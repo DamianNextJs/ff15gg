@@ -5,15 +5,11 @@
 }
 
 @theme {
-  --color-bg: rgb(7, 7, 33); /* DARK BLUE COLOR FOR BACKGROUND*/
-  --color-accent: rgb(13, 13, 40); /* LIGHTER BG COLOR FOR CREATING CONTRAST*/
-  --color-primary: rgb(49, 115, 250); /* NICE BLUE COLOR FOR BUTTONS AND SUCH*/
-  --color-secondary: rgb(25, 25, 55); /* DARKER BLUE/PURPLE COLOR */
-  --color-win: rgb(30, 43, 94); /* GREEN COLOR FOR MATCH HISTORY WIN*/
-  --color-lose: rgb(59, 33, 60); /* RED COLOR FOR MATCH HISTORY LOSE*/
-  --color-subtle: rgb(
-    195,
-    210,
-    244
-  ); /*Subtle color for making text more subtle*/
+  --color-bg: rgb(10, 10, 36); /* Slightly warmer dark navy */
+  --color-accent: rgb(18, 18, 46); /* Richer contrast shade */
+  --color-primary: rgb(72, 130, 255); /* Brighter, slightly warmer blue */
+  --color-secondary: rgb(32, 28, 60); /* Deep violet-navy hybrid */
+  --color-win: rgb(36, 58, 102); /* Blue-leaning "win" shade */
+  --color-lose: rgb(92, 42, 70); /* Purple-red mix for losses */
+  --color-subtle: rgb(205, 218, 245); /* Slightly lighter subtle text */
 }
