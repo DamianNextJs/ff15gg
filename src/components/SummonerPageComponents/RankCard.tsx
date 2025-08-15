@@ -1,22 +1,24 @@
 import { calculateWinrate } from "@/helper/calculateWinrate";
 import { toNormalCase } from "@/helper/toNormalCase";
 import { toRoman } from "@/helper/toRoman";
+import { RankedData } from "@/types/riot";
+import Image from "next/image";
 
 export default function RankCard({
   data,
   rankType,
 }: {
-  data: any;
+  data: RankedData | null;
   rankType: string;
 }) {
-  const wins = data?.wins;
-  const losses = data?.losses;
+  const wins = data?.wins ?? 0;
+  const losses = data?.losses ?? 0;
   const leaguePoints = data?.leaguePoints;
   const winrate = calculateWinrate(wins, losses);
-  const tier = toNormalCase(data?.tier); //The actual rank like Diamond
-  const rank = toRoman(data?.rank, tier); //The division like Diamond 1
+  const tier = data ? toNormalCase(data?.tier) : ""; //The actual rank like Diamond
+  const rank = data ? toRoman(data?.rank, tier) : ""; //The division like Diamond 1
 
-  const hasRankInfo = rank || tier;
+  const hasRankInfo = !!rank || !!tier;
 
   return (
     <section className="mt-3 w-full bg-secondary rounded-md p-4">
@@ -28,11 +30,14 @@ export default function RankCard({
         {hasRankInfo ? (
           <div className="flex items-center justify-between">
             <div className="flex gap-4">
-              <img
+              <Image
                 src={`/Ranked_Emblems/Rank=${tier}.png`}
                 alt="rank"
-                className="size-15"
+                width={60}
+                height={60}
+                className="border-2 rounded-md"
               />
+
               <div className="flex flex-col justify-center">
                 <span className="font-bold text-lg space-x-1.5">
                   <span>{tier}</span>

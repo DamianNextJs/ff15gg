@@ -1,4 +1,3 @@
-import { error } from "console";
 import { NextResponse } from "next/server";
 
 const API_KEY = process.env.RIOT_API_KEY;
@@ -61,11 +60,11 @@ export async function GET(
   {
     params,
   }: {
-    params: {
+    params: Promise<{
       region: string;
       platform: string;
       gameNameAndTag: string;
-    };
+    }>;
   }
 ) {
   const { region, gameNameAndTag, platform } = await params;
@@ -89,8 +88,9 @@ export async function GET(
     );
 
     return NextResponse.json({ riotAccount, summoner, ranked, matches });
-  } catch (err: any) {
-    console.error("Error fetching Summoner profile: ", err.message);
-    return NextResponse.json({ error: err.message }, { status: 500 });
+  } catch (err: unknown) {
+    const message = err instanceof Error ? err.message : "Unknown Error";
+    console.error("Error fetching Summoner profile: ", message);
+    return NextResponse.json({ error: message }, { status: 500 });
   }
 }

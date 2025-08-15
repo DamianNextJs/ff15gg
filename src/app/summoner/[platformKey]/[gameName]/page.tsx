@@ -7,6 +7,7 @@ import { regionMap } from "@/lib/region";
 import RankCard from "@/components/SummonerPageComponents/RankCard";
 import { getRankData } from "@/helper/getRankData";
 import ProfileCard from "@/components/SummonerPageComponents/ProfileCard";
+import { SummonerData } from "@/types/riot";
 
 export default function SummonerPage() {
   const { platformKey, gameName } = useParams<{
@@ -14,23 +15,23 @@ export default function SummonerPage() {
     gameName: string;
   }>();
 
-  const [profileData, setProfileData] = useState<any>();
+  const [profileData, setProfileData] = useState<SummonerData | null>();
   const [loading, setLoading] = useState(true);
 
-  if (!platformKey || !gameName) return notFound();
-
-  const [name, tag] = decodeURIComponent(gameName).trim().split("#");
-  const platform = regionMap[platformKey as keyof typeof regionMap].platform;
-  const region = regionMap[platformKey as keyof typeof regionMap].region;
-
   useEffect(() => {
+    if (!platformKey || !gameName) return notFound();
+    const [name, tag] = decodeURIComponent(gameName).trim().split("#");
+    const platform = regionMap[platformKey as keyof typeof regionMap].platform;
+    const region = regionMap[platformKey as keyof typeof regionMap].region;
+
     async function fetchData() {
       try {
         const data = await getFullSummonerProfile(region, platform, name, tag);
         setProfileData(data);
 
-        console.log("PROFILE DATA: ", data);
+        // console.log("PROFILE DATA: ", data);
       } catch (error) {
+        console.log(error);
         setProfileData(null);
       } finally {
         setLoading(false);
@@ -38,14 +39,14 @@ export default function SummonerPage() {
     }
 
     fetchData();
-  }, [platformKey, gameName]);
+  }, [gameName, platformKey]);
 
   if (loading) return <div>loading..</div>;
   if (!profileData) return notFound();
 
   //get ranked data for both queue types after data is not null
-  const soloData = getRankData(profileData.ranked, "solo");
-  const flexData = getRankData(profileData.ranked, "flex");
+  const soloData = getRankData(profileData.ranked || [], "solo");
+  const flexData = getRankData(profileData.ranked || [], "flex");
 
   return (
     <main className="h-full lg:mx-50">
