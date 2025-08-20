@@ -27,6 +27,7 @@ export default function ProfileCard({ data }: { data: SummonerData }) {
           height={80}
           className="border-2  rounded-md"
           style={{ borderColor }}
+          priority
         />
 
         <div

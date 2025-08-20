@@ -8,6 +8,7 @@ import RankCard from "@/components/SummonerPageComponents/RankCard";
 import { getRankData } from "@/helper/getRankData";
 import ProfileCard from "@/components/SummonerPageComponents/ProfileCard";
 import { SummonerData } from "@/types/riot";
+import { getChampionById } from "@/helper/getChampionById";
 
 export default function SummonerPage() {
   const { platformKey, gameName } = useParams<{
@@ -29,7 +30,9 @@ export default function SummonerPage() {
         const data = await getFullSummonerProfile(region, platform, name, tag);
         setProfileData(data);
 
-        // console.log("PROFILE DATA: ", data);
+        if (process.env.NODE_ENV === "development") {
+          console.log("PROFILE DATA: ", data);
+        }
       } catch (error) {
         console.log(error);
         setProfileData(null);
@@ -44,6 +47,9 @@ export default function SummonerPage() {
   if (loading) return <div>loading..</div>;
   if (!profileData) return notFound();
 
+  const topChampId = profileData.championMastery?.[0].championId; // champion with highest mastery points
+  const champ = topChampId ? getChampionById(topChampId) : getChampionById(92); // riven as default;
+
   //get ranked data for both queue types after data is not null
   const soloData = getRankData(profileData.ranked || [], "solo");
   const flexData = getRankData(profileData.ranked || [], "flex");
@@ -51,13 +57,18 @@ export default function SummonerPage() {
   return (
     <main className="h-full lg:mx-50">
       {/* profile background */}
-      <div className=" h-1/3 bg-[url(https://ddragon.leagueoflegends.com/cdn/img/champion/splash/Riven_1.jpg)] bg-cover bg-bg-center">
+      <div
+        className="h-1/3 bg-cover bg-bg-center"
+        style={{
+          backgroundImage: `url(https://ddragon.leagueoflegends.com/cdn/img/champion/splash/${champ.id}_1.jpg)`,
+        }}
+      >
         <div className="bg-linear-to-r from-bg from-20%  via-bg/60 via-80% to-bg to-100% h-full">
           <div className="p-4 pt-8">
             {/* profile wrapper */}
             <ProfileCard data={profileData} />
             {/* rank wrapper */}
-            <div className="mt-10">
+            <div className="mt-10 md:mt-20">
               <RankCard data={soloData} rankType={"Ranked Solo"} />
               <RankCard data={flexData} rankType={"Ranked Flex"} />
             </div>

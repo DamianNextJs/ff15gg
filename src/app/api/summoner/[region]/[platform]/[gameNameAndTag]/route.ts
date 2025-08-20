@@ -1,4 +1,5 @@
 import { NextResponse } from "next/server";
+import { ChampionMastery } from "@/types/riot";
 
 const API_KEY = process.env.RIOT_API_KEY;
 
@@ -28,11 +29,22 @@ async function getSummonerByPuuid(puuid: string, platform: string) {
   return res.json();
 }
 
+async function getChampionMastery(puuid: string, platform: string) {
+  const res = await fetch(
+    `https://${platform}.api.riotgames.com/lol/champion-mastery/v4/champion-masteries/by-puuid/${puuid}`,
+    { headers }
+  );
+
+  if (!res.ok) throw new Error("Champion Mastery not found");
+  return res.json();
+}
+
 async function getRankedInfo(puuid: string, platform: string) {
   const res = await fetch(
     `https://${platform}.api.riotgames.com/lol/league/v4/entries/by-puuid/${puuid}`,
     { headers }
   );
+
   if (!res.ok) throw new Error("Ranked info not found");
   return res.json();
 }
@@ -76,6 +88,15 @@ export async function GET(
     //Summoner
     const summoner = await getSummonerByPuuid(riotAccount.puuid, platform);
 
+    //Champion Mastery
+    const champMastery: ChampionMastery[] = await getChampionMastery(
+      summoner.puuid,
+      platform
+    );
+    const championMastery = champMastery
+      .sort((a, b) => b.championPoints - a.championPoints)
+      .slice(0, 3);
+
     //Ranked
     const ranked = await getRankedInfo(summoner.puuid, platform);
 
@@ -87,7 +108,13 @@ export async function GET(
       matchIds.map((id: string) => getMatch(id, region))
     );
 
-    return NextResponse.json({ riotAccount, summoner, ranked, matches });
+    return NextResponse.json({
+      riotAccount,
+      summoner,
+      ranked,
+      matches,
+      championMastery,
+    });
   } catch (err: unknown) {
     const message = err instanceof Error ? err.message : "Unknown Error";
     console.error("Error fetching Summoner profile: ", message);

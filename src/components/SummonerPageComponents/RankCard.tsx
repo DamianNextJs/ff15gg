@@ -33,8 +33,8 @@ export default function RankCard({
               <Image
                 src={`/Ranked_Emblems/Rank=${tier}.png`}
                 alt="rank"
-                width={60}
-                height={60}
+                width={50}
+                height={50}
                 className="border-2 rounded-md"
               />
 
