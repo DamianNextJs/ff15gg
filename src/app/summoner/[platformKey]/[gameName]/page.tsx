@@ -9,6 +9,7 @@ import { getRankData } from "@/helper/getRankData";
 import ProfileCard from "@/components/SummonerPageComponents/ProfileCard";
 import { SummonerData } from "@/types/riot";
 import { getChampionById } from "@/helper/getChampionById";
+import ChampStatsCard from "@/components/SummonerPageComponents/ChampStatsCard";
 
 export default function SummonerPage() {
   const { platformKey, gameName } = useParams<{
@@ -16,18 +17,24 @@ export default function SummonerPage() {
     gameName: string;
   }>();
 
-  const [profileData, setProfileData] = useState<SummonerData | null>();
+  const [profileData, setProfileData] = useState<SummonerData | null>(null);
   const [loading, setLoading] = useState(true);
+
+  const { platform, region } = regionMap[platformKey as keyof typeof regionMap];
 
   useEffect(() => {
     if (!platformKey || !gameName) return notFound();
     const [name, tag] = decodeURIComponent(gameName).trim().split("#");
-    const platform = regionMap[platformKey as keyof typeof regionMap].platform;
-    const region = regionMap[platformKey as keyof typeof regionMap].region;
 
     async function fetchData() {
       try {
-        const data = await getFullSummonerProfile(region, platform, name, tag);
+        const data = await getFullSummonerProfile(
+          region,
+          platform,
+          name,
+          tag,
+          false
+        );
         setProfileData(data);
 
         if (process.env.NODE_ENV === "development") {
@@ -42,13 +49,16 @@ export default function SummonerPage() {
     }
 
     fetchData();
-  }, [gameName, platformKey]);
+  }, [gameName, platformKey, region, platform]);
 
   if (loading) return <div>loading..</div>;
   if (!profileData) return notFound();
 
+  // Champion for background image
   const topChampId = profileData.championMastery?.[0].championId; // champion with highest mastery points
-  const champ = topChampId ? getChampionById(topChampId) : getChampionById(92); // riven as default;
+  const bgImgChamp = topChampId
+    ? getChampionById(topChampId)
+    : getChampionById(92); // riven by default;
 
   //get ranked data for both queue types after data is not null
   const soloData = getRankData(profileData.ranked || [], "solo");
@@ -60,26 +70,25 @@ export default function SummonerPage() {
       <div
         className="h-1/3 bg-cover bg-bg-center"
         style={{
-          backgroundImage: `url(https://ddragon.leagueoflegends.com/cdn/img/champion/splash/${champ.id}_1.jpg)`,
+          backgroundImage: `url(https://ddragon.leagueoflegends.com/cdn/img/champion/splash/${bgImgChamp.id}_1.jpg)`,
         }}
       >
-        <div className="bg-linear-to-r from-bg from-20%  via-bg/60 via-80% to-bg to-100% h-full">
+        <div className="bg-linear-to-r from-bg from-40%  via-bg/60 via-75% to-bg to-100% h-full">
           <div className="p-4 pt-8">
             {/* profile wrapper */}
-            <ProfileCard data={profileData} />
+            <ProfileCard
+              data={profileData}
+              setData={setProfileData}
+              platform={platform}
+              region={region}
+            />
             {/* rank wrapper */}
             <div className="mt-10 md:mt-20">
               <RankCard data={soloData} rankType={"Ranked Solo"} />
               <RankCard data={flexData} rankType={"Ranked Flex"} />
             </div>
             {/* Champion Stats */}
-            <section className="mt-3 w-full bg-secondary rounded-md p-4">
-              <div className="space-y-4">
-                <h2 className="text-sm font-semibold border-l-2 border-primary ps-3">
-                  Champion Stats
-                </h2>
-              </div>
-            </section>
+            <ChampStatsCard recentChampStats={profileData.champStats} />
             {/*  */}
           </div>
         </div>

@@ -12,6 +12,8 @@ export interface SummonerData {
   ranked?: RankedData[];
   matches?: MatchData[];
   championMastery?: ChampionMastery[];
+  champStats: ChampStats[];
+  lastUpdated: string;
 }
 
 export interface RankedData {
@@ -24,16 +26,20 @@ export interface RankedData {
 }
 
 export interface MatchData {
-  gameMode: string;
-  gameEndTimeStamp: number;
-  gameDuration: number;
-  participants: ParticipantData[];
+  info: {
+    gameMode: string;
+    gameEndTimeStamp: number;
+    gameDuration: number;
+    participants: ParticipantData[];
+  };
 }
 
 export interface ParticipantData {
+  puuid: string;
   riotIdGameName: string;
   riotIdTagLine: string;
   championName: string;
+  championId: number;
   champLevel: number;
   assists: number;
   deaths: number;
@@ -70,3 +76,13 @@ export interface ChampionMastery {
   championLevel: number;
   championPoints: number;
 }
+
+export type ChampStats = {
+  champId: number;
+  games: number;
+  wins: number;
+  losses: number;
+  kills: number;
+  deaths: number;
+  assists: number;
+};

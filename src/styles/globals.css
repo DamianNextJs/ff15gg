@@ -9,7 +9,7 @@
   --color-accent: rgb(18, 18, 46); /* Richer contrast shade */
   --color-primary: rgb(72, 130, 255); /* Brighter, slightly warmer blue */
   --color-secondary: rgb(32, 28, 60); /* Deep violet-navy hybrid */
+  --color-subtle: rgb(205, 218, 245); /* Slightly lighter subtle text */
   --color-win: rgb(36, 58, 102); /* Blue-leaning "win" shade */
   --color-lose: rgb(92, 42, 70); /* Purple-red mix for losses */
-  --color-subtle: rgb(205, 218, 245); /* Slightly lighter subtle text */
 }

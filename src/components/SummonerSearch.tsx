@@ -4,6 +4,7 @@ import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { type RegionKey } from "@/lib/region";
 import RegionSelect from "./RegionSelect";
+import { normalizeSummonerName } from "@/helper/normalizeSummonerName";
 
 export default function SummonerSearch() {
   const [summonerName, setSummonerName] = useState("");
@@ -20,8 +21,10 @@ export default function SummonerSearch() {
       return;
     }
 
+    const { gameName, tagLine } = normalizeSummonerName(name, tag);
+
     router.push(
-      `/summoner/${region}/${encodeURIComponent(summonerName.trim())}`
+      `/summoner/${region}/${encodeURIComponent(`${gameName}#${tagLine}`)}`
     );
   };
 

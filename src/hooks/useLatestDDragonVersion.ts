@@ -21,5 +21,5 @@ export function useLatestDDragonVersion() {
     fetchVersion();
   }, []);
 
-  return version;
+  return version || "15.16.1";
 }
