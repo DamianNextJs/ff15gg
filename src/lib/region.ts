@@ -26,3 +26,10 @@ export const regionMap = {
 };
 
 export type RegionKey = keyof typeof regionMap;
+
+export const platformToRegionKey: Record<string, RegionKey> = Object.entries(
+  regionMap
+).reduce((acc, [key, value]) => {
+  acc[value.platform] = key as RegionKey;
+  return acc;
+}, {} as Record<string, RegionKey>);

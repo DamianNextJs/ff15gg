@@ -86,3 +86,12 @@ export type ChampStats = {
   deaths: number;
   assists: number;
 };
+
+export interface CachedSummoner {
+  puuid: string;
+  gameName: string;
+  tagLine: string;
+  region: string;
+  profileIconId: number;
+  summonerLevel: number;
+}

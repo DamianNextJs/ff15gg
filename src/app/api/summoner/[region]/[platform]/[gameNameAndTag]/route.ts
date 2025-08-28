@@ -2,8 +2,8 @@ import { NextResponse } from "next/server";
 import { ChampionMastery, MatchData } from "@/types/riot";
 import { connectToDB } from "@/lib/mongodb";
 import Summoner, { ISummoner } from "@/models/Summoner";
-import { calculateChampionStats } from "@/helper/calculateChampionStats";
-import { normalizeSummonerName } from "@/helper/normalizeSummonerName";
+import { calculateChampionStats } from "@/helper/stats/calculateChampionStats";
+import { normalizeSummonerName } from "@/helper";
 
 const API_KEY = process.env.RIOT_API_KEY;
 
@@ -113,29 +113,35 @@ export async function GET(
   const { region, gameNameAndTag, platform } = await params;
   const [rawGameName, rawTagLine] =
     decodeURIComponent(gameNameAndTag).split("#");
-  const { gameName, tagLine } = normalizeSummonerName(rawGameName, rawTagLine);
   const url = new URL(req.url);
   const force = url.searchParams.get("force") === "true";
 
   //check cache first if not forced (force true = when update button clicked for fresh data fetch on summoner page)
-  if (!force) {
-    const summoner = await Summoner.findOne({
-      gameName,
-      tagLine,
-      region,
-    }).lean<ISummoner>();
-
-    if (summoner) {
-      return NextResponse.json({
-        ...summoner.data,
-        lastUpdated: summoner.lastUpdated,
-      });
-    }
-  }
-
   try {
     // Riot Account
-    const riotAccount = await getRiotAccount(gameName, tagLine, region);
+    const riotAccount = await getRiotAccount(rawGameName, rawTagLine, region);
+    const riotGameName = riotAccount.gameName;
+    const riotTagLine = riotAccount.tagLine;
+
+    const normalizedName = normalizeSummonerName(
+      riotGameName,
+      riotTagLine
+    ).gameName;
+
+    if (!force) {
+      const cached = await Summoner.findOne({
+        normalizedName,
+        tagLine: riotTagLine,
+        platform,
+      }).lean<ISummoner>();
+
+      if (cached) {
+        return NextResponse.json({
+          ...cached.data,
+          lastUpdated: cached.lastUpdated,
+        });
+      }
+    }
 
     //Summoner
     const summoner = await getSummonerByPuuid(riotAccount.puuid, platform);
@@ -173,12 +179,16 @@ export async function GET(
     await Summoner.findOneAndUpdate(
       { puuid: summoner.puuid },
       {
-        puuid: summoner.puuid,
-        gameName,
-        tagLine,
-        region,
-        data: profileData,
-        lastUpdated: now,
+        $set: {
+          puuid: summoner.puuid,
+          gameName: riotGameName,
+          tagLine: riotTagLine,
+          normalizedName,
+          platform,
+          data: profileData,
+          lastUpdated: now,
+          testField: "Hello world",
+        },
       },
       { upsert: true, new: true }
     );

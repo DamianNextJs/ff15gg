@@ -1,6 +1,6 @@
-import { calculateWinrate } from "@/helper/calculateWinrate";
-import { calculateKDA } from "@/helper/calculateKDA";
-import { getChampionById } from "@/helper/getChampionById";
+import { calculateWinrate } from "@/helper";
+import { calculateKDA } from "@/helper";
+import { getChampionById } from "@/helper/champion/getChampionById";
 import { Key } from "react";
 import Image from "next/image";
 import { useLatestDDragonVersion } from "@/hooks/useLatestDDragonVersion";

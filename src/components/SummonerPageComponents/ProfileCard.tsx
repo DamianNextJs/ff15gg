@@ -1,12 +1,12 @@
 "use client";
 import { useLatestDDragonVersion } from "@/hooks/useLatestDDragonVersion";
 import { rankBorderColors } from "@/lib/rankBorderColors";
-import { toNormalCase } from "@/helper/toNormalCase";
-import { getRankData } from "@/helper/getRankData";
+import { toNormalCase } from "@/helper";
+import { getRankData } from "@/helper";
 import { SummonerData } from "@/types/riot";
 import Image from "next/image";
 import { useState } from "react";
-import { getFullSummonerProfile } from "@/helper/getFullSummonerProfile";
+import { getFullSummonerProfile } from "@/helper/summoner/getFullSummonerProfile";
 import UpdateButton from "../UpdateButton";
 
 interface ProfileCardProps {

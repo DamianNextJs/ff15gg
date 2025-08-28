@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { regionMap, type RegionKey } from "../lib/region";
 
 export default function RegionSelect({
@@ -11,9 +11,24 @@ export default function RegionSelect({
   onChange: (region: RegionKey) => void;
 }) {
   const [open, setOpen] = useState(false);
+  const ref = useRef<HTMLDivElement>(null);
+
+  //close dropdown if click happens outside
+  useEffect(() => {
+    function handleClickOutside(event: MouseEvent) {
+      if (ref.current && !ref.current.contains(event.target as Node)) {
+        setOpen(false);
+      }
+    }
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => document.removeEventListener("mousedown", handleClickOutside);
+  }, []);
 
   return (
-    <div className="text-white font-bold text-xs relative cursor-pointer w-12 text-center ">
+    <div
+      ref={ref}
+      className="text-white font-bold text-xs relative cursor-pointer w-12 text-center "
+    >
       {/* Selected */}
       <div
         onClick={() => setOpen(!open)}

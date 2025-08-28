@@ -2,13 +2,13 @@
 
 import { useEffect, useState } from "react";
 import { notFound, useParams } from "next/navigation";
-import { getFullSummonerProfile } from "@/helper/getFullSummonerProfile";
+import { getFullSummonerProfile } from "@/helper/summoner/getFullSummonerProfile";
 import { regionMap } from "@/lib/region";
 import RankCard from "@/components/SummonerPageComponents/RankCard";
-import { getRankData } from "@/helper/getRankData";
+import { getRankData } from "@/helper";
 import ProfileCard from "@/components/SummonerPageComponents/ProfileCard";
 import { SummonerData } from "@/types/riot";
-import { getChampionById } from "@/helper/getChampionById";
+import { getChampionById } from "@/helper/champion/getChampionById";
 import ChampStatsCard from "@/components/SummonerPageComponents/ChampStatsCard";
 
 export default function SummonerPage() {
@@ -45,6 +45,9 @@ export default function SummonerPage() {
         setProfileData(null);
       } finally {
         setLoading(false);
+        if (typeof window !== "undefined") {
+          window.scrollTo(0, 0);
+        }
       }
     }
 

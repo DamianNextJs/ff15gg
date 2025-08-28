@@ -4,7 +4,8 @@ import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { type RegionKey } from "@/lib/region";
 import RegionSelect from "./RegionSelect";
-import { normalizeSummonerName } from "@/helper/normalizeSummonerName";
+import { normalizeSummonerName } from "@/helper";
+import SearchSuggestions from "./SearchSuggestions";
 
 export default function SummonerSearch() {
   const [summonerName, setSummonerName] = useState("");
@@ -29,32 +30,35 @@ export default function SummonerSearch() {
   };
 
   return (
-    <form
-      className="w-full flex justify-between items-center bg-white text-secondary p-5  lg:w-1/2 rounded-md"
-      onSubmit={handleSearch}
-    >
-      <input
-        value={summonerName}
-        onChange={(e) => setSummonerName(e.target.value)}
-        placeholder="Enter Riot ID"
-        className="focus:outline-none w-full"
-      />
-      <RegionSelect value={region} onChange={setRegion} />
-      <svg
-        xmlns="http://www.w3.org/2000/svg"
-        fill="none"
-        viewBox="0 0 24 24"
-        strokeWidth={1.5}
-        stroke="currentColor"
-        className="size-7 ms-3 cursor-pointer"
-        onClick={handleSearch}
+    <div className="relative w-full lg:w-2/3 2xl:w-1/2   text-secondary">
+      <form
+        className="flex justify-between items-center bg-white p-5 rounded-md mx-auto"
+        onSubmit={handleSearch}
       >
-        <path
-          strokeLinecap="round"
-          strokeLinejoin="round"
-          d="m21 21-5.197-5.197m0 0A7.5 7.5 0 1 0 5.196 5.196a7.5 7.5 0 0 0 10.607 10.607Z"
+        <input
+          value={summonerName}
+          onChange={(e) => setSummonerName(e.target.value)}
+          placeholder="Enter Riot ID"
+          className="focus:outline-none w-full"
         />
-      </svg>
-    </form>
+        <RegionSelect value={region} onChange={setRegion} />
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          fill="none"
+          viewBox="0 0 24 24"
+          strokeWidth={1.5}
+          stroke="currentColor"
+          className="size-7 ms-3 cursor-pointer"
+          onClick={handleSearch}
+        >
+          <path
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            d="m21 21-5.197-5.197m0 0A7.5 7.5 0 1 0 5.196 5.196a7.5 7.5 0 0 0 10.607 10.607Z"
+          />
+        </svg>
+      </form>
+      <SearchSuggestions summonerName={summonerName} region={region} />
+    </div>
   );
 }
