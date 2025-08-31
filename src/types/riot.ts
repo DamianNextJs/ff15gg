@@ -37,8 +37,10 @@ export interface MatchData {
 export interface ParticipantData {
   puuid: string;
   riotIdGameName: string;
-  riotIdTagLine: string;
+  riotIdTagline: string;
   championName: string;
+  teamId: number;
+  profileIcon: number;
   championId: number;
   champLevel: number;
   assists: number;

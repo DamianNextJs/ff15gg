@@ -5,8 +5,8 @@ export function calculateKDA(kills: number, assists: number, deaths: number) {
 }
 
 export function calculateWinrate(wins: number, losses: number) {
-  if (!wins || !losses) return 0;
   const totalGames: number = wins + losses;
+  if (totalGames === 0) return 0;
   const winrate = Math.round((wins / totalGames) * 100);
 
   return winrate;

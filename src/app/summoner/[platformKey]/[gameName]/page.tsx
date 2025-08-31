@@ -10,6 +10,7 @@ import ProfileCard from "@/components/SummonerPageComponents/ProfileCard";
 import { SummonerData } from "@/types/riot";
 import { getChampionById } from "@/helper/champion/getChampionById";
 import ChampStatsCard from "@/components/SummonerPageComponents/ChampStatsCard";
+import RecentlyPlayedWith from "@/components/SummonerPageComponents/RecentlyPlayedWith";
 
 export default function SummonerPage() {
   const { platformKey, gameName } = useParams<{
@@ -45,9 +46,6 @@ export default function SummonerPage() {
         setProfileData(null);
       } finally {
         setLoading(false);
-        if (typeof window !== "undefined") {
-          window.scrollTo(0, 0);
-        }
       }
     }
 
@@ -68,33 +66,38 @@ export default function SummonerPage() {
   const flexData = getRankData(profileData.ranked || [], "flex");
 
   return (
-    <main className="h-full lg:mx-50">
+    <main className="min-h-screen md:mx-20 lg:mx-40 2xl:max-w-2/3 2xl:mx-auto">
       {/* profile background */}
       <div
-        className="h-1/3 bg-cover bg-bg-center"
+        className="h-[20vh] md:h-[25vh] bg-cover relative"
         style={{
           backgroundImage: `url(https://ddragon.leagueoflegends.com/cdn/img/champion/splash/${bgImgChamp.id}_1.jpg)`,
         }}
       >
-        <div className="bg-linear-to-r from-bg from-40%  via-bg/60 via-75% to-bg to-100% h-full">
-          <div className="p-4 pt-8">
-            {/* profile wrapper */}
-            <ProfileCard
-              data={profileData}
-              setData={setProfileData}
-              platform={platform}
-              region={region}
-            />
-            {/* rank wrapper */}
-            <div className="mt-10 md:mt-20">
-              <RankCard data={soloData} rankType={"Ranked Solo"} />
-              <RankCard data={flexData} rankType={"Ranked Flex"} />
-            </div>
-            {/* Champion Stats */}
-            <ChampStatsCard recentChampStats={profileData.champStats} />
-            {/*  */}
-          </div>
+        <div className="absolute inset-0 bg-linear-to-r from-bg from-40%  via-bg/60 via-75% to-bg to-100%" />
+      </div>
+
+      <div className="relative -mt-[20vh] md:-mt-[25vh] p-4 pt-8">
+        {/* profile wrapper */}
+        <ProfileCard
+          data={profileData}
+          setData={setProfileData}
+          platform={platform}
+          region={region}
+        />
+        {/* rank wrapper */}
+        <div className="mt-10 md:mt-20">
+          <RankCard data={soloData} rankType={"Ranked Solo"} />
+          <RankCard data={flexData} rankType={"Ranked Flex"} />
         </div>
+        {/* Champion Stats */}
+        <ChampStatsCard recentChampStats={profileData.champStats} />
+        {/* Recently Played With*/}
+        <RecentlyPlayedWith
+          matches={profileData.matches || []}
+          puuid={profileData.riotAccount.puuid}
+          region={platformKey}
+        />
       </div>
     </main>
   );

@@ -3,6 +3,7 @@ export * from "@/helper/champion/getChampionById";
 
 //stats
 export * from "@/helper/stats/calculateChampionStats";
+export * from "@/helper/stats/getRecentTeammates";
 export * from "@/helper/stats/stats";
 
 // summoner
