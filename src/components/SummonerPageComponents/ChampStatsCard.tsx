@@ -15,8 +15,8 @@ export default function ChampStatsCard({
   const champIconUrl = `https://ddragon.leagueoflegends.com/cdn/${version}/img/champion/`;
 
   return (
-    <section className="mt-3 w-full bg-secondary rounded-md p-4">
-      <h2 className="text-sm md:text-lg font-bold border-l-2 border-primary m-0 ps-3">
+    <section className="mt-3 bg-secondary rounded-md p-4">
+      <h2 className="text-sm lg:text-base font-semibold border-l-2 border-primary ps-3">
         Champion Stats
       </h2>
       {recentChampStats &&
@@ -30,7 +30,7 @@ export default function ChampStatsCard({
           );
           return (
             <div
-              className="mt-3 grid grid-cols-[2fr_1fr_1fr] border-t border-accent -mx-4 px-4 pt-2 font-bold text-xs md:text-sm text-center"
+              className="mt-3 grid grid-cols-[2fr_1fr_1fr] border-t border-accent -mx-4 px-4 pt-2 font-medium text-xs lg:text-sm text-center"
               key={key}
             >
               {/* Champ Icon + name */}
@@ -41,12 +41,12 @@ export default function ChampStatsCard({
                   width={35}
                   height={35}
                 />
-                <p>{champ.name}</p>
+                <p className="font-semibold">{champ.name}</p>
               </div>
 
               {/* stats container */}
               <div>
-                <p>{kda} KDA</p>
+                <p className="font-semibold">{kda} KDA</p>
                 <p className="text-subtle">
                   {champStats.kills} <span className="text-subtle/50">/</span>{" "}
                   {champStats.deaths} <span className="text-subtle/50">/</span>{" "}

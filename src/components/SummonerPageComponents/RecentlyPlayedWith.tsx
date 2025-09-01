@@ -18,14 +18,14 @@ export default function RecentlyPlayedWith({
   const recentTeammates = getRecentTeammates(matches, puuid);
 
   return (
-    <section className="mt-3 w-full bg-secondary rounded-md p-4 pb-0">
-      <h2 className="text-sm md:text-lg font-bold border-l-2 border-primary ps-3">
+    <section className="mt-3 bg-secondary rounded-md p-4 pb-0">
+      <h2 className="text-sm lg:text-base font-semibold border-l-2 border-primary ps-3">
         Recently Played With
       </h2>
 
-      <div className="text-sm text-subtle mt-3">
+      <div className="text-sm lg:text-base text-subtle mt-3 font-medium">
         {/* Headers */}
-        <div className="grid grid-cols-[2fr_1fr_1fr_1fr] bg-subtle/15 -mx-4 px-4 py-4 border-t border-accent font-semibold">
+        <div className="grid grid-cols-[2fr_1fr_1fr_1fr] bg-subtle/15 -mx-4 px-4 py-4 border-t border-accent">
           <p>Summoner</p>
           <p className="text-center">Played</p>
           <p className="text-center">W - L </p>
@@ -40,7 +40,7 @@ export default function RecentlyPlayedWith({
                   `${teamMate.gameName}#${teamMate.tagLine}`
                 )}`}
                 key={Key}
-                className="grid grid-cols-[2fr_1fr_1fr_1fr] -mx-4 px-4 py-3 border-t border-accent font-semibold hover:bg-subtle/15 cursor-pointer"
+                className="grid grid-cols-[2fr_1fr_1fr_1fr] -mx-4 px-4 py-3 border-t border-accent hover:bg-subtle/15 cursor-pointer"
               >
                 {/* name + icon */}
                 <div className="flex items-center gap-2">

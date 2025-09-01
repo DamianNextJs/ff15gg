@@ -21,14 +21,14 @@ export default function RankCard({
   const hasRankInfo = !!rank || !!tier;
 
   return (
-    <section className="mt-3 w-full bg-secondary rounded-md p-4">
+    <section className="mt-3 bg-secondary rounded-md p-4">
       <div className={`relative ${hasRankInfo && "space-y-4"}`}>
-        <h2 className="text-sm md:text-lg font-bold border-l-2 border-primary ps-3">
+        <h2 className="text-sm lg:text-base font-semibold border-l-2 border-primary ps-3">
           {rankType}
         </h2>
 
         {hasRankInfo ? (
-          <div className="flex items-center justify-between font-bold">
+          <div className="flex items-center justify-between ">
             <div className="flex gap-4">
               <Image
                 src={`/Ranked_Emblems/Rank=${tier}.png`}
@@ -39,16 +39,18 @@ export default function RankCard({
               />
 
               <div className="flex flex-col justify-center">
-                <span className="font-extrabold text-lg space-x-1.5">
+                <span className="font-bold text-lg space-x-1.5">
                   <span>{tier}</span>
                   <span>{rank}</span>
                 </span>
 
-                <span className="text-xs text-subtle">{leaguePoints} LP</span>
+                <span className="text-xs font-semibold text-subtle">
+                  {leaguePoints} LP
+                </span>
               </div>
             </div>
 
-            <div className="flex flex-col items-end text-xs text-subtle space-y-1">
+            <div className="flex flex-col font-semibold items-end text-xs text-subtle space-y-1">
               <span>
                 {wins}W {losses}L
               </span>

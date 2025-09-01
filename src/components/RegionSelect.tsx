@@ -27,7 +27,7 @@ export default function RegionSelect({
   return (
     <div
       ref={ref}
-      className="text-white font-bold text-xs relative cursor-pointer w-12 text-center "
+      className="text-white font-bold text-xs lg:text-sm relative cursor-pointer w-12 text-center "
     >
       {/* Selected */}
       <div
@@ -39,7 +39,7 @@ export default function RegionSelect({
 
       {/* Dropdown */}
       {open && (
-        <div className="absolute -left-1.5 bg-white mt-7 rounded p-2 space-y-3 ">
+        <div className="absolute left-1/2 -translate-x-1/2 bg-white mt-7 rounded p-2 space-y-3">
           {Object.entries(regionMap).map(([key, region]) => (
             <div
               key={key}

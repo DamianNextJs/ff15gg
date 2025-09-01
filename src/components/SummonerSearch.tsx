@@ -30,9 +30,9 @@ export default function SummonerSearch() {
   };
 
   return (
-    <div className="relative w-full lg:w-2/3 2xl:w-1/2   text-secondary">
+    <div className="relative w-full lg:w-1/2 text-secondary">
       <form
-        className="flex justify-between items-center bg-white p-5 rounded-md mx-auto"
+        className="flex justify-between items-center bg-white p-5 rounded-md mx-auto lg:text-xl"
         onSubmit={handleSearch}
       >
         <input
@@ -48,7 +48,7 @@ export default function SummonerSearch() {
           viewBox="0 0 24 24"
           strokeWidth={1.5}
           stroke="currentColor"
-          className="size-7 ms-3 cursor-pointer"
+          className="size-7  ms-3 cursor-pointer"
           onClick={handleSearch}
         >
           <path

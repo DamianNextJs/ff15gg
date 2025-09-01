@@ -64,28 +64,27 @@ export default function ProfileCard({
   return (
     <section className="flex items-end gap-3">
       <div className="relative w-fit">
-        <Image
-          src={profileIconUrl}
-          alt="profile icon"
-          width={80}
-          height={80}
-          className="border-2  rounded-md"
-          style={{ borderColor }}
-          priority
-        />
+        <div className="size-20 lg:size-24">
+          <Image
+            src={profileIconUrl}
+            alt="profile icon"
+            fill
+            className="border-2 rounded-md"
+            style={{ borderColor }}
+            priority
+          />
+        </div>
 
         <div
-          className="absolute -top-0.5 bg-bg border-2 $ left-1/2 -translate-1/2 rounded-md text-xs px-2 py-0.5"
+          className="absolute -top-0.5 bg-bg border-2 left-1/2 -translate-1/2 rounded-md text-xs px-2 py-0.5"
           style={{ borderColor }}
         >
           {data.summoner.summonerLevel}
         </div>
       </div>
-      <div className="text-xl space-y-1 font-semibold">
+      <div className="text-xl lg:text-3xl space-y-1 font-semibold">
         <div>
-          <span className="truncate max-w-35">
-            {data.riotAccount.gameName}{" "}
-          </span>
+          <span className="truncate max-w-35">{data.riotAccount.gameName}</span>
           <span className="ms-1 text-subtle ">#{data.riotAccount.tagLine}</span>
         </div>
         {/* update button */}

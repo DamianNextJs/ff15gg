@@ -48,29 +48,33 @@ export default function SearchSuggestions({
   return (
     <ul
       ref={ref}
-      className="absolute top-full mt-1 w-full bg-white border z-10 rounded-md overflow-hidden"
+      className="absolute mt-1 w-full bg-white border z-10 rounded-md"
     >
-      <h2 className="bg-subtle text-xs p-2">Summoner Profile</h2>
+      <h2 className="bg-subtle text-xs lg:text-sm p-2 rounded-md">
+        Summoner Profile
+      </h2>
       {results.map((suggestion: CachedSummoner, key: Key) => (
         <li
           key={key}
-          className="p-2 hover:bg-gray-200 cursor-pointer flex justify-between items-center"
+          className="p-2 hover:bg-gray-200 cursor-pointer flex justify-between items-center rounded-md"
           onClick={() => handleSelectSuggestion(suggestion)}
         >
-          <div className="flex items-center gap-2">
+          <div className="flex items-center gap-1.5">
             <Image
               src={`https://ddragon.leagueoflegends.com/cdn/${version}/img/profileicon/${suggestion.profileIconId}.png`}
               alt="icon"
               width={25}
               height={25}
             />
-            <span className="text-sm sm:text-base font-medium">
+            <span className="text-sm lg:text-base">
               {suggestion.gameName} #{suggestion.tagLine}
             </span>
-            <span className="text-xs ">Lvl {suggestion.summonerLevel}</span>
+            <span className="text-xs lg:text-sm opacity-50">
+              Lvl {suggestion.summonerLevel}
+            </span>
           </div>
           <span
-            className={`${regionMap[region].color} text-xs p-0.5 w-10 text-center rounded-xs text-white font-bold`}
+            className={`${regionMap[region].color} text-xs p-1 rounded-xs w-10 text-center text-white font-bold`}
           >
             {regionMap[platformToRegionKey[suggestion.region]].label}
           </span>

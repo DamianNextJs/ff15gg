@@ -1,13 +1,9 @@
 export default function NotFound() {
   return (
-    <div className="flex justify-center flex-col-reverse items-center md:flex-row mx-4  gap-20 h-3/4">
-      <div className="text-3xl md:text-5xl uppercase font-bold space-y-5  md:border-b  pb-10 text-center">
-        <div>This Page</div>
-        <div>Doesn&apos;t Exist</div>
-      </div>
-      <div className="text-7xl md:text-9xl font-extrabold border-b md:border-none w-full md:w-fit text-center md:text-justify pb-10">
-        404
-      </div>
+    <div className="min-h-screen -translate-y-30 flex flex-col lg:flex-row items-center justify-center text-5xl lg:text-7xl gap-3 lg:gap-9 font-bold">
+      <div className="">404</div>
+      <div className="hidden lg:block">|</div>
+      <div>Page not Found</div>
     </div>
   );
 }
