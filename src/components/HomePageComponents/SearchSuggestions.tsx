@@ -6,7 +6,7 @@ import { Key, useEffect, useRef, useState } from "react";
 import { useRouter } from "next/navigation";
 import { RegionKey, regionMap, platformToRegionKey } from "@/lib/regionMap";
 import { useVersion } from "@/context/VersionContext";
-import Loading from "@/app/loading";
+import LoadingIndicator from "./LoadingIndicator";
 
 export default function SearchSuggestions({
   summonerName,
@@ -44,7 +44,7 @@ export default function SearchSuggestions({
     );
   };
 
-  if (loading) return <Loading />;
+  if (loading) return <LoadingIndicator />;
 
   if (!results.length || !open) return null;
 

@@ -16,14 +16,17 @@ export default function ChampMasteryCard({
       <h2 className="text-sm lg:text-base font-semibold border-l-2 border-primary ps-3">
         Champion Mastery
       </h2>
-      <div className="flex justify-around mt-3">
+      <div className="flex justify-around mt-4">
         {championMastery.map((c: ChampionMastery, key: Key) => {
           if (!c.championLevel) return null;
           //FOR ICON
           const champ = getChampionById(c.championId);
 
           return (
-            <div key={key} className="flex flex-col items-center gap-0.5">
+            <div
+              key={key}
+              className="flex flex-col items-center gap-0.5 text-xs lg:text-sm"
+            >
               <div>
                 <Image
                   src={`${champIconUrl}${champ?.image}`}
@@ -32,10 +35,11 @@ export default function ChampMasteryCard({
                   alt="champ icon"
                 />
               </div>
-              <div className="text-sm ">Lvl {c.championLevel}</div>
-              <div className="text-xs text-subtle">
+              <span className="font-medium">{champ?.name}</span>
+              <span className="text-subtle">Lvl {c.championLevel}</span>
+              <span className=" text-subtle">
                 {c.championPoints.toLocaleString()} pts
-              </div>
+              </span>
             </div>
           );
         })}
