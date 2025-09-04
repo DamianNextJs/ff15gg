@@ -6,6 +6,7 @@ import { Key, useEffect, useRef, useState } from "react";
 import { useRouter } from "next/navigation";
 import { RegionKey, regionMap, platformToRegionKey } from "@/lib/regionMap";
 import { useVersion } from "@/context/VersionContext";
+import Loading from "@/app/loading";
 
 export default function SearchSuggestions({
   summonerName,
@@ -15,7 +16,7 @@ export default function SearchSuggestions({
   region: RegionKey;
 }) {
   const version = useVersion();
-  const { results } = useCachedSummoners(summonerName, region);
+  const { results, loading } = useCachedSummoners(summonerName, region);
   const router = useRouter();
   const [open, setOpen] = useState(true);
   const ref = useRef<HTMLUListElement>(null);
@@ -43,6 +44,8 @@ export default function SearchSuggestions({
     );
   };
 
+  if (loading) return <Loading />;
+
   if (!results.length || !open) return null;
 
   return (
@@ -50,7 +53,7 @@ export default function SearchSuggestions({
       ref={ref}
       className="absolute mt-1 w-full bg-white border z-10 rounded-md"
     >
-      <h2 className="bg-subtle text-xs lg:text-sm p-2 rounded-md">
+      <h2 className="bg-subtle text-xs lg:text-sm p-2 rounded-t-md">
         Summoner Profile
       </h2>
       {results.map((suggestion: CachedSummoner, key: Key) => (

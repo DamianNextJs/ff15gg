@@ -8,11 +8,14 @@ export function useCachedSummoners(
   delay = 300
 ) {
   const [results, setResults] = useState<CachedSummoner[]>([]);
+  const [loading, setLoading] = useState(false);
 
   useEffect(() => {
+    setLoading(true);
     const trimmedQuery = query.trim();
     if (!trimmedQuery || trimmedQuery.startsWith("#")) {
       setResults([]);
+      setLoading(false);
       return;
     }
 
@@ -36,6 +39,7 @@ export function useCachedSummoners(
           console.error(error);
           setResults([]);
         } finally {
+          setLoading(false);
         }
       };
       fetchData();
@@ -44,5 +48,5 @@ export function useCachedSummoners(
     return () => clearTimeout(handler);
   }, [query, region, delay]);
 
-  return { results };
+  return { results, loading };
 }
