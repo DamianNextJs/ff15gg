@@ -13,6 +13,7 @@ import ChampStatsCard from "@/components/SummonerPageComponents/ChampStatsCard";
 import RecentlyPlayedWith from "@/components/SummonerPageComponents/RecentlyPlayedWith";
 import Loading from "./loading";
 import MatchHistory from "@/components/SummonerPageComponents/MatchHistoryComponents/MatchHistory";
+import ChampMasteryCard from "@/components/SummonerPageComponents/ChampMasteryCard";
 
 export default function SummonerPage() {
   const { platformKey, gameName } = useParams<{
@@ -94,6 +95,8 @@ export default function SummonerPage() {
         </div>
         {/* Champion Stats */}
         <ChampStatsCard recentChampStats={profileData.champStats} />
+        {/* Champion Mastery */}
+        <ChampMasteryCard championMastery={profileData.championMastery || []} />
         {/* Recently Played With*/}
         <RecentlyPlayedWith
           matches={profileData.matches || []}
