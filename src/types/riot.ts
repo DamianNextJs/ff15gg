@@ -28,8 +28,10 @@ export interface RankedData {
 export interface MatchData {
   info: {
     gameMode: string;
-    gameEndTimeStamp: number;
+    gameEndTimestamp: number;
     gameDuration: number;
+    queueId: number;
+    platformId: string;
     participants: ParticipantData[];
   };
 }
@@ -57,6 +59,8 @@ export interface ParticipantData {
   visionScore: number;
   summoner1Id: number;
   summoner2Id: number;
+  neutralMinionsKilled: number;
+  totalMinionsKilled: number;
 
   perks: {
     styles: {
@@ -65,8 +69,6 @@ export interface ParticipantData {
       selections: { perk: number }[];
     }[];
   };
-  primaryRuneId?: number;
-  subStyleId?: number;
 
   lane: "TOP" | "JUNGLE" | "MIDDLE" | "BOTTOM" | "NONE";
   role: "SOLO" | "DUO" | "DUO_CARRY" | "DUO_SUPPORT" | "NONE";

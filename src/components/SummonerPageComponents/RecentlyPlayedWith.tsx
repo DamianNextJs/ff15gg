@@ -1,9 +1,9 @@
 import { getRecentTeammates, TeammateSummary } from "@/helper";
-import { useLatestDDragonVersion } from "@/hooks/useLatestDDragonVersion";
 import { MatchData } from "@/types/riot";
 import Image from "next/image";
 import { Key } from "react";
 import Link from "next/link";
+import { useVersion } from "@/context/VersionContext";
 
 export default function RecentlyPlayedWith({
   matches,
@@ -14,7 +14,7 @@ export default function RecentlyPlayedWith({
   matches: MatchData[];
   puuid: string;
 }) {
-  const version = useLatestDDragonVersion();
+  const version = useVersion();
   const recentTeammates = getRecentTeammates(matches, puuid);
 
   return (

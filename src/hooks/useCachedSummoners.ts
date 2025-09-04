@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { CachedSummoner } from "@/types/riot";
-import { regionMap, RegionKey } from "@/lib/region";
+import { regionMap, RegionKey } from "@/lib/regionMap";
 
 export function useCachedSummoners(
   query: string,

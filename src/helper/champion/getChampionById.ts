@@ -1,18 +1,14 @@
-import championData from "@/lib/champions.json";
+import championData from "@/lib/data/champions.json";
 
 interface Champion {
   id: string;
   key: string;
   name: string;
-  image: { full: string };
+  image: string;
 }
 
-const championMap: Record<number, Champion> = {};
+const championMap: Record<string, Champion> = championData;
 
-Object.values(championData.data).forEach((champ: Champion) => {
-  championMap[Number(champ.key)] = champ;
-});
-
-export function getChampionById(id: number) {
-  return championMap[id];
+export function getChampionById(id: number): Champion | undefined {
+  return championMap[id.toString()];
 }

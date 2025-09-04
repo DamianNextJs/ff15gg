@@ -1,4 +1,4 @@
-import SummonerSearch from "../components/SummonerSearch";
+import SummonerSearch from "../components/HomePageComponents/SummonerSearch";
 
 export default function Home() {
   return (

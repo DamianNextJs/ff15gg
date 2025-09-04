@@ -1,5 +1,4 @@
 "use client";
-import { useLatestDDragonVersion } from "@/hooks/useLatestDDragonVersion";
 import { rankBorderColors } from "@/lib/rankBorderColors";
 import { toNormalCase } from "@/helper";
 import { getRankData } from "@/helper";
@@ -7,7 +6,8 @@ import { SummonerData } from "@/types/riot";
 import Image from "next/image";
 import { useState } from "react";
 import { getFullSummonerProfile } from "@/helper/summoner/getFullSummonerProfile";
-import UpdateButton from "../UpdateButton";
+import UpdateButton from "./UpdateButton";
+import { useVersion } from "@/context/VersionContext";
 
 interface ProfileCardProps {
   data: SummonerData;
@@ -24,7 +24,7 @@ export default function ProfileCard({
 }: ProfileCardProps) {
   const [loading, setLoading] = useState(false); //Spinner for button
   const [flash, setFlash] = useState(false); // flash button after update
-  const version = useLatestDDragonVersion();
+  const version = useVersion();
   const iconId = data?.summoner?.profileIconId ?? 0;
   const profileIconUrl = `https://ddragon.leagueoflegends.com/cdn/${version}/img/profileicon/${iconId}.png`;
 

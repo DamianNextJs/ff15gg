@@ -39,7 +39,7 @@ export default function RankCard({
               />
 
               <div className="flex flex-col justify-center">
-                <span className="font-bold text-lg space-x-1.5">
+                <span className="font-semibold text-lg space-x-1.5">
                   <span>{tier}</span>
                   <span>{rank}</span>
                 </span>

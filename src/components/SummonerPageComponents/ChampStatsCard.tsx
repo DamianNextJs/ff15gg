@@ -1,17 +1,17 @@
-import { calculateWinrate } from "@/helper";
+import { calculateAverageStats, calculateWinrate } from "@/helper";
 import { calculateKDA } from "@/helper";
 import { getChampionById } from "@/helper/champion/getChampionById";
 import { Key } from "react";
 import Image from "next/image";
-import { useLatestDDragonVersion } from "@/hooks/useLatestDDragonVersion";
 import { ChampStats } from "@/types/riot";
+import { useVersion } from "@/context/VersionContext";
 
 export default function ChampStatsCard({
   recentChampStats,
 }: {
   recentChampStats: ChampStats[];
 }) {
-  const version = useLatestDDragonVersion();
+  const version = useVersion();
   const champIconUrl = `https://ddragon.leagueoflegends.com/cdn/${version}/img/champion/`;
 
   return (
@@ -23,10 +23,18 @@ export default function ChampStatsCard({
         recentChampStats.map((champStats: ChampStats, key: Key) => {
           const champ = getChampionById(champStats.champId);
           const winRate = calculateWinrate(champStats.wins, champStats.losses);
+          const { averageKills, averageDeaths, averageAssists } =
+            calculateAverageStats(
+              champStats.kills,
+              champStats.deaths,
+              champStats.assists,
+              champStats.games
+            );
+
           const kda = calculateKDA(
             champStats.kills,
-            champStats.assists,
-            champStats.deaths
+            champStats.deaths,
+            champStats.assists
           );
           return (
             <div
@@ -36,21 +44,21 @@ export default function ChampStatsCard({
               {/* Champ Icon + name */}
               <div className="flex gap-2 items-center">
                 <Image
-                  src={`${champIconUrl}${champ.image.full}`}
+                  src={`${champIconUrl}${champ?.image}`}
                   alt="champion icon"
                   width={35}
                   height={35}
                 />
-                <p className="font-semibold">{champ.name}</p>
+                <p className="font-semibold">{champ?.name}</p>
               </div>
 
               {/* stats container */}
               <div>
                 <p className="font-semibold">{kda} KDA</p>
                 <p className="text-subtle">
-                  {champStats.kills} <span className="text-subtle/50">/</span>{" "}
-                  {champStats.deaths} <span className="text-subtle/50">/</span>{" "}
-                  {champStats.assists}
+                  {averageKills} <span className="text-subtle/50">/</span>{" "}
+                  {averageDeaths} <span className="text-subtle/50">/</span>{" "}
+                  {averageAssists}
                 </p>
               </div>
 

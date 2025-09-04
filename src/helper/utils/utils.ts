@@ -11,6 +11,14 @@ export function formatTimeAgo(timeStamp: number) {
   return "just now";
 }
 
+export function formatGameDuration(gameDuration: number) {
+  const minutes = Math.floor(gameDuration / 60);
+  const seconds = gameDuration % 60;
+
+  const formattedSeconds = seconds.toString().padStart(2, "0");
+  return `${minutes}:${formattedSeconds}`;
+}
+
 // mainly used for showing the rank in NormalCase since its returned in lowercase
 export function toNormalCase(str: string) {
   if (!str) return "";

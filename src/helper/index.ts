@@ -5,6 +5,7 @@ export * from "@/helper/champion/getChampionById";
 export * from "@/helper/stats/calculateChampionStats";
 export * from "@/helper/stats/getRecentTeammates";
 export * from "@/helper/stats/stats";
+export * from "@/helper/stats/getRecentStats";
 
 // summoner
 export * from "@/helper/summoner/getFullSummonerProfile";

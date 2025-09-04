@@ -3,7 +3,7 @@
 import { useEffect, useState } from "react";
 import { notFound, useParams } from "next/navigation";
 import { getFullSummonerProfile } from "@/helper/summoner/getFullSummonerProfile";
-import { regionMap } from "@/lib/region";
+import { regionMap } from "@/lib/regionMap";
 import RankCard from "@/components/SummonerPageComponents/RankCard";
 import { getRankData } from "@/helper";
 import ProfileCard from "@/components/SummonerPageComponents/ProfileCard";
@@ -12,6 +12,7 @@ import { getChampionById } from "@/helper/champion/getChampionById";
 import ChampStatsCard from "@/components/SummonerPageComponents/ChampStatsCard";
 import RecentlyPlayedWith from "@/components/SummonerPageComponents/RecentlyPlayedWith";
 import Loading from "./loading";
+import MatchHistory from "@/components/SummonerPageComponents/MatchHistoryComponents/MatchHistory";
 
 export default function SummonerPage() {
   const { platformKey, gameName } = useParams<{
@@ -72,7 +73,7 @@ export default function SummonerPage() {
       <div
         className="h-[20vh] lg:h-[27vh] bg-cover relative"
         style={{
-          backgroundImage: `url(https://ddragon.leagueoflegends.com/cdn/img/champion/splash/${bgImgChamp.id}_1.jpg)`,
+          backgroundImage: `url(https://ddragon.leagueoflegends.com/cdn/img/champion/splash/${bgImgChamp?.id}_1.jpg)`,
         }}
       >
         <div className="absolute inset-0 bg-linear-to-r from-bg from-40%  via-bg/60 via-75% to-bg to-100%" />
@@ -98,6 +99,11 @@ export default function SummonerPage() {
           matches={profileData.matches || []}
           puuid={profileData.riotAccount.puuid}
           region={platformKey}
+        />
+        {/* Match History */}
+        <MatchHistory
+          matches={profileData.matches || []}
+          puuid={profileData.riotAccount.puuid}
         />
       </div>
     </main>
