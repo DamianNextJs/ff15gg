@@ -25,8 +25,8 @@ export default function ItemSlots({
                 <Image
                   src={itemIconUrl}
                   alt="item"
-                  width={20}
-                  height={20}
+                  width={21}
+                  height={21}
                   className="rounded-sm"
                 />
               ) : (
@@ -41,8 +41,8 @@ export default function ItemSlots({
           <Image
             src={wardIconUrl}
             alt="item"
-            width={20}
-            height={20}
+            width={21}
+            height={21}
             className="rounded-sm "
           />
         ) : (
