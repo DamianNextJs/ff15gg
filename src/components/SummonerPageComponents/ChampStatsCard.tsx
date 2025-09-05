@@ -48,7 +48,6 @@ export default function ChampStatsCard({
                   alt="champion icon"
                   width={35}
                   height={35}
-                  unoptimized
                 />
                 <p className="font-semibold lg:text-sm">{champ?.name}</p>
               </div>

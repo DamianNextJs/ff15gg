@@ -38,13 +38,7 @@ export default function ParticipantList({
                       isMyParticipant ? "border-orange-500 border" : ""
                     } size-4`}
                   >
-                    <Image
-                      src={champIconUrl}
-                      alt=""
-                      width={15}
-                      height={15}
-                      unoptimized
-                    />
+                    <Image src={champIconUrl} alt="" width={15} height={15} />
                   </div>
                   <Link
                     href={`/summoner/${regionKey}/${encodeURIComponent(

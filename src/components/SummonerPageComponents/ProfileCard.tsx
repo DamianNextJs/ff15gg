@@ -73,7 +73,6 @@ export default function ProfileCard({
             style={{ borderColor }}
             priority
             sizes="5rem"
-            unoptimized
           />
         </div>
 

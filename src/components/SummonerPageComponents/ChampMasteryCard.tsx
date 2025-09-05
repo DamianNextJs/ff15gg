@@ -33,7 +33,6 @@ export default function ChampMasteryCard({
                   width={40}
                   height={40}
                   alt="champ icon"
-                  unoptimized
                 />
               </div>
               <span className="font-medium lg:text-sm">{champ?.name}</span>
