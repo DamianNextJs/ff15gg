@@ -49,6 +49,7 @@ export default function RecentlyPlayedWith({
                     width={25}
                     height={25}
                     alt=""
+                    unoptimized
                   />
                   {teamMate.gameName}
                 </div>

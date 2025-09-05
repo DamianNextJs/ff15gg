@@ -43,12 +43,14 @@ export default function PlayerLoadout({
           height={23}
           width={23}
           alt="summonerspell icon"
+          unoptimized
         />
         <Image
           src={`${summonerSpellIconUrl}${summoner2Icon}.png`}
           height={23}
           width={23}
           alt="summonerspell icon"
+          unoptimized
         />
       </div>
       {/* RUNE ICONS */}
@@ -60,6 +62,7 @@ export default function PlayerLoadout({
             width={23}
             alt="rune icon"
             className="bg-white/10 rounded-sm p-0.5"
+            unoptimized
           />
           <Image
             src={`/${subStyleIcon?.icon}`}
@@ -67,6 +70,7 @@ export default function PlayerLoadout({
             width={23}
             alt="rune icon"
             className="bg-white/10 rounded-sm p-1"
+            unoptimized
           />
         </div>
       ) : null}

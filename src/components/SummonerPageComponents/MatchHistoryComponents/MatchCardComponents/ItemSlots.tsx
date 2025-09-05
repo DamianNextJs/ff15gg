@@ -28,6 +28,7 @@ export default function ItemSlots({
                   width={21}
                   height={21}
                   className="rounded-sm"
+                  unoptimized
                 />
               ) : (
                 <div className="size-5 bg-white/10 rounded-sm" />
@@ -44,6 +45,7 @@ export default function ItemSlots({
             width={21}
             height={21}
             className="rounded-sm "
+            unoptimized
           />
         ) : (
           <div className="size-5 bg-white/10 rounded-sm" />
