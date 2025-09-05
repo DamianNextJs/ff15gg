@@ -25,7 +25,7 @@ export default function ChampMasteryCard({
           return (
             <div
               key={key}
-              className="flex flex-col items-center gap-0.5 text-xs lg:text-sm"
+              className="flex flex-col items-center gap-0.5 text-xs"
             >
               <div>
                 <Image
@@ -35,7 +35,7 @@ export default function ChampMasteryCard({
                   alt="champ icon"
                 />
               </div>
-              <span className="font-medium">{champ?.name}</span>
+              <span className="font-medium lg:text-sm">{champ?.name}</span>
               <span className="text-subtle">Lvl {c.championLevel}</span>
               <span className=" text-subtle">
                 {c.championPoints.toLocaleString()} pts

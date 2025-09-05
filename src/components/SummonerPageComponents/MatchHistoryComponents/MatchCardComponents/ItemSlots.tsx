@@ -8,28 +8,47 @@ export default function ItemSlots({
   myParticipant: ParticipantData;
 }) {
   const version = useVersion();
+  const wardIcon = myParticipant["item6"];
+  const wardIconUrl = `https://ddragon.leagueoflegends.com/cdn/${version}/img/item/${wardIcon}.png`;
+
   return (
     <div className="flex gap-1">
-      {Array.from({ length: 7 }).map((_, i) => {
-        const itemId = myParticipant[`item${i}` as keyof typeof myParticipant];
-        const itemIconUrl = `https://ddragon.leagueoflegends.com/cdn/${version}/img/item/${itemId}.png`;
+      <div className="flex lg:grid lg:grid-cols-3 gap-1">
+        {Array.from({ length: 6 }).map((_, i) => {
+          const itemId =
+            myParticipant[`item${i}` as keyof typeof myParticipant];
+          const itemIconUrl = `https://ddragon.leagueoflegends.com/cdn/${version}/img/item/${itemId}.png`;
 
-        return (
-          <div key={i}>
-            {itemId ? (
-              <Image
-                src={itemIconUrl}
-                alt="item"
-                width={20}
-                height={20}
-                className="rounded-sm"
-              />
-            ) : (
-              <div className="size-5 bg-white/10 rounded-sm"></div>
-            )}
-          </div>
-        );
-      })}
+          return (
+            <div key={i}>
+              {itemId ? (
+                <Image
+                  src={itemIconUrl}
+                  alt="item"
+                  width={20}
+                  height={20}
+                  className="rounded-sm"
+                />
+              ) : (
+                <div className="size-5 bg-white/10 rounded-sm" />
+              )}
+            </div>
+          );
+        })}
+      </div>
+      <div className="shrink-0">
+        {wardIcon ? (
+          <Image
+            src={wardIconUrl}
+            alt="item"
+            width={20}
+            height={20}
+            className="rounded-sm "
+          />
+        ) : (
+          <div className="size-5 bg-white/10 rounded-sm" />
+        )}
+      </div>
     </div>
   );
 }

@@ -69,7 +69,7 @@ export default function SummonerPage() {
   const flexData = getRankData(profileData.ranked || [], "flex");
 
   return (
-    <main className="min-h-screen lg:w-1/2 mx-auto">
+    <main className="min-h-screen lg:w-250 mx-auto">
       {/* profile background */}
       <div
         className="h-[20vh] lg:h-[27vh] bg-cover relative"
@@ -77,7 +77,7 @@ export default function SummonerPage() {
           backgroundImage: `url(https://ddragon.leagueoflegends.com/cdn/img/champion/splash/${bgImgChamp?.id}_1.jpg)`,
         }}
       >
-        <div className="absolute inset-0 bg-linear-to-r from-bg from-40%  via-bg/60 via-75% to-bg to-100%" />
+        <div className="absolute inset-0 bg-linear-to-r from-bg from-35%  via-bg/60 via-75% to-bg to-100%" />
       </div>
 
       <div className="relative -mt-[20vh] p-4 pt-8 lg:p-0">
@@ -88,26 +88,33 @@ export default function SummonerPage() {
           platform={platform}
           region={region}
         />
-        {/* rank wrapper */}
-        <div className="mt-10 lg:mt-15">
-          <RankCard data={soloData} rankType={"Ranked Solo"} />
-          <RankCard data={flexData} rankType={"Ranked Flex"} />
+
+        <div className="mt-10 lg:mt-15 lg:flex gap-3">
+          {/* rank wrapper */}
+          <div className="flex-1">
+            <RankCard data={soloData} rankType={"Ranked Solo"} />
+            <RankCard data={flexData} rankType={"Ranked Flex"} />
+            {/* Champion Stats */}
+            <ChampStatsCard recentChampStats={profileData.champStats} />
+            {/* Champion Mastery */}
+            <ChampMasteryCard
+              championMastery={profileData.championMastery || []}
+            />
+            {/* Recently Played With*/}
+            <RecentlyPlayedWith
+              matches={profileData.matches || []}
+              puuid={profileData.riotAccount.puuid}
+              region={platformKey}
+            />
+          </div>
+          <div className="flex-2">
+            {/* Match History */}
+            <MatchHistory
+              matches={profileData.matches || []}
+              puuid={profileData.riotAccount.puuid}
+            />
+          </div>
         </div>
-        {/* Champion Stats */}
-        <ChampStatsCard recentChampStats={profileData.champStats} />
-        {/* Champion Mastery */}
-        <ChampMasteryCard championMastery={profileData.championMastery || []} />
-        {/* Recently Played With*/}
-        <RecentlyPlayedWith
-          matches={profileData.matches || []}
-          puuid={profileData.riotAccount.puuid}
-          region={platformKey}
-        />
-        {/* Match History */}
-        <MatchHistory
-          matches={profileData.matches || []}
-          puuid={profileData.riotAccount.puuid}
-        />
       </div>
     </main>
   );

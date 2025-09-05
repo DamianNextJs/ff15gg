@@ -14,14 +14,14 @@ export default function GameInfo({
   const formattedGameDuration = formatGameDuration(match.info.gameDuration);
 
   return (
-    <div className="text-xs font-medium flex justify-between">
+    <div className="text-xs font-medium flex lg:flex-col-reverse justify-between lg:justify-around items-center text-center gap-1">
       <div>
         <span className={`${isWin ? "text-blue-500" : "text-red-500"} `}>
           {isWin ? "WIN" : "LOSS"}
         </span>
         <span className="text-subtle ms-1">{formattedGameDuration}</span>
       </div>
-      <div>
+      <div className="flex lg:flex-col">
         <span>{queueType}</span>
         <span className="text-subtle ms-2">{timeAgo}</span>
       </div>

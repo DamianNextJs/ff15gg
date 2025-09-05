@@ -69,10 +69,6 @@ export interface ParticipantData {
       selections: { perk: number }[];
     }[];
   };
-
-  lane: "TOP" | "JUNGLE" | "MIDDLE" | "BOTTOM" | "NONE";
-  role: "SOLO" | "DUO" | "DUO_CARRY" | "DUO_SUPPORT" | "NONE";
-  mappedRole: "TOP" | "JUNGLE" | "MIDDLE" | "ADC" | "SUPPORT" | null;
 }
 
 export interface ChampionMastery {

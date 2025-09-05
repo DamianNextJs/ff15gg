@@ -1,6 +1,6 @@
 export default function Loading() {
   return (
-    <main className="w-full lg:w-1/2 lg:mt-14 min-h-screen pt-8 px-4 lg:px-0 mx-auto animate-pulse flex flex-col">
+    <main className="w-full lg:w-250 lg:mt-14 min-h-screen pt-8 px-4 lg:px-0 mx-auto animate-pulse flex flex-col">
       {/* Profile skeleton */}
       <div className="flex items-center gap-4">
         {/* Profile Icon */}

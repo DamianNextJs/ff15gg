@@ -18,7 +18,7 @@ export default function PlayerStats({
   const kda = calculateKDA(kills, deaths, assists);
 
   return (
-    <div className="text-xs font-medium flex justify-between gap-2">
+    <div className="text-xs font-medium flex lg:flex-col items-center justify-between gap-2 lg:gap-0.5">
       {/* actual stats */}
       <div className="flex gap-0.5">
         {kills} <p className="text-subtle/50"> / </p>

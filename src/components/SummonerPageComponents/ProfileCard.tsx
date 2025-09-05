@@ -64,7 +64,7 @@ export default function ProfileCard({
   return (
     <section className="flex items-end gap-3">
       <div className="relative w-fit">
-        <div className="size-20 lg:size-24">
+        <div className="size-20 lg:size-24 relative">
           <Image
             src={profileIconUrl}
             alt="profile icon"
@@ -72,6 +72,7 @@ export default function ProfileCard({
             className="border-2 rounded-md"
             style={{ borderColor }}
             priority
+            sizes="5rem"
           />
         </div>
 

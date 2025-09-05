@@ -23,7 +23,7 @@ export default function RecentlyPlayedWith({
         Recently Played With
       </h2>
 
-      <div className="text-sm lg:text-base text-subtle mt-3 font-medium">
+      <div className="text-xs text-subtle mt-3 font-medium">
         {/* Headers */}
         <div className="grid grid-cols-[2fr_1fr_1fr_1fr] bg-subtle/15 -mx-4 px-4 py-4 border-t border-accent">
           <p>Summoner</p>

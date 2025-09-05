@@ -38,7 +38,7 @@ export default function ChampStatsCard({
           );
           return (
             <div
-              className="mt-3 grid grid-cols-[2fr_1fr_1fr] border-t border-accent -mx-4 px-4 pt-2 font-medium text-xs lg:text-sm text-center"
+              className="mt-3 grid grid-cols-[2fr_1fr_1fr] border-t border-accent -mx-4 px-4 pt-2 font-medium text-xs  text-center"
               key={key}
             >
               {/* Champ Icon + name */}
@@ -49,13 +49,13 @@ export default function ChampStatsCard({
                   width={35}
                   height={35}
                 />
-                <p className="font-semibold">{champ?.name}</p>
+                <p className="font-semibold lg:text-sm">{champ?.name}</p>
               </div>
 
               {/* stats container */}
               <div>
                 <p className="font-semibold">{kda} KDA</p>
-                <p className="text-subtle">
+                <p className="text-subtle text-nowrap">
                   {averageKills} <span className="text-subtle/50">/</span>{" "}
                   {averageDeaths} <span className="text-subtle/50">/</span>{" "}
                   {averageAssists}

@@ -9,7 +9,7 @@ import SearchSuggestions from "./SearchSuggestions";
 
 export default function SummonerSearch() {
   const [summonerName, setSummonerName] = useState("");
-  const [region, setRegion] = useState<RegionKey>("euw");
+  const [region, setRegion] = useState<RegionKey>("euw1");
 
   const router = useRouter();
 

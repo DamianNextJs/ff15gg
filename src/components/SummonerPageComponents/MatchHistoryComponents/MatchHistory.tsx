@@ -2,6 +2,7 @@ import { MatchData } from "@/types/riot";
 import MatchHistoryHeader from "@/components/SummonerPageComponents/MatchHistoryComponents/MatchHistoryHeader";
 import { Key } from "react";
 import MatchCard from "./MatchCardComponents/MatchCard";
+import { queueMap } from "@/lib/queueMap";
 
 export default function MatchHistory({
   matches,
@@ -24,6 +25,7 @@ export default function MatchHistory({
             (p) => p.puuid === puuid
           );
           if (!myParticipant) return null;
+          if (!queueMap[match.info.queueId]) return null;
 
           return (
             <MatchCard key={key} myParticipant={myParticipant} match={match} />

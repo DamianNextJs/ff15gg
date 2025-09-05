@@ -1,11 +1,11 @@
 export const regionMap = {
-  euw: {
+  euw1: {
     label: "EUW",
     platform: "euw1",
     region: "europe",
     color: "bg-blue-500",
   },
-  na: {
+  na1: {
     label: "NA",
     platform: "na1",
     region: "americas",
