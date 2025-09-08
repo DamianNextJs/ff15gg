@@ -1,6 +1,5 @@
 # FF15GG
-**A web app to track League of Legends summoner stats and match history**  
-inspired by platforms like u.gg
+**A web app to track League of Legends summoner stats and match history**, inspired by platforms like u.gg
 
 Live demo: [ff15gg.vercel.app](https://ff15gg.vercel.app)
 
@@ -14,7 +13,7 @@ Live demo: [ff15gg.vercel.app](https://ff15gg.vercel.app)
 
 ## Tech Stack
 
-**Frontend**: NextJs (App Router), TypeScript, Tailwind CSS  
-**Backend**: NextJs API routes  
+**Frontend**: Next.js (App Router), TypeScript, Tailwind CSS  
+**Backend**: Next.js API routes  
 **Database**: MongoDB (persistent caching)  
 **API**: Riot Games API  
