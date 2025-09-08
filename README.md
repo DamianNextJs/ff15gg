@@ -16,4 +16,5 @@ Live demo: [ff15gg.vercel.app](https://ff15gg.vercel.app)
 
 **Frontend**: NextJs (App Router), TypeScript, Tailwind CSS  
 **Backend**: NextJs API routes  
+**Database**: MongoDB (persistent caching)  
 **API**: Riot Games API  
