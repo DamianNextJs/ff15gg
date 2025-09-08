@@ -2,7 +2,7 @@
 **A web app to track League of Legends summoner stats and match history**  
 inspired by platforms like u.gg
 
-Live demo: [ff15gg.vercel.app](https:ff15gg.vercel.app)
+Live demo: [ff15gg.vercel.app](https://ff15gg.vercel.app)
 
 ## Features
 
