@@ -1,6 +1,6 @@
 import { MatchData } from "@/types/riot";
-import { queueMap } from "@/lib/queueMap";
-import { formatGameDuration, formatTimeAgo } from "@/helper";
+import { queueMap } from "@/lib/maps/queueMap";
+import { formatGameDuration, formatTimeAgo } from "@/helper/utils/utils";
 
 export default function GameInfo({
   isWin,

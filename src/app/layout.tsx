@@ -3,8 +3,6 @@ import { Geist, Geist_Mono } from "next/font/google";
 import "@/styles/globals.css";
 import NavBar from "@/components/Navbar";
 import Footer from "@/components/Footer";
-import { getLatestDDragonVersion } from "@/lib/getLatestDDragonVersion";
-import { VersionProvider } from "@/context/VersionContext";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -26,17 +24,14 @@ export default async function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  const version = await getLatestDDragonVersion();
   return (
     <html lang="en">
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased bg-bg flex flex-col min-h-screen scroll-smooth`}
       >
-        <VersionProvider version={version}>
-          <NavBar />
-          <main className="my-16">{children}</main>
-          <Footer />
-        </VersionProvider>
+        <NavBar />
+        <main className="my-16">{children}</main>
+        <Footer />
       </body>
     </html>
   );

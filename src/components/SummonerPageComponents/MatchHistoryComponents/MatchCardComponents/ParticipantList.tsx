@@ -1,9 +1,9 @@
-import { Key } from "react";
 import Image from "next/image";
-import { useVersion } from "@/context/VersionContext";
 import { MatchData, ParticipantData } from "@/types/riot";
 import Link from "next/link";
-import { platformToRegionKey, RegionKey, regionMap } from "@/lib/regionMap";
+import { RegionKey, regionMap } from "@/lib/maps/regionMap";
+import { DDragon } from "@/helper/utils/ddragon";
+import { getChampionById } from "@/helper/getChampionById";
 
 export default function ParticipantList({
   match,
@@ -12,10 +12,8 @@ export default function ParticipantList({
   match: MatchData;
   myParticipant: ParticipantData;
 }) {
-  const version = useVersion();
-
-  const regionKey: RegionKey =
-    platformToRegionKey[match.info.platformId.toLowerCase()];
+  const regionKey =
+    regionMap[match.info.platformId.toLowerCase() as RegionKey].platform;
 
   return (
     <div className="hidden lg:flex gap-5">
@@ -23,14 +21,16 @@ export default function ParticipantList({
         <div key={teamId}>
           {match.info.participants
             .filter((p) => p.teamId === teamId)
-            .map((p, key: Key) => {
-              const champIconUrl = `https://ddragon.leagueoflegends.com/cdn/${version}/img/champion/${p.championName}.png`;
+            .map((p) => {
+              const champ = getChampionById(p.championId);
+              if (!champ) return null;
+              const champIconUrl = DDragon.championIcon(champ.id);
 
               const isMyParticipant = p.puuid === myParticipant.puuid;
 
               return (
                 <div
-                  key={key}
+                  key={p.puuid}
                   className="text-xs w-20 text-left flex my-0.5 gap-0.5"
                 >
                   <div
@@ -42,7 +42,7 @@ export default function ParticipantList({
                   </div>
                   <Link
                     href={`/summoner/${regionKey}/${encodeURIComponent(
-                      `${p.riotIdGameName}#${p.riotIdTagline}`
+                      `${p.riotIdGameName}-${p.riotIdTagline}`
                     )}`}
                     className={`truncate flex-1 hover:underline ${
                       isMyParticipant && "pointer-events-none"

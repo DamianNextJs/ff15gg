@@ -1,6 +1,5 @@
-import { calculateWinrate } from "@/helper";
-import { toNormalCase } from "@/helper";
-import { toRoman } from "@/helper";
+import { calculateWinrate } from "@/helper/stats/stats";
+import { toNormalCase, toRoman } from "@/helper/utils/utils";
 import { RankedData } from "@/types/riot";
 import Image from "next/image";
 

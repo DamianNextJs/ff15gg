@@ -1,4 +1,4 @@
-import { calculateCSPerMin, calculateKDA } from "@/helper";
+import { calculateCSPerMin, calculateKDA } from "@/helper/stats/stats";
 import { ParticipantData } from "@/types/riot";
 
 export default function PlayerStats({

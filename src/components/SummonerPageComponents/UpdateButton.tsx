@@ -1,6 +1,6 @@
 "use client";
 
-import { formatTimeAgo } from "@/helper";
+import { formatTimeAgo } from "@/helper/utils/utils";
 
 interface UpdateButtonProps {
   loading: boolean;

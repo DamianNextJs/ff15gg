@@ -2,9 +2,9 @@
 
 import { useState } from "react";
 import { useRouter } from "next/navigation";
-import { type RegionKey } from "@/lib/regionMap";
+import { type RegionKey } from "@/lib/maps/regionMap";
 import RegionSelect from "./RegionSelect";
-import { normalizeSummonerName } from "@/helper";
+import { normalizeSummonerName } from "@/helper/summoner";
 import SearchSuggestions from "./SearchSuggestions";
 
 export default function SummonerSearch() {
@@ -25,7 +25,7 @@ export default function SummonerSearch() {
     const { gameName, tagLine } = normalizeSummonerName(name, tag);
 
     router.push(
-      `/summoner/${region}/${encodeURIComponent(`${gameName}#${tagLine}`)}`
+      `/summoner/${region}/${encodeURIComponent(`${gameName}-${tagLine}`)}`
     );
   };
 

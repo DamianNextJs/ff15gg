@@ -1,3 +1,5 @@
+// --- SummonerData.ts ---
+
 export interface SummonerData {
   summoner: {
     profileIconId: number;
@@ -13,18 +15,32 @@ export interface SummonerData {
   matches?: MatchData[];
   championMastery?: ChampionMastery[];
   champStats: ChampStats[];
+  recentStats: RecentStats;
+  recentTeammates: TeammateSummary[];
   lastUpdated: string;
 }
 
-export interface RankedData {
-  queueType: "RANKED_SOLO_5x5" | "RANKED_FLEX_SR";
-  leaguePoints: number;
-  losses: number;
+// Aggregated recent stats for the summoner
+export interface RecentStats {
   wins: number;
-  rank: string;
-  tier: string;
+  losses: number;
+  kills: number;
+  deaths: number;
+  assists: number;
+  gamesPlayed: number;
 }
 
+// Ranked data for the summoner
+export interface RankedData {
+  queueType: "RANKED_SOLO_5x5" | "RANKED_FLEX_SR";
+  tier: string;
+  rank: string;
+  wins: number;
+  losses: number;
+  leaguePoints: number;
+}
+
+// Match and participant data
 export interface MatchData {
   info: {
     gameMode: string;
@@ -45,9 +61,15 @@ export interface ParticipantData {
   profileIcon: number;
   championId: number;
   champLevel: number;
-  assists: number;
-  deaths: number;
   kills: number;
+  deaths: number;
+  assists: number;
+  win: boolean;
+  visionScore: number;
+  summoner1Id: number;
+  summoner2Id: number;
+  neutralMinionsKilled: number;
+  totalMinionsKilled: number;
   item0: number | null;
   item1: number | null;
   item2: number | null;
@@ -55,13 +77,6 @@ export interface ParticipantData {
   item4: number | null;
   item5: number | null;
   item6: number | null;
-  win: boolean;
-  visionScore: number;
-  summoner1Id: number;
-  summoner2Id: number;
-  neutralMinionsKilled: number;
-  totalMinionsKilled: number;
-
   perks: {
     styles: {
       description: string;
@@ -71,12 +86,14 @@ export interface ParticipantData {
   };
 }
 
+// Champion mastery data
 export interface ChampionMastery {
   championId: number;
   championLevel: number;
   championPoints: number;
 }
 
+// Aggregated champion stats
 export type ChampStats = {
   champId: number;
   games: number;
@@ -87,6 +104,19 @@ export type ChampStats = {
   assists: number;
 };
 
+// Recently played teammates summary
+export interface TeammateSummary {
+  puuid: string;
+  gameName: string;
+  tagLine: string;
+  profileIconId: number;
+  gamesPlayed: number;
+  wins: number;
+  losses: number;
+  winRate: number; // 0-100 percentage
+}
+
+// Minimal cached summoner for search suggestions
 export interface CachedSummoner {
   puuid: string;
   gameName: string;

@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
-import { regionMap, type RegionKey } from "@/lib/regionMap";
+import { regionMap, type RegionKey } from "@/lib/maps/regionMap";
 
 export default function RegionSelect({
   value,

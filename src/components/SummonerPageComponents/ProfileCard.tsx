@@ -1,32 +1,33 @@
 "use client";
-import { rankBorderColors } from "@/lib/rankBorderColors";
-import { toNormalCase } from "@/helper";
-import { getRankData } from "@/helper";
+
+import { rankBorderColors } from "@/lib/maps/rankBorderColorMap";
+import { toNormalCase } from "@/helper/utils/utils";
+import { getRankData } from "@/helper/summoner";
 import { SummonerData } from "@/types/riot";
 import Image from "next/image";
 import { useState } from "react";
-import { getFullSummonerProfile } from "@/helper/summoner/getFullSummonerProfile";
+import { useRouter } from "next/navigation";
+import { DDragon } from "@/helper/utils/ddragon";
 import UpdateButton from "./UpdateButton";
-import { useVersion } from "@/context/VersionContext";
+import { updateSummonerProfile } from "@/app/summoner/[platformKey]/[gameName]/actions";
 
 interface ProfileCardProps {
   data: SummonerData;
-  setData: React.Dispatch<React.SetStateAction<SummonerData | null>>;
   region: string;
   platform: string;
 }
 
 export default function ProfileCard({
   data,
-  setData,
   region,
   platform,
 }: ProfileCardProps) {
-  const [loading, setLoading] = useState(false); //Spinner for button
-  const [flash, setFlash] = useState(false); // flash button after update
-  const version = useVersion();
+  const [flash, setFlash] = useState(false);
+  const [loading, setLoading] = useState(false);
+  const router = useRouter();
+
   const iconId = data?.summoner?.profileIconId ?? 0;
-  const profileIconUrl = `https://ddragon.leagueoflegends.com/cdn/${version}/img/profileicon/${iconId}.png`;
+  const profileIconUrl = DDragon.profileIcon(iconId);
 
   const tier = toNormalCase(
     getRankData(data.ranked || [], "solo")?.tier ??
@@ -34,31 +35,22 @@ export default function ProfileCard({
       ""
   );
   const borderColor = rankBorderColors[tier];
-
   const lastUpdatedTimeStamp = new Date(data.lastUpdated).getTime();
 
-  // handle clicking "update button"
   async function handleClick() {
     setLoading(true);
-    setFlash(false);
 
-    try {
-      const freshData = await getFullSummonerProfile(
-        region,
-        platform,
-        data.riotAccount.gameName,
-        data.riotAccount.tagLine,
-        true
-      );
-      setData(freshData);
+    await updateSummonerProfile(
+      region,
+      platform,
+      data.riotAccount.gameName,
+      data.riotAccount.tagLine
+    );
 
-      setFlash(true);
-      setTimeout(() => setFlash(false), 1200);
-    } catch (error) {
-      console.error("Failed to update profile", error);
-    } finally {
-      setLoading(false);
-    }
+    setLoading(false);
+    setFlash(true);
+    setTimeout(() => setFlash(false), 1000); // reset flash after 1s
+    router.refresh();
   }
 
   return (
@@ -75,7 +67,6 @@ export default function ProfileCard({
             sizes="5rem"
           />
         </div>
-
         <div
           className="absolute -top-0.5 bg-bg border-2 left-1/2 -translate-1/2 rounded-md text-xs px-2 py-0.5"
           style={{ borderColor }}
@@ -83,12 +74,12 @@ export default function ProfileCard({
           {data.summoner.summonerLevel}
         </div>
       </div>
+
       <div className="text-xl lg:text-3xl space-y-1 font-semibold">
         <div>
           <span className="truncate max-w-35">{data.riotAccount.gameName}</span>
-          <span className="ms-1 text-subtle ">#{data.riotAccount.tagLine}</span>
+          <span className="ms-1 text-subtle">#{data.riotAccount.tagLine}</span>
         </div>
-        {/* update button */}
         <UpdateButton
           loading={loading}
           flash={flash}

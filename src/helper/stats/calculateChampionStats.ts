@@ -6,11 +6,11 @@ export function calculateChampionStats(
 ): ChampStats[] {
   const statsMap: Record<number, ChampStats> = {};
 
-  matches.forEach((match) => {
+  for (const match of matches) {
     const participant = match.info.participants.find(
       (p) => p.puuid === summonerPuuid
     );
-    if (!participant) return null;
+    if (!participant) continue;
 
     const champId = participant.championId;
 
@@ -26,14 +26,14 @@ export function calculateChampionStats(
       };
     }
 
-    const champStats = statsMap[champId];
-    champStats.games++;
-    champStats.wins += participant.win ? 1 : 0;
-    champStats.losses += participant.win ? 0 : 1;
-    champStats.kills += participant.kills;
-    champStats.deaths += participant.deaths;
-    champStats.assists += participant.assists;
-  });
+    const stats = statsMap[champId];
+    stats.games++;
+    stats.wins += participant.win ? 1 : 0;
+    stats.losses += participant.win ? 0 : 1;
+    stats.kills += participant.kills;
+    stats.deaths += participant.deaths;
+    stats.assists += participant.assists;
+  }
 
   return Object.values(statsMap)
     .sort((a, b) => b.games - a.games)

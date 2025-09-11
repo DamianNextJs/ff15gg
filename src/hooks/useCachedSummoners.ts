@@ -1,52 +1,53 @@
 import { useState, useEffect } from "react";
 import { CachedSummoner } from "@/types/riot";
-import { regionMap, RegionKey } from "@/lib/regionMap";
+import { regionMap, RegionKey } from "@/lib/maps/regionMap";
+import { useDebounce } from "./useDebounce";
 
-export function useCachedSummoners(
-  query: string,
-  region: RegionKey,
-  delay = 300
-) {
+export function useCachedSummoners(query: string, region: RegionKey) {
+  const debouncedQuery = useDebounce(query.trim(), 300);
   const [results, setResults] = useState<CachedSummoner[]>([]);
   const [loading, setLoading] = useState(false);
 
   useEffect(() => {
-    setLoading(true);
-    const trimmedQuery = query.trim();
-    if (!trimmedQuery || trimmedQuery.startsWith("#")) {
+    if (!debouncedQuery || debouncedQuery.startsWith("#")) {
       setResults([]);
-      setLoading(false);
+      setLoading(false); // reset loading for empty or invalid query
       return;
     }
 
-    const handler = setTimeout(() => {
-      const fetchData = async () => {
-        try {
-          const platform = regionMap[region].platform;
+    const controller = new AbortController();
+    const signal = controller.signal;
 
-          const res = await fetch(
-            `/api/summoners/searchCached?search=${encodeURIComponent(
-              trimmedQuery
-            )}&platform=${platform}`
-          );
+    const fetchData = async () => {
+      setLoading(true); // start loading before fetch
+      try {
+        const platform = regionMap[region].platform;
 
-          if (!res.ok) throw new Error("Failed to fetch cached summoners");
+        const res = await fetch(
+          `/api/summoners/searchCached?search=${encodeURIComponent(
+            debouncedQuery
+          )}&platform=${platform}`,
+          { signal }
+        );
 
-          const data: CachedSummoner[] = await res.json();
+        if (!res.ok) throw new Error("Failed to fetch cached summoners");
 
-          setResults(data);
-        } catch (error) {
+        const data: CachedSummoner[] = await res.json();
+        setResults(data);
+      } catch (error: unknown) {
+        if (error instanceof Error && error.name !== "AbortError") {
           console.error(error);
           setResults([]);
-        } finally {
-          setLoading(false);
         }
-      };
-      fetchData();
-    }, delay);
+      } finally {
+        setLoading(false); // stop loading after fetch (success or error)
+      }
+    };
 
-    return () => clearTimeout(handler);
-  }, [query, region, delay]);
+    fetchData();
+
+    return () => controller.abort();
+  }, [debouncedQuery, region]);
 
   return { results, loading };
 }

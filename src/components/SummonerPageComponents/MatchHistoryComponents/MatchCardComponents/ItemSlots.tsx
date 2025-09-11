@@ -1,4 +1,4 @@
-import { useVersion } from "@/context/VersionContext";
+import { DDragon } from "@/helper/utils/ddragon";
 import { ParticipantData } from "@/types/riot";
 import Image from "next/image";
 
@@ -7,17 +7,19 @@ export default function ItemSlots({
 }: {
   myParticipant: ParticipantData;
 }) {
-  const version = useVersion();
-  const wardIcon = myParticipant["item6"];
-  const wardIconUrl = `https://ddragon.leagueoflegends.com/cdn/${version}/img/item/${wardIcon}.png`;
+  const wardIconId =
+    typeof myParticipant.item6 === "number" ? myParticipant.item6 : 0;
+
+  const wardIconUrl = DDragon.itemIcon(wardIconId);
 
   return (
     <div className="flex gap-1">
       <div className="flex lg:grid lg:grid-cols-3 gap-1">
         {Array.from({ length: 6 }).map((_, i) => {
-          const itemId =
-            myParticipant[`item${i}` as keyof typeof myParticipant];
-          const itemIconUrl = `https://ddragon.leagueoflegends.com/cdn/${version}/img/item/${itemId}.png`;
+          const itemIdRaw = myParticipant[`item${i}` as keyof ParticipantData];
+          const itemId = typeof itemIdRaw === "number" ? itemIdRaw : 0;
+
+          const itemIconUrl = DDragon.itemIcon(itemId);
 
           return (
             <div key={i}>
@@ -37,7 +39,7 @@ export default function ItemSlots({
         })}
       </div>
       <div className="shrink-0">
-        {wardIcon ? (
+        {wardIconId ? (
           <Image
             src={wardIconUrl}
             alt="item"
