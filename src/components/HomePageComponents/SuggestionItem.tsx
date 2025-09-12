@@ -2,21 +2,22 @@
 
 import Image from "next/image";
 import { CachedSummoner } from "@/types/riot";
-import { RegionKey, regionMap } from "@/lib/maps/regionMap";
+import { regionMap, type RegionKey } from "@/lib/maps/regionMap";
 import { DDragon } from "@/helper/utils/ddragon";
 
 interface SuggestionItemProps {
   summoner: CachedSummoner;
-  region: RegionKey;
   onSelect: (summoner: CachedSummoner) => void;
 }
 
 export default function SuggestionItem({
   summoner,
-  region,
   onSelect,
 }: SuggestionItemProps) {
   const profileIcon = DDragon.profileIcon(summoner.profileIconId);
+
+  // Ensure summoner.region is typed as a valid RegionKey
+  const regionKey = summoner.region as RegionKey;
 
   return (
     <li
@@ -33,9 +34,9 @@ export default function SuggestionItem({
         </span>
       </div>
       <span
-        className={`${regionMap[region].color} text-xs p-1 rounded-xs w-10 text-center text-white font-bold`}
+        className={`${regionMap[regionKey].color} text-xs p-1 rounded-xs w-10 text-center text-white font-bold`}
       >
-        {regionMap[region].label}
+        {regionMap[regionKey].label}
       </span>
     </li>
   );

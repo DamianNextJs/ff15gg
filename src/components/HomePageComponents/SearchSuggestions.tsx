@@ -1,8 +1,9 @@
 "use client";
 
 import { useCachedSummoners } from "@/hooks/useCachedSummoners";
+import { useRecentSearches } from "@/hooks/useRecentSearches";
 import { CachedSummoner } from "@/types/riot";
-import { useEffect, useRef, useState, useMemo } from "react";
+import { useEffect, useState, useMemo } from "react";
 import { useRouter } from "next/navigation";
 import { RegionKey } from "@/lib/maps/regionMap";
 import LoadingIndicator from "./LoadingIndicator";
@@ -12,70 +13,57 @@ import { createSummonerUrl } from "@/helper/summoner";
 interface SearchSuggestionsProps {
   summonerName: string;
   region: RegionKey;
+  focused: boolean;
 }
 
 export default function SearchSuggestions({
   summonerName,
   region,
+  focused,
 }: SearchSuggestionsProps) {
   const { results, loading } = useCachedSummoners(summonerName, region);
+  const { recent, addRecent } = useRecentSearches();
   const router = useRouter();
-  const [open, setOpen] = useState(true);
   const [showLoader, setShowLoader] = useState(false);
-  const ref = useRef<HTMLUListElement>(null);
 
-  // Close suggestions if click happens outside
-  useEffect(() => {
-    function handleClickOutside(event: MouseEvent) {
-      if (ref.current && !ref.current.contains(event.target as Node)) {
-        setOpen(false);
-      }
-    }
-    document.addEventListener("mousedown", handleClickOutside);
-    return () => document.removeEventListener("mousedown", handleClickOutside);
-  }, []);
-
-  // Re-open suggestions when summonerName changes
-  useEffect(() => {
-    if (summonerName) setOpen(true);
-  }, [summonerName]);
-
-  // Delayed loader logic: only show if loading takes longer than 200ms
+  // Delayed loader: show only if loading >200ms
   useEffect(() => {
     if (!loading) {
       setShowLoader(false);
       return;
     }
-
     const timeout = setTimeout(() => setShowLoader(true), 200);
     return () => clearTimeout(timeout);
   }, [loading]);
 
   const handleSelectSuggestion = (summoner: CachedSummoner) => {
+    addRecent(summoner);
     const summonerUrl = createSummonerUrl(summoner.gameName, summoner.tagLine);
-
-    router.push(`/summoner/${region}/${encodeURIComponent(summonerUrl)}`);
+    router.push(
+      `/summoner/${summoner.region}/${encodeURIComponent(summonerUrl)}`
+    );
   };
 
-  // Memoize formatted results to avoid recalculating on every render
-  const formattedResults = useMemo(() => results, [results]);
+  const trimmedInput = summonerName.trim();
+  // Decide which list to show: recent searches or cached results
+  const suggestions: CachedSummoner[] = useMemo(() => {
+    if (!focused) return [];
+    if (!trimmedInput) return recent; // show all recent searches
+    return results; // show cached search results
+  }, [focused, trimmedInput, recent, results]);
 
   if (showLoader) return <LoadingIndicator />;
-  if (!formattedResults.length || !open) return null;
+  if (!suggestions.length) return null;
 
   return (
-    <ul
-      ref={ref}
-      className="absolute mt-1 w-full bg-white border z-10 rounded-md"
-    >
+    <ul className="absolute mt-1 w-full bg-white border z-10 rounded-md">
       <h2 className="bg-subtle text-xs lg:text-sm p-2 rounded-t-md">
-        Summoner Profile
+        {!trimmedInput ? "Recent Searches" : "Summoner Profile"}
       </h2>
-      {formattedResults.map((s) => (
+      {suggestions.map((s) => (
         <SuggestionItem
           key={s.puuid}
           summoner={s}
-          region={region}
           onSelect={handleSelectSuggestion}
         />
       ))}
