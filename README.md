@@ -11,7 +11,7 @@ Live demo: [ff15gg.vercel.app](https://ff15gg.vercel.app)
 - Recent searches with persistence across sessions
 - Persistent caching to reduce Riot API requests
 - Responsive design with Tailwind CSS
-- Update Button for fetching fresh data straight from Riot API
+- Update Button for fetching fresh data straight from Riot API (includes a cooldown to prevent spamming and API rate limit abuse)
 - Region selection integrated with search (recent searches respect region per summoner)
 - Handles whitespace input gracefully: recent searches are still shown
 

@@ -7,6 +7,7 @@ interface UpdateButtonProps {
   flash: boolean;
   handleClick: () => void;
   lastUpdated: number;
+  disabled?: boolean;
 }
 
 export default function UpdateButton({
@@ -14,14 +15,15 @@ export default function UpdateButton({
   flash,
   handleClick,
   lastUpdated,
+  disabled = false,
 }: UpdateButtonProps) {
   return (
     <button
       className={`relative w-30 text-xs lg:text-sm px-2 py-2 rounded-sm font-semibold transition-all duration-300 cursor-pointer flex justify-center items-center group ${
         flash ? "bg-yellow-400 scale-105" : "bg-primary"
-      }`}
+      } `}
       onClick={handleClick}
-      disabled={loading}
+      disabled={loading || disabled}
     >
       {loading ? (
         <span className="size-4 lg:size-5 border-2 border-subtle border-t-transparent rounded-full animate-spin"></span>
