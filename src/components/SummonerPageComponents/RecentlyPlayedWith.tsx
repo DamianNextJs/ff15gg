@@ -2,6 +2,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { TeammateSummary } from "@/types/riot"; // assuming you updated types
 import { DDragon } from "@/helper/utils/ddragon";
+import { createSummonerUrl } from "@/helper/summoner";
 
 interface RecentlyPlayedWithProps {
   region: string;
@@ -32,12 +33,14 @@ export default function RecentlyPlayedWith({
         {/* Teammates */}
         {recentTeammates.map((teammate) => {
           const profileIcon = DDragon.profileIcon(teammate.profileIconId);
+          const summonerUrl = createSummonerUrl(
+            teammate.gameName,
+            teammate.tagLine
+          );
 
           return (
             <Link
-              href={`/summoner/${region}/${encodeURIComponent(
-                `${teammate.gameName}-${teammate.tagLine}`
-              )}`}
+              href={`/summoner/${region}/${encodeURIComponent(summonerUrl)}`}
               key={teammate.puuid}
               className="grid grid-cols-[2fr_1fr_1fr_1fr] -mx-4 px-4 py-3 border-t border-accent hover:bg-subtle/15 cursor-pointer"
             >

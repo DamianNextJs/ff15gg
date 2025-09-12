@@ -24,19 +24,33 @@ export async function getSummonerProfile(
   force = false
 ): Promise<SummonerData> {
   await connectToDB();
-  const normalizedName = normalizeSummonerName(gameName, tagLine).gameName;
+
+  // --- Normalize names for both query and DB storage ---
+  const { gameName: normName, tagLine: normTag } = normalizeSummonerName(
+    gameName,
+    tagLine
+  );
 
   // --- Return cached if exists ---
   if (!force) {
     const cached = await Summoner.findOne({
-      normalizedName,
-      tagLine,
+      normalizedName: normName,
+      tagLine: normTag,
       platform,
     }).lean<ISummoner>();
-    if (cached) return cached.data as SummonerData;
+
+    if (cached?.data) {
+      console.log(`[CACHE HIT] ${normName}#${normTag} from DB`);
+      return cached.data as SummonerData;
+    } else {
+      console.log(`[CACHE MISS] ${normName}#${normTag} not in DB`);
+    }
+  } else {
+    console.log(`[FORCE FETCH] ${normName}#${normTag}`);
   }
 
   // --- Fetch Riot data ---
+  console.log(`[RIOT FETCH] Fetching data for ${normName}#${normTag}`);
   const riotAccount = await getRiotAccount(gameName, tagLine, region);
   const summoner = await getSummonerByPuuid(riotAccount.puuid, platform);
   const championMastery = mapChampionMastery(
@@ -72,14 +86,14 @@ export async function getSummonerProfile(
   };
 
   // --- Cache in DB ---
-  await Summoner.findOneAndUpdate(
+  const updated = await Summoner.findOneAndUpdate(
     { puuid: summoner.puuid },
     {
       $set: {
         puuid: summoner.puuid,
         gameName: riotAccount.gameName,
-        tagLine: riotAccount.tagLine,
-        normalizedName,
+        tagLine: riotAccount.tagLine.toLowerCase(), // normalize for DB
+        normalizedName: normName,
         platform,
         data: profileData,
         lastUpdated: new Date(),
@@ -88,5 +102,7 @@ export async function getSummonerProfile(
     { upsert: true, new: true }
   );
 
-  return profileData;
+  console.log(`[DB SAVE] Cached data for ${normName}#${normTag}`);
+
+  return updated.data as SummonerData;
 }

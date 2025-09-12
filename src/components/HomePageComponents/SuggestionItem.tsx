@@ -26,7 +26,7 @@ export default function SuggestionItem({
       <div className="flex items-center gap-1.5">
         <Image src={profileIcon} alt="icon" width={25} height={25} />
         <span className="text-sm lg:text-base">
-          {summoner.gameName} #{summoner.tagLine}
+          {summoner.gameName} #{summoner.tagLine.toUpperCase()}
         </span>
         <span className="text-xs lg:text-sm opacity-50">
           Lvl {summoner.summonerLevel}

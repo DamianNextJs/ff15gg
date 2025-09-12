@@ -1,22 +1,30 @@
 import { connectToDB } from "@/lib/mongodb";
 import Summoner from "@/models/Summoner";
+import { NextRequest, NextResponse } from "next/server";
 
-export async function GET(req: Request) {
+function escapeRegex(str: string) {
+  return str.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+}
+
+export async function GET(req: NextRequest) {
   await connectToDB();
 
-  const url = new URL(req.url);
+  const url = req.nextUrl;
   const search = url.searchParams.get("search");
   const platform = url.searchParams.get("platform");
 
-  if (!search || !platform) return new Response(null, { status: 400 });
+  if (!search || !platform) return NextResponse.json(null, { status: 400 });
 
   const [inputName, inputTag = ""] = search.split("#");
 
-  const normalizedName = inputName.toLowerCase().replace(/\s+/g, "");
+  const normalizedName = escapeRegex(
+    inputName.toLowerCase().replace(/\s+/g, "")
+  );
+  const escapedTag = escapeRegex(inputTag);
 
   const results = await Summoner.find({
     normalizedName: { $regex: `^${normalizedName}` },
-    tagLine: { $regex: `^${inputTag}`, $options: "i" },
+    tagLine: { $regex: `^${escapedTag}`, $options: "i" },
     platform,
   })
     .limit(5)
@@ -32,5 +40,5 @@ export async function GET(req: Request) {
     summonerLevel: s.data.summoner.summonerLevel,
   }));
 
-  return new Response(JSON.stringify(formatted), { status: 200 });
+  return NextResponse.json(formatted);
 }

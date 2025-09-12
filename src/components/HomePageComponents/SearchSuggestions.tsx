@@ -7,6 +7,7 @@ import { useRouter } from "next/navigation";
 import { RegionKey } from "@/lib/maps/regionMap";
 import LoadingIndicator from "./LoadingIndicator";
 import SuggestionItem from "./SuggestionItem";
+import { createSummonerUrl } from "@/helper/summoner";
 
 interface SearchSuggestionsProps {
   summonerName: string;
@@ -51,11 +52,9 @@ export default function SearchSuggestions({
   }, [loading]);
 
   const handleSelectSuggestion = (summoner: CachedSummoner) => {
-    router.push(
-      `/summoner/${region}/${encodeURIComponent(
-        `${summoner.gameName}-${summoner.tagLine}`
-      )}`
-    );
+    const summonerUrl = createSummonerUrl(summoner.gameName, summoner.tagLine);
+
+    router.push(`/summoner/${region}/${encodeURIComponent(summonerUrl)}`);
   };
 
   // Memoize formatted results to avoid recalculating on every render

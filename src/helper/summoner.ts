@@ -13,3 +13,10 @@ export function normalizeSummonerName(gameName: string, tagLine: string) {
     tagLine: tagLine.replace(/\s+/g, "").toLowerCase(),
   };
 }
+
+// src/helper/summonerUrl.ts
+export function createSummonerUrl(gameName: string, tagLine: string) {
+  const { gameName: normalizedName, tagLine: normalizedTag } =
+    normalizeSummonerName(gameName, tagLine);
+  return `${normalizedName}-${normalizedTag}`;
+}

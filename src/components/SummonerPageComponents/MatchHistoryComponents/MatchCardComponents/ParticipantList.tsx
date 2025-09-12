@@ -4,6 +4,7 @@ import Link from "next/link";
 import { RegionKey, regionMap } from "@/lib/maps/regionMap";
 import { DDragon } from "@/helper/utils/ddragon";
 import { getChampionById } from "@/helper/getChampionById";
+import { createSummonerUrl } from "@/helper/summoner";
 
 export default function ParticipantList({
   match,
@@ -27,6 +28,10 @@ export default function ParticipantList({
               const champIconUrl = DDragon.championIcon(champ.id);
 
               const isMyParticipant = p.puuid === myParticipant.puuid;
+              const summonerUrl = createSummonerUrl(
+                p.riotIdGameName,
+                p.riotIdTagline
+              );
 
               return (
                 <div
@@ -42,7 +47,7 @@ export default function ParticipantList({
                   </div>
                   <Link
                     href={`/summoner/${regionKey}/${encodeURIComponent(
-                      `${p.riotIdGameName}-${p.riotIdTagline}`
+                      summonerUrl
                     )}`}
                     className={`truncate flex-1 hover:underline ${
                       isMyParticipant && "pointer-events-none"
