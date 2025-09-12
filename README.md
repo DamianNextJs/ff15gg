@@ -8,9 +8,18 @@ Live demo: [ff15gg.vercel.app](https://ff15gg.vercel.app)
 
 - View summoner profiles: rank, LP and match history
 - Search suggestions when typing
+- Recent searches with persistence across sessions
 - Persistent caching to reduce Riot API requests
 - Responsive design with Tailwind CSS
-- Update Button for fetching Fresh Data straight from Riot API
+- Update Button for fetching fresh data straight from Riot API
+- Region selection integrated with search (recent searches respect region per summoner)
+- Handles whitespace input gracefully: recent searches are still shown
+
+## Notes / Usage Tips
+
+- Recent searches are stored locally in the browser (using localStorage)
+- Clicking on a suggestion adds it to recent searches and navigates to the correct region.
+- Input trimming ensures searches with leading/trailing whitespace don't trigger API requests unnecessarily
 
 ## Tech Stack
 
