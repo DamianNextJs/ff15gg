@@ -28,7 +28,7 @@ export default function SummonerSearch() {
   };
 
   return (
-    <div className="relative w-full lg:w-1/2 text-secondary">
+    <div className="relative w-full lg:w-175 text-secondary">
       <form
         className="flex justify-between items-center bg-white p-5 rounded-md mx-auto lg:text-xl"
         onSubmit={handleSearch}

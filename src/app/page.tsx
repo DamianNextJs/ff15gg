@@ -13,7 +13,7 @@ export default function Home() {
           className="object-cover object-center"
           priority // optional: loads immediately
         />
-        <div className="absolute inset-0 bg-primary/10 backdrop-brightness-50" />
+        <div className="absolute inset-0 bg-primary/10 backdrop-brightness-50 bg-gradient-to-t from-bg via-bg/20 to-transparent" />
       </div>
       {/* Content */}
       <div className="min-h-screen flex flex-col justify-center items-center gap-5 lg:gap-10 -translate-y-30 mx-4">
