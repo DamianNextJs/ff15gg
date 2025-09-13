@@ -1,4 +1,3 @@
-import { notFound } from "next/navigation";
 import { regionMap, RegionKey } from "@/lib/maps/regionMap";
 import RankCard from "@/components/SummonerPageComponents/RankCard";
 import ProfileCard from "@/components/SummonerPageComponents/ProfileCard";
@@ -10,6 +9,7 @@ import { getRankData } from "@/helper/summoner";
 import { getChampionById } from "@/helper/getChampionById";
 import { getSummonerProfile } from "@/lib/server/getSummonerProfile";
 import { SummonerData } from "@/types/riot";
+import SummonerNotFound from "./SummonerNotFound";
 
 interface SummonerPageProps {
   params: Promise<{
@@ -20,7 +20,6 @@ interface SummonerPageProps {
 
 export default async function SummonerPage({ params }: SummonerPageProps) {
   const { platformKey, gameName } = await params;
-  if (!platformKey || !gameName) return notFound();
 
   const { platform, region } = regionMap[platformKey as RegionKey];
   const [name, tag = ""] = decodeURIComponent(gameName).split("-");
@@ -30,10 +29,8 @@ export default async function SummonerPage({ params }: SummonerPageProps) {
     profileData = await getSummonerProfile(region, platform, name, tag, false);
   } catch (err) {
     console.error(err);
-    return notFound();
+    return <SummonerNotFound gameName={gameName} platformKey={platformKey} />;
   }
-
-  if (!profileData) return notFound();
 
   // --- Champion for background ---
   const topChampId = profileData.championMastery?.[0]?.championId;
