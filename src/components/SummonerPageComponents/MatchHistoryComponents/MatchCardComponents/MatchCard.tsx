@@ -4,6 +4,7 @@ import GameInfo from "./GameInfo";
 import ItemSlots from "./ItemSlots";
 import PlayerStats from "./PlayerStats";
 import ParticipantList from "./ParticipantList";
+import { getMatchResultUI } from "@/helper/utils/matchResult";
 
 export default function MatchCard({
   myParticipant,
@@ -14,17 +15,20 @@ export default function MatchCard({
 }) {
   //Game Info
   const gameDuration = match.info.gameDuration;
+  const { bg } = getMatchResultUI(match, myParticipant.win);
 
   return (
     <div
-      className={`${
-        myParticipant?.win ? "bg-win/90" : "bg-lose/90"
-      } flex flex-col  rounded-md mt-2 p-2 gap-1 lg:flex-row lg:gap-3 lg:items-center lg:justify-around`}
+      className={`${bg} flex flex-col rounded-md mt-2 p-2 gap-1 lg:flex-row lg:gap-3 lg:items-center`}
     >
-      <GameInfo isWin={myParticipant.win} match={match} />
-      <div className="flex justify-between gap-3">
+      {/* Game Info */}
+      <div className="min-w-28">
+        <GameInfo isWin={myParticipant.win} match={match} />
+      </div>
+      {/* Player loadout, stats and items */}
+      <div className="flex justify-between flex-1">
         <PlayerLoadout myParticipant={myParticipant} />
-        <div className="flex flex-col lg:flex-row-reverse justify-end items-end lg:items-center gap-2 lg:gap-3">
+        <div className="flex flex-col lg:flex-row-reverse justify-end items-end lg:items-center gap-2 lg:gap-4">
           <ItemSlots myParticipant={myParticipant} />
           <PlayerStats
             myParticipant={myParticipant}
@@ -33,7 +37,9 @@ export default function MatchCard({
         </div>
       </div>
       {/* PARTICIPANT LIST */}
-      <ParticipantList match={match} myParticipant={myParticipant} />
+      <div className="ms-2">
+        <ParticipantList match={match} myParticipant={myParticipant} />
+      </div>
     </div>
   );
 }
