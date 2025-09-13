@@ -1,6 +1,6 @@
 import { MatchData, RecentStats } from "@/types/riot";
 import MatchHistoryHeader from "./MatchHistoryHeader";
-import MatchCard from "./MatchCardComponents/MatchCard";
+import MatchCard from "./MatchCard";
 import { queueMap } from "@/lib/maps/queueMap";
 
 interface MatchHistoryProps {

@@ -1,9 +1,9 @@
 import { MatchData, ParticipantData } from "@/types/riot";
-import PlayerLoadout from "./PlayerLoadout";
-import GameInfo from "./GameInfo";
-import ItemSlots from "./ItemSlots";
-import PlayerStats from "./PlayerStats";
-import ParticipantList from "./ParticipantList";
+import PlayerLoadout from "./MatchCardComponents/PlayerLoadout";
+import GameInfo from "./MatchCardComponents/GameInfo";
+import ItemSlots from "./MatchCardComponents/ItemSlots";
+import PlayerStats from "./MatchCardComponents/PlayerStats";
+import ParticipantList from "./MatchCardComponents/ParticipantList";
 import { getMatchResultUI } from "@/helper/utils/matchResult";
 
 export default function MatchCard({

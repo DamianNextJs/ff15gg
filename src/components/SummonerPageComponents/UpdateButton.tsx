@@ -49,9 +49,10 @@ export default function UpdateButton({
         <span className="relative">Update</span>
       )}
 
-      <div className="absolute bg-bg -top-14.5 p-2.5 w-60 border border-subtle/70 rounded-sm shadow-lg shadow-black opacity-0 group-hover:opacity-100 transition duration-200 ease-in-out pointer-events-none">
+      <div className="absolute bottom-full mb-3 left-1/2 -translate-x-1/2 p-4 bg-bg border border-subtle/50 text-xs rounded shadow-lg opacity-0 scale-95 transform transition-all group-hover:opacity-100 group-hover:scale-100 duration-150 ease-out z-50 pointer-events-none min-w-[8rem]  w-max hidden lg:block">
         Last Updated: {formatTimeAgo(lastUpdated)}
-        <div className="bg-bg w-4 h-4 border border-subtle/70 absolute left-1/2 -translate-x-1/2 rotate-45 border-t-0 border-s-0 -bottom-2"></div>
+        {/* Arrow */}
+        <div className="absolute bottom-[-0.4rem] left-1/2 -translate-x-1/2 w-3 h-3 bg-bg border-b border-r border-subtle/50 rotate-45"></div>
       </div>
     </button>
   );

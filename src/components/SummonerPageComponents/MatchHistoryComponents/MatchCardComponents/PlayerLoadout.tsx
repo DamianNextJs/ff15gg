@@ -1,32 +1,44 @@
+"use client";
+
 import { ParticipantData } from "@/types/riot";
 import Image from "next/image";
-import { SummonerSpellMap } from "@/lib/maps/summonerSpellMap";
-import { runeMap } from "@/lib/maps/runeMap";
 import { DDragon } from "@/helper/utils/ddragon";
+import { SummonerSpellIcon } from "./PlayerLoadoutComponents/SummonerSpellIcon";
+import { RuneIcon } from "./PlayerLoadoutComponents/RuneIcon";
+import {
+  getRuneData,
+  getSummonerSpellData,
+} from "@/helper/utils/playerLoadout";
 
 export default function PlayerLoadout({
   myParticipant,
 }: {
   myParticipant: ParticipantData;
 }) {
-  //ICONS - PLAYER LOADOUT
+  // Champion
   const champIconUrl = DDragon.championIcon(myParticipant.championName);
-
-  const summoner1 = SummonerSpellMap[myParticipant?.summoner1Id];
-  const summoner1Icon = DDragon.summonerSpell(summoner1);
-  const summoner2 = SummonerSpellMap[myParticipant?.summoner2Id];
-  const summoner2Icon = DDragon.summonerSpell(summoner2);
-
-  const keyStone = runeMap[myParticipant.perks.styles[0].selections[0].perk];
-  const keyStoneIcon = DDragon.runeIcon(keyStone.icon);
-  const subStyle = runeMap[myParticipant.perks.styles[1].style];
-  const subStyleIcon = DDragon.runeIcon(subStyle.icon);
   const champLevel = myParticipant.champLevel;
+
+  // Summoner Spells
+  const { data: summoner1Data, icon: summoner1Icon } = getSummonerSpellData(
+    myParticipant.summoner1Id
+  );
+  const { data: summoner2Data, icon: summoner2Icon } = getSummonerSpellData(
+    myParticipant.summoner2Id
+  );
+
+  // Runes
+  const { data: keyStoneData, icon: keyStoneIcon } = getRuneData(
+    myParticipant.perks.styles[0].selections[0].perk
+  );
+  const { data: subStyleData, icon: subStyleIcon } = getRuneData(
+    myParticipant.perks.styles[1].style
+  );
 
   return (
     <div className="grid grid-cols-4 gap-1 max-w-fit">
       {/* Champ Icon */}
-      <div className="col-span-2 relative  h-13 w-13">
+      <div className="col-span-2 relative h-13 w-13">
         <Image
           src={champIconUrl}
           width={52}
@@ -37,38 +49,18 @@ export default function PlayerLoadout({
           {champLevel}
         </span>
       </div>
-      {/* SUMMONER SPELL ICONS */}
+
+      {/* Summoner Spells */}
       <div className="col-span-1 flex flex-col gap-1">
-        <Image
-          src={summoner1Icon}
-          height={23}
-          width={23}
-          alt="summonerspell icon"
-        />
-        <Image
-          src={summoner2Icon}
-          height={23}
-          width={23}
-          alt="summonerspell icon"
-        />
+        {SummonerSpellIcon(summoner1Data, summoner1Icon)}
+        {SummonerSpellIcon(summoner2Data, summoner2Icon)}
       </div>
-      {/* RUNE ICONS */}
+
+      {/* Runes */}
       {keyStoneIcon && subStyleIcon ? (
         <div className="col-span-1 flex flex-col gap-1">
-          <Image
-            src={keyStoneIcon}
-            height={23}
-            width={23}
-            alt="rune icon"
-            className="bg-white/10 rounded-sm p-0.5"
-          />
-          <Image
-            src={subStyleIcon}
-            height={23}
-            width={23}
-            alt="rune icon"
-            className="bg-white/10 rounded-sm p-1"
-          />
+          {RuneIcon(keyStoneData, keyStoneIcon)}
+          {RuneIcon(subStyleData, subStyleIcon)}
         </div>
       ) : null}
     </div>

@@ -1,26 +1,26 @@
-import runesRefored from "@/lib/data/runesReforged.json";
+import runesData from "@/lib/data/runesReforged.json";
+import { RuneInfo, RuneStyle } from "@/types/rune";
 
-export type Rune = {
-  id: number;
-  key: string;
-  icon: string;
-  name: string;
-};
+// Flatten rune styles + runes into a Record
+export const RuneMap: Record<number, RuneInfo> = (() => {
+  const map: Record<number, RuneInfo> = {};
 
-export const runeMap: Record<number, Rune> = {};
+  for (const style of runesData as RuneStyle[]) {
+    // Add the style itself (used for subStyle icon/name)
+    map[style.id] = {
+      id: style.id,
+      key: style.key,
+      icon: style.icon,
+      name: style.name,
+    };
 
-runesRefored.forEach((tree) => {
-  // Tree itself
-  runeMap[tree.id] = {
-    id: tree.id,
-    key: tree.key,
-    icon: tree.icon,
-    name: tree.name,
-  };
+    // Add all runes inside its slots
+    for (const slot of style.slots) {
+      for (const rune of slot.runes) {
+        map[rune.id] = rune;
+      }
+    }
+  }
 
-  tree.slots.forEach((slot) => {
-    slot.runes.forEach((rune) => {
-      runeMap[rune.id] = rune;
-    });
-  });
-});
+  return map;
+})();
