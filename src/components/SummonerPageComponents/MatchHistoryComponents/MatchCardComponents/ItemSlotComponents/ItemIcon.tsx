@@ -12,14 +12,14 @@ interface ItemIconProps {
 const typedItemsData = itemsData.data as ItemsData;
 
 export const ItemIcon = ({ itemId }: ItemIconProps) => {
-  const EmptySlot = <div className="size-5 bg-white/10 rounded-sm" />;
+  const EmptySlot = <div className="size-5.5 bg-white/10 rounded-sm" />;
 
   if (!itemId) return EmptySlot;
 
   const itemData = typedItemsData[String(itemId)];
 
   const itemIconUrl = DDragon.itemIcon(itemId);
-  const imageProps = { width: 21, height: 21, className: "rounded-sm" };
+  const imageProps = { width: 22, height: 22, className: "rounded-sm" };
 
   return (
     <Tooltip content={<ItemTooltip item={itemData} />}>

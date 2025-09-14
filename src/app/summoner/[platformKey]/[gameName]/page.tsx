@@ -29,7 +29,7 @@ export default async function SummonerPage({ params }: SummonerPageProps) {
     profileData = await getSummonerProfile(region, platform, name, tag, false);
   } catch (err) {
     console.error(err);
-    return <SummonerNotFound gameName={gameName} platformKey={platformKey} />;
+    return <SummonerNotFound name={name} tag={tag} platformKey={platformKey} />;
   }
 
   // --- Champion for background ---
