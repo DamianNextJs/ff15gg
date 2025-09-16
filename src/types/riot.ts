@@ -1,33 +1,29 @@
-// --- SummonerData.ts ---
-
+// -- Custom extended Types
 export interface SummonerData {
-  summoner: {
-    profileIconId: number;
-    summonerLevel: number;
-    puuid: string;
-  };
-  riotAccount: {
-    gameName: string;
-    tagLine: string;
-    puuid: string;
-  };
+  // Riot Types
+  riotAccount: RiotAccount;
+  summoner: Summoner;
   ranked?: RankedData[];
-  matches?: MatchData[];
   championMastery?: ChampionMastery[];
-  champStats: ChampStats[];
-  recentStats: RecentStats;
-  recentTeammates: TeammateSummary[];
-  lastUpdated: string;
+  matches?: MatchData[];
+  // Custom Types
+  champStats?: ChampStats[];
+  lastUpdated?: Date;
+  platform?: string;
 }
 
-// Aggregated recent stats for the summoner
-export interface RecentStats {
-  wins: number;
-  losses: number;
-  kills: number;
-  deaths: number;
-  assists: number;
-  gamesPlayed: number;
+// --- Below are the same shape as riot sends them back but stripped down to what we need
+// Riot Account data
+export interface RiotAccount {
+  gameName: string;
+  tagLine: string;
+  puuid: string;
+}
+
+// Summoner data
+export interface Summoner {
+  profileIconId: number;
+  summonerLevel: number;
 }
 
 // Ranked data for the summoner
@@ -42,6 +38,9 @@ export interface RankedData {
 
 // Match and participant data
 export interface MatchData {
+  metadata: {
+    matchId: string;
+  };
   info: {
     gameMode: string;
     gameEndTimestamp: number;
@@ -93,6 +92,7 @@ export interface ChampionMastery {
   championPoints: number;
 }
 
+// --- Aggregation Types
 // Aggregated champion stats
 export type ChampStats = {
   champId: number;
@@ -104,8 +104,18 @@ export type ChampStats = {
   assists: number;
 };
 
-// Recently played teammates summary
-export interface TeammateSummary {
+// Aggregated recent stats for the summoner
+export interface RecentStats {
+  wins: number;
+  losses: number;
+  kills: number;
+  deaths: number;
+  assists: number;
+  gamesPlayed: number;
+}
+
+// Aggregated Recently played teammates summary
+export interface RecentTeammates {
   puuid: string;
   gameName: string;
   tagLine: string;
@@ -114,14 +124,4 @@ export interface TeammateSummary {
   wins: number;
   losses: number;
   winRate: number; // 0-100 percentage
-}
-
-// Minimal cached summoner for search suggestions
-export interface CachedSummoner {
-  puuid: string;
-  gameName: string;
-  tagLine: string;
-  region: string;
-  profileIconId: number;
-  summonerLevel: number;
 }

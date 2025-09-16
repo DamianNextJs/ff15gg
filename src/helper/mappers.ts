@@ -22,6 +22,9 @@ export function mapRanked(raw: SummonerData["ranked"]): SummonerData["ranked"] {
 
 export function mapMatches(raw: MatchData[]): MatchData[] {
   return raw.map((m) => ({
+    metadata: {
+      matchId: m.metadata.matchId,
+    },
     info: {
       gameMode: m.info.gameMode,
       gameEndTimestamp: m.info.gameEndTimestamp,

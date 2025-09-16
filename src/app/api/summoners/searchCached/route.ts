@@ -1,10 +1,8 @@
+import { normalizeSummonerName } from "@/helper/summoner";
 import { connectToDB } from "@/lib/mongodb";
 import Summoner from "@/models/Summoner";
+import { SummonerData } from "@/types/riot";
 import { NextRequest, NextResponse } from "next/server";
-
-function escapeRegex(str: string) {
-  return str.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
-}
 
 export async function GET(req: NextRequest) {
   await connectToDB();
@@ -17,27 +15,23 @@ export async function GET(req: NextRequest) {
 
   const [inputName, inputTag = ""] = search.split("#");
 
-  const normalizedName = escapeRegex(
-    inputName.toLowerCase().replace(/\s+/g, "")
-  );
-  const escapedTag = escapeRegex(inputTag);
+  const { gameName: normalizedGameName, tagLine: normalizedTagLine } =
+    normalizeSummonerName(inputName, inputTag);
 
   const results = await Summoner.find({
-    normalizedName: { $regex: `^${normalizedName}` },
-    tagLine: { $regex: `^${escapedTag}`, $options: "i" },
+    normalizedGameName: { $regex: `^${normalizedGameName}` },
+    normalizedTagLine: { $regex: `^${normalizedTagLine}` },
     platform,
   })
     .limit(5)
-    .select("gameName tagLine puuid platform data.summoner")
+    .select(
+      "platform data.riotAccount.puuid data.riotAccount.gameName data.riotAccount.tagLine data.summoner.profileIconId data.summoner.summonerLevel"
+    )
     .lean();
 
-  const formatted = results.map((s) => ({
-    puuid: s.puuid,
-    gameName: s.gameName,
-    tagLine: s.tagLine,
-    region: s.platform,
-    profileIconId: s.data.summoner.profileIconId,
-    summonerLevel: s.data.summoner.summonerLevel,
+  const formatted: SummonerData[] = results.map((s) => ({
+    ...s.data,
+    platform: s.platform,
   }));
 
   return NextResponse.json(formatted);

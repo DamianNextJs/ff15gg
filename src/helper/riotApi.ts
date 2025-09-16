@@ -1,5 +1,3 @@
-import { MatchData } from "@/types/riot";
-
 const API_KEY = process.env.RIOT_API_KEY!;
 const headers = { "X-Riot-Token": API_KEY };
 
@@ -64,21 +62,4 @@ export async function getMatch(matchId: string, region: string) {
   );
   if (!res.ok) throw new Error("Match not found");
   return res.json();
-}
-
-export async function fetchMatchesInBatches(
-  matchIds: string[],
-  region: string,
-  batchSize = 5
-) {
-  const results: MatchData[] = [];
-  for (let i = 0; i < matchIds.length; i += batchSize) {
-    const batch = matchIds.slice(i, i + batchSize);
-    const batchResults = await Promise.all(
-      batch.map((id) => getMatch(id, region).catch(() => null))
-    );
-    results.push(...batchResults.filter(Boolean));
-    await new Promise((r) => setTimeout(r, 1000));
-  }
-  return results;
 }

@@ -1,11 +1,11 @@
 import { useState, useEffect } from "react";
-import { CachedSummoner } from "@/types/riot";
+import { SummonerData } from "@/types/riot";
 import { regionMap, RegionKey } from "@/lib/maps/regionMap";
 import { useDebounce } from "./useDebounce";
 
 export function useCachedSummoners(query: string, region: RegionKey) {
   const debouncedQuery = useDebounce(query.trim(), 300);
-  const [results, setResults] = useState<CachedSummoner[]>([]);
+  const [results, setResults] = useState<SummonerData[]>([]);
   const [loading, setLoading] = useState(false);
 
   useEffect(() => {
@@ -32,7 +32,7 @@ export function useCachedSummoners(query: string, region: RegionKey) {
 
         if (!res.ok) throw new Error("Failed to fetch cached summoners");
 
-        const data: CachedSummoner[] = await res.json();
+        const data: SummonerData[] = await res.json();
         setResults(data);
       } catch (error: unknown) {
         if (error instanceof Error && error.name !== "AbortError") {

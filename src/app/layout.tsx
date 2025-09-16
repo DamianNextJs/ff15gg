@@ -19,7 +19,7 @@ export const metadata: Metadata = {
   description: "Search League of Legends Summoners",
 };
 
-export default async function RootLayout({
+export default function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
