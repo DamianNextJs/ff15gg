@@ -4,6 +4,7 @@ import MatchCard from "./MatchCard";
 import { queueMap } from "@/lib/maps/queueMap";
 import { Suspense } from "react";
 import { getRecentStats } from "@/helper/stats/getRecentStats";
+import MatchHistoryLoader from "./MatchHistoryLoader";
 
 interface MatchHistoryProps {
   matches: MatchData[];
@@ -21,7 +22,7 @@ export default async function MatchHistory({
       <h2 className="text-sm lg:text-base font-semibold border-l-2 border-primary ps-3">
         Match History
       </h2>
-      <Suspense fallback={<p> loading match history</p>}>
+      <Suspense fallback={<MatchHistoryLoader />}>
         <MatchHistoryHeader recentStats={recentStats} />
 
         <div className="mt-3 -mx-2">
