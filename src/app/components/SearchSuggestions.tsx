@@ -2,7 +2,7 @@
 
 import { useCachedSummoners } from "@/hooks/useCachedSummoners";
 import { useRecentSearches } from "@/hooks/useRecentSearches";
-import { DbSummonerData } from "@/types/riot";
+import { SummonerData } from "@/types/riot";
 import { useEffect, useState, useMemo } from "react";
 import { useRouter } from "next/navigation";
 import { RegionKey } from "@/lib/maps/regionMap";
@@ -36,7 +36,7 @@ export default function SearchSuggestions({
     return () => clearTimeout(timeout);
   }, [loading]);
 
-  const handleSelectSuggestion = (summoner: DbSummonerData) => {
+  const handleSelectSuggestion = (summoner: SummonerData) => {
     addRecent(summoner);
     const summonerUrl = createSummonerUrl(
       summoner.riotAccount.gameName,
@@ -51,7 +51,7 @@ export default function SearchSuggestions({
 
   const trimmedInput = summonerName.trim();
   // Decide which list to show: recent searches or cached results
-  const suggestions: DbSummonerData[] = useMemo(() => {
+  const suggestions: SummonerData[] = useMemo(() => {
     if (!focused) return [];
     if (!trimmedInput) return recent; // show all recent searches
     return results; // show cached search results

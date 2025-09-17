@@ -8,14 +8,13 @@ import { MatchData } from "@/types/riot";
 export function mergeMatches(
   existingMatches: MatchData[] = [],
   incomingMatches: MatchData[] = [],
-  limit = 20
+  cap = 200
 ) {
-  const existingIds = new Set(existingMatches.map((m) => m.matchId));
-  const newMatches = incomingMatches.filter((m) => !existingIds.has(m.matchId));
+  const merged = [...existingMatches, ...incomingMatches];
 
-  const merged = [...existingMatches, ...newMatches].sort(
-    (a, b) => b.info.gameEndTimestamp - a.info.gameEndTimestamp
-  );
+  const deduped = Array.from(
+    new Map(merged.map((m) => [m.metadata.matchId, m])).values()
+  ).sort((a, b) => b.info.gameEndTimestamp - a.info.gameEndTimestamp);
 
-  return merged.slice(0, limit);
+  return deduped.slice(0, 200);
 }

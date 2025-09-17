@@ -24,8 +24,6 @@ export default async function ProfileCard({ params }: ProfileCardProps) {
 
   const profileData = await getSummonerData(region, platform, name, tag);
 
-  console.log("PROFILE DATA: ", profileData);
-
   if (!profileData) {
     return <SummonerNotFound platformKey={platform} name={name} tag={tag} />;
   }
@@ -59,7 +57,7 @@ export default async function ProfileCard({ params }: ProfileCardProps) {
       </div>
 
       {/* Foreground content */}
-      <div className="flex gap-3 items-end">
+      <div className="flex gap-3 items-end mb-10 lg:mb-6">
         {/* Profile Icon */}
         <div className="relative">
           <div className="size-20 lg:size-24 relative">

@@ -1,8 +1,8 @@
 import type { Metadata } from "next";
 import { ReactNode, Suspense } from "react";
 import ProfileCard from "./components/ProfileCard";
-import Link from "next/link";
 import ProfileSkeleton from "./components/ProfileSkeleton";
+import ProfileLinks from "./components/ProfileLinks";
 
 export const metadata: Metadata = {
   title: "Summoner page",
@@ -24,19 +24,12 @@ export default async function SummonerPageLayout({
   return (
     <main className="min-h-screen lg:w-250 mx-auto ">
       <div className="p-4 lg:p-0">
-        <div className="relative">
-          <Suspense fallback={<ProfileSkeleton />}>
+        <Suspense fallback={<ProfileSkeleton />}>
+          <div className="relative">
             <ProfileCard params={await params} />
-          </Suspense>
-          <nav className="flex absolute bottom-0 left-0">
-            <div>
-              <Link href={"./overview"}>overview</Link>
-            </div>
-            <div>
-              <Link href={"./live-game"}>livegame</Link>
-            </div>
-          </nav>
-        </div>
+            <ProfileLinks />
+          </div>
+        </Suspense>
         {children}
       </div>
     </main>

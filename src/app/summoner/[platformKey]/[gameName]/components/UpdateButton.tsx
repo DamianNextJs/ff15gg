@@ -38,21 +38,26 @@ export default function UpdateButton({
       const elapsed = Date.now() - Number(lastUpdate);
       const remaining = Math.max(COOLDOWN_MS - elapsed, 0);
       setCooldown(remaining);
-
-      if (remaining <= 0) {
-        localStorage.removeItem(STORAGE_KEY);
-      }
     }
   }, [STORAGE_KEY]);
 
   // Cooldown countdown
   useEffect(() => {
     if (cooldown <= 0) {
-      localStorage.removeItem(STORAGE_KEY);
       return;
     }
 
-    const interval = setInterval(() => setCooldown((c) => c - 1000), 1000);
+    const interval = setInterval(() => {
+      setCooldown((c) => {
+        const next = c - 1000;
+        if (next <= 0) {
+          // when it naturally expires, clean up once
+          localStorage.removeItem(STORAGE_KEY);
+        }
+        return next;
+      });
+    }, 1000);
+
     return () => clearInterval(interval);
   }, [cooldown, STORAGE_KEY]);
 

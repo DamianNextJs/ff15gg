@@ -21,7 +21,6 @@ export default async function Overview({ params }: OverviewProps) {
   const [name, tag = ""] = decodeURIComponent(gameName).split("-");
 
   const profileData = await getSummonerData(region, platform, name, tag);
-
   if (!profileData) return null;
 
   const recentTeammates = getRecentTeammates(

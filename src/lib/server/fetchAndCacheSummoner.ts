@@ -58,9 +58,9 @@ export async function fetchAndCacheSummoner(
   const riotAccount = await getRiotAccount(gameName, tagLine, region);
   const summoner = await getSummonerByPuuid(riotAccount.puuid, platform);
   const championMastery = mapChampionMastery(
-    await getChampionMastery(summoner.puuid, platform)
+    await getChampionMastery(riotAccount.puuid, platform)
   );
-  const ranked = mapRanked(await getRankedInfo(summoner.puuid, platform));
+  const ranked = mapRanked(await getRankedInfo(riotAccount.puuid, platform));
 
   // --- Fetch recent matches ---
   const recentMatchIds = await getRecentMatchIds(riotAccount.puuid, region, 20);
