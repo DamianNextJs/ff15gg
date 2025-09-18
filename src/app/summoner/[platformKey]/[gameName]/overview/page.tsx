@@ -7,6 +7,7 @@ import ChampStatsCard from "./components/ChampStatsCard";
 import ChampMasteryCard from "./components/ChampMasteryCard";
 import RecentlyPlayedWith from "./components/RecentlyPlayedWith";
 import MatchHistory from "./components/MatchHistoryComponents/MatchHistory";
+import { getRankData } from "@/helper/summoner";
 
 export default function Overview() {
   const { summonerData: profileData } = useSummonerData();
@@ -15,17 +16,14 @@ export default function Overview() {
     profileData.riotAccount.puuid
   );
 
+  const soloData = getRankData(profileData.ranked || [], "solo");
+  const flexData = getRankData(profileData.ranked || [], "flex");
+
   return (
     <div className="lg:flex gap-3 -mt-3.5">
       <div className="flex-1">
-        <RankCard
-          data={profileData?.ranked?.[0] || null}
-          rankType="Ranked Solo"
-        />
-        <RankCard
-          data={profileData?.ranked?.[1] || null}
-          rankType="Ranked Flex"
-        />
+        <RankCard data={soloData} rankType="Ranked Solo" />
+        <RankCard data={flexData} rankType="Ranked Flex" />
         <ChampStatsCard recentChampStats={profileData?.champStats || []} />
         <ChampMasteryCard
           championMastery={profileData?.championMastery || []}
