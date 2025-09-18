@@ -1,16 +1,16 @@
 import Image from "next/image";
 import Link from "next/link";
-import { RecentTeammates } from "@/types/riot"; // assuming you updated types
+import { RecentTeammates } from "@/types/riot";
 import { DDragon } from "@/utils/ddragon";
 import { createSummonerUrl } from "@/helper/summoner";
 
 interface RecentlyPlayedWithProps {
-  region: string;
+  platformKey: string;
   recentTeammates: RecentTeammates[]; // already aggregated on server
 }
 
 export default function RecentlyPlayedWith({
-  region,
+  platformKey,
   recentTeammates,
 }: RecentlyPlayedWithProps) {
   if (!recentTeammates || recentTeammates.length === 0) return null;
@@ -40,9 +40,10 @@ export default function RecentlyPlayedWith({
 
           return (
             <Link
-              href={`/summoner/${region}/${encodeURIComponent(
+              href={`/summoner/${platformKey}/${encodeURIComponent(
                 summonerUrl
               )}/overview`}
+              prefetch={false}
               key={teammate.puuid}
               className="grid grid-cols-[2fr_1fr_1fr_1fr] -mx-4 px-4 py-3 border-t border-accent hover:bg-subtle/15 cursor-pointer"
             >

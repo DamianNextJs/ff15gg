@@ -7,10 +7,10 @@ export function getRankData(ranked: RankedData[], type: "solo" | "flex") {
 }
 
 // make sure summonername is stored consistently in our db
-export function normalizeSummonerName(gameName: string, tagLine: string) {
+export function normalizeSummonerName(gameName?: string, tagLine?: string) {
   return {
-    gameName: gameName.replace(/\s+/g, "").toLowerCase(),
-    tagLine: tagLine.replace(/\s+/g, "").toLowerCase(),
+    gameName: (gameName ?? "").replace(/\s+/g, "").toLowerCase(),
+    tagLine: (tagLine ?? "").replace(/\s+/g, "").toLowerCase(),
   };
 }
 

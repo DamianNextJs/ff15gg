@@ -1,28 +1,15 @@
-import ChampMasteryCard from "@/app/summoner/[platformKey]/[gameName]/overview/components/ChampMasteryCard";
-import ChampStatsCard from "@/app/summoner/[platformKey]/[gameName]/overview/components/ChampStatsCard";
-import MatchHistory from "@/app/summoner/[platformKey]/[gameName]/overview/components/MatchHistoryComponents/MatchHistory";
-import RankCard from "@/app/summoner/[platformKey]/[gameName]/overview/components/RankCard";
-import RecentlyPlayedWith from "@/app/summoner/[platformKey]/[gameName]/overview/components/RecentlyPlayedWith";
-import { getSummonerData } from "@/helper/getSummonerData";
+"use client";
+
+import { useSummonerData } from "@/context/SummonerContext";
 import { getRecentTeammates } from "@/helper/stats/getRecentTeammates";
-import { RegionKey, regionMap } from "@/lib/maps/regionMap";
+import RankCard from "./components/RankCard";
+import ChampStatsCard from "./components/ChampStatsCard";
+import ChampMasteryCard from "./components/ChampMasteryCard";
+import RecentlyPlayedWith from "./components/RecentlyPlayedWith";
+import MatchHistory from "./components/MatchHistoryComponents/MatchHistory";
 
-interface OverviewProps {
-  params: Promise<{
-    platformKey: string;
-    gameName: string;
-  }>;
-}
-
-export default async function Overview({ params }: OverviewProps) {
-  const { platformKey, gameName } = await params;
-
-  const { platform, region } = regionMap[platformKey as RegionKey];
-  const [name, tag = ""] = decodeURIComponent(gameName).split("-");
-
-  const profileData = await getSummonerData(region, platform, name, tag);
-  if (!profileData) return null;
-
+export default function Overview() {
+  const { summonerData: profileData } = useSummonerData();
   const recentTeammates = getRecentTeammates(
     profileData.matches || [],
     profileData.riotAccount.puuid
@@ -45,7 +32,7 @@ export default async function Overview({ params }: OverviewProps) {
         />
         <RecentlyPlayedWith
           recentTeammates={recentTeammates}
-          region={platformKey}
+          platformKey={profileData.platform ?? "unknown"}
         />
       </div>
 

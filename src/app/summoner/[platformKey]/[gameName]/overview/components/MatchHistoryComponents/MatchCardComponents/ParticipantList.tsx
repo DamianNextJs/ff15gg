@@ -46,6 +46,7 @@ export default function ParticipantList({
                     <Image src={champIconUrl} alt="" width={15} height={15} />
                   </div>
                   <Link
+                    prefetch={false}
                     href={`/summoner/${regionKey}/${encodeURIComponent(
                       summonerUrl
                     )}/overview`}

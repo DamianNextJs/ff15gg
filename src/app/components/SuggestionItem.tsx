@@ -19,8 +19,6 @@ export default function SuggestionItem({
   // Ensure summoner.region is typed as a valid RegionKey
   const platform = summoner.platform as RegionKey;
 
-  console.log(summoner);
-
   return (
     <li
       className="p-2 hover:bg-gray-200 cursor-pointer flex justify-between items-center rounded-md"

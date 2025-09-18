@@ -16,5 +16,5 @@ export function mergeMatches(
     new Map(merged.map((m) => [m.metadata.matchId, m])).values()
   ).sort((a, b) => b.info.gameEndTimestamp - a.info.gameEndTimestamp);
 
-  return deduped.slice(0, 200);
+  return deduped.slice(0, cap);
 }

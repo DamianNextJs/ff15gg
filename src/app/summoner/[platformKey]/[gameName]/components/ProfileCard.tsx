@@ -1,3 +1,4 @@
+"use client";
 import { rankBorderColors } from "@/lib/maps/rankBorderColorMap";
 import { toNormalCase } from "@/utils/utils";
 import { getRankData } from "@/helper/summoner";
@@ -5,28 +6,13 @@ import Image from "next/image";
 import { DDragon } from "@/utils/ddragon";
 import UpdateButton from "./UpdateButton";
 import { getChampionById } from "@/helper/getChampionById";
+import { useSummonerData } from "@/context/SummonerContext";
 import { RegionKey, regionMap } from "@/lib/maps/regionMap";
-import SummonerNotFound from "@/app/summoner/[platformKey]/[gameName]/SummonerNotFound";
-import { getSummonerData } from "@/helper/getSummonerData";
+import ProfileSkeleton from "./ProfileSkeleton";
 
-interface ProfileCardProps {
-  params: {
-    platformKey: string;
-    gameName: string;
-  };
-}
-
-export default async function ProfileCard({ params }: ProfileCardProps) {
-  const { platformKey, gameName } = params;
-
-  const { platform, region } = regionMap[platformKey as RegionKey];
-  const [name, tag = ""] = decodeURIComponent(gameName).split("-");
-
-  const profileData = await getSummonerData(region, platform, name, tag);
-
-  if (!profileData) {
-    return <SummonerNotFound platformKey={platform} name={name} tag={tag} />;
-  }
+export default function ProfileCard() {
+  const { summonerData: profileData } = useSummonerData();
+  if (!profileData) return <ProfileSkeleton />;
 
   const iconId = profileData.summoner.profileIconId ?? 0;
   const profileIconUrl = DDragon.profileIcon(iconId);
@@ -42,6 +28,9 @@ export default async function ProfileCard({ params }: ProfileCardProps) {
   // --- Champion for background ---
   const topChampId = profileData?.championMastery?.[0]?.championId ?? 92;
   const bgImgChamp = getChampionById(topChampId);
+
+  // --- derive region + platfrom from stored platformKey ---
+  const { region, platform } = regionMap[profileData.platform as RegionKey];
 
   return (
     <section className="relative flex items-center h-[20vh] lg:h-[27vh]">
@@ -91,8 +80,8 @@ export default async function ProfileCard({ params }: ProfileCardProps) {
           <UpdateButton
             region={region}
             platform={platform}
-            gameName={name}
-            tagLine={tag}
+            gameName={profileData.riotAccount.gameName}
+            tagLine={profileData.riotAccount.tagLine}
             puuid={profileData.riotAccount.puuid}
             lastUpdated={lastUpdatedTimeStamp}
           />

@@ -14,6 +14,7 @@ interface UpdateButtonProps {
   lastUpdated: Date;
 }
 const COOLDOWN_MS = 5 * 60 * 1000;
+const STORAGE_KEY = "summonerLastUpdates";
 
 export default function UpdateButton({
   puuid,
@@ -23,23 +24,30 @@ export default function UpdateButton({
   tagLine,
   lastUpdated,
 }: UpdateButtonProps) {
-  const STORAGE_KEY = `lastUpdate_${puuid}`; // unique per summoner
-
   const [flash, setFlash] = useState(false);
   const [loading, setLoading] = useState(false);
   const [cooldown, setCooldown] = useState(0);
   const router = useRouter();
   const isDisabled = loading || cooldown > 0;
 
+  // Helper to read/write the centralized storage object
+  const getStoredTimeStamps = (): Record<string, number> => {
+    const stored = localStorage.getItem(STORAGE_KEY);
+    return stored ? JSON.parse(stored) : {};
+  };
+  const setStoredTimeStamps = (obj: Record<string, number>) => {
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(obj));
+  };
+
   // Initialize cooldown from localStorage
   useEffect(() => {
-    const lastUpdate = localStorage.getItem(STORAGE_KEY);
+    const timestamps = getStoredTimeStamps();
+    const lastUpdate = timestamps[puuid];
     if (lastUpdate) {
       const elapsed = Date.now() - Number(lastUpdate);
-      const remaining = Math.max(COOLDOWN_MS - elapsed, 0);
-      setCooldown(remaining);
+      setCooldown(Math.max(COOLDOWN_MS - elapsed, 0));
     }
-  }, [STORAGE_KEY]);
+  }, [puuid]);
 
   // Cooldown countdown
   useEffect(() => {
@@ -51,15 +59,17 @@ export default function UpdateButton({
       setCooldown((c) => {
         const next = c - 1000;
         if (next <= 0) {
-          // when it naturally expires, clean up once
-          localStorage.removeItem(STORAGE_KEY);
+          // remove only this puuid from centralized object
+          const timestamps = getStoredTimeStamps();
+          delete timestamps[puuid];
+          setStoredTimeStamps(timestamps);
         }
         return next;
       });
     }, 1000);
 
     return () => clearInterval(interval);
-  }, [cooldown, STORAGE_KEY]);
+  }, [cooldown, puuid]);
 
   async function handleClick() {
     if (cooldown > 0) return;
@@ -67,8 +77,12 @@ export default function UpdateButton({
     setLoading(true);
     try {
       await updateSummonerProfile(region, platform, gameName, tagLine);
-      localStorage.setItem(STORAGE_KEY, String(Date.now())); // persist timestamp
-      setLoading(false);
+
+      // persists timestamp centrally
+      const timestamps = getStoredTimeStamps();
+      timestamps[puuid] = Date.now();
+      setStoredTimeStamps(timestamps);
+
       setFlash(true);
       setCooldown(COOLDOWN_MS);
       setTimeout(() => setFlash(false), 1000); // reset flash after 1s

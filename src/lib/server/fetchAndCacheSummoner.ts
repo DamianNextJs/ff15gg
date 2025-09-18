@@ -41,6 +41,7 @@ export async function fetchAndCacheSummoner(
     );
     return {
       ...existingSummoner.data,
+      matches: existingSummoner?.data?.matches?.slice(0, 20),
       lastUpdated: existingSummoner.lastUpdated,
       platform: existingSummoner.platform,
     };
@@ -66,6 +67,16 @@ export async function fetchAndCacheSummoner(
   const recentMatchIds = await getRecentMatchIds(riotAccount.puuid, region, 20);
   await new Promise((res) => setTimeout(res, 1000)); // rate limit pause
 
+  // Get the platform prefix of the first match to check for platform mismatch
+  const firstMatchPlatform = recentMatchIds[0]?.split("_")[0].toLowerCase();
+
+  if (!firstMatchPlatform || firstMatchPlatform !== platform) {
+    console.warn(
+      `[PLATFORM MISMATCH] Requested ${platform}, but first match is on ${firstMatchPlatform}`
+    );
+    return null;
+  }
+
   const newMatches: MatchData[] = mapMatches(
     await Promise.all(
       recentMatchIds.map((matchId: string) => getMatch(matchId, region))
@@ -75,8 +86,7 @@ export async function fetchAndCacheSummoner(
   // --- Merge with existing matches  ---
   const mergedMatches = mergeMatches(
     existingSummoner?.data?.matches ?? [],
-    newMatches,
-    20
+    newMatches
   );
 
   // --- Aggregations ---
@@ -114,5 +124,10 @@ export async function fetchAndCacheSummoner(
     `[DB SAVE] Cached data for ${normalizedGameName}#${normalizedTagLine}`
   );
 
-  return profileData;
+  return {
+    ...profileData,
+    matches: profileData.matches?.slice(0, 20),
+    lastUpdated: new Date(),
+    platform,
+  };
 }
