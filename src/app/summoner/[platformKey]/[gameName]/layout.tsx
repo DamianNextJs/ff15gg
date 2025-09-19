@@ -1,7 +1,6 @@
 import type { Metadata } from "next";
 import { ReactNode, Suspense } from "react";
 import ProfileCard from "./components/ProfileCard";
-import ProfileLinks from "./components/ProfileLinks";
 import ProfileSkeleton from "./components/ProfileSkeleton";
 
 export const metadata: Metadata = {
@@ -27,7 +26,6 @@ export default async function SummonerPageLayout({
         <div className="relative">
           <Suspense fallback={<ProfileSkeleton />}>
             <ProfileCard params={await params} />
-            <ProfileLinks />
           </Suspense>
         </div>
         {children}

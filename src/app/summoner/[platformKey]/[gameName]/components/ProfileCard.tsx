@@ -7,7 +7,7 @@ import UpdateButton from "./UpdateButton";
 import { getChampionById } from "@/helper/getChampionById";
 import { RegionKey, regionMap } from "@/lib/maps/regionMap";
 import { getSummonerData } from "@/helper/getSummonerData";
-import SummonerNotFound from "../SummonerNotFound";
+import ProfileLinks from "./ProfileLinks";
 
 interface ProfileCardProps {
   params: {
@@ -29,8 +29,7 @@ export default async function ProfileCard({ params }: ProfileCardProps) {
     console.log("error fetching summoner", error);
   }
 
-  if (!profileData)
-    return <SummonerNotFound platformKey={platformKey} name={name} tag={tag} />;
+  if (!profileData) return <div className="h-50 lg:h-65" />;
 
   const iconId = profileData.summoner.profileIconId ?? 0;
   const profileIconUrl = DDragon.profileIcon(iconId);
@@ -102,6 +101,7 @@ export default async function ProfileCard({ params }: ProfileCardProps) {
           />
         </div>
       </div>
+      <ProfileLinks />
     </section>
   );
 }

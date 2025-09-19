@@ -34,7 +34,7 @@ export default function Loading() {
           </h2>
           <div className="flex justify-around">
             {Array.from({ length: 3 }).map((_, i) => (
-              <div key={i} className="bg-accent rounded-md w-12 h-23.5 mt-4" />
+              <div key={i} className="bg-accent rounded-md w-12 h-24.5 mt-4" />
             ))}
           </div>
         </div>

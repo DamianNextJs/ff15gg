@@ -5,13 +5,12 @@ export default function Home() {
   return (
     <main className="relative min-h-screen">
       {/* Background */}
-      <div className="absolute inset-0 ">
+      <div className="absolute inset-0">
         <Image
           src="https://ddragon.leagueoflegends.com/cdn/img/champion/splash/Riven_23.jpg"
           alt="Background champion"
           fill // makes it cover the parent
           className="object-cover object-center"
-          priority // optional: loads immediately
         />
         <div className="absolute inset-0 bg-primary/10 backdrop-brightness-50 bg-gradient-to-t from-bg via-bg/20 to-transparent" />
       </div>
