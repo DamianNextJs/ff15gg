@@ -83,7 +83,7 @@ export async function fetchAndCacheSummoner(
     )
   );
 
-  // --- Merge with existing matches  ---
+  // --- Merge with existing matches ---
   const mergedMatches = mergeMatches(
     existingSummoner?.data?.matches ?? [],
     newMatches

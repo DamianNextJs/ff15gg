@@ -33,7 +33,7 @@ export default function ProfileCard() {
   const { region, platform } = regionMap[profileData.platform as RegionKey];
 
   return (
-    <section className="relative flex items-center h-[20vh] lg:h-[27vh]">
+    <section className="relative flex items-center h-50 lg:h-75">
       {/* Background */}
       <div
         className="absolute inset-0 bg-cover -mt-4 -mx-4 lg:m-0 -z-1"
@@ -46,7 +46,7 @@ export default function ProfileCard() {
       </div>
 
       {/* Foreground content */}
-      <div className="flex gap-3 items-end mb-10 lg:mb-6">
+      <div className="flex gap-4 items-end mb-14 lg:mb-0">
         {/* Profile Icon */}
         <div className="relative">
           <div className="size-20 lg:size-24 relative">

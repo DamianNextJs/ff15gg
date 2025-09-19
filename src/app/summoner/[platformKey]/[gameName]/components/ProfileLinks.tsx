@@ -12,7 +12,7 @@ export default function ProfileLinks() {
   const pathName = usePathname() || "";
 
   return (
-    <nav className="absolute bottom-7 lg:bottom-9  left-0 space-x-7 font-semibold">
+    <nav className="absolute bottom-10  left-0 space-x-7 font-semibold">
       {links.map((link) => {
         const isActive = pathName.includes(link.href.replace("./", "/"));
 
