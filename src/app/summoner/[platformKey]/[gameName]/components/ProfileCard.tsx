@@ -1,4 +1,3 @@
-"use client";
 import { rankBorderColors } from "@/lib/maps/rankBorderColorMap";
 import { toNormalCase } from "@/utils/utils";
 import { getRankData } from "@/helper/summoner";
@@ -6,20 +5,39 @@ import Image from "next/image";
 import { DDragon } from "@/utils/ddragon";
 import UpdateButton from "./UpdateButton";
 import { getChampionById } from "@/helper/getChampionById";
-import { useSummonerData } from "@/context/SummonerContext";
 import { RegionKey, regionMap } from "@/lib/maps/regionMap";
-import ProfileSkeleton from "./ProfileSkeleton";
+import { getSummonerData } from "@/helper/getSummonerData";
+import SummonerNotFound from "../SummonerNotFound";
 
-export default function ProfileCard() {
-  const { summonerData: profileData } = useSummonerData();
-  if (!profileData) return <ProfileSkeleton />;
+interface ProfileCardProps {
+  params: {
+    platformKey: string;
+    gameName: string;
+  };
+}
+
+export default async function ProfileCard({ params }: ProfileCardProps) {
+  const { platformKey, gameName } = params;
+
+  const { platform, region } = regionMap[platformKey as RegionKey];
+  const [name, tag = ""] = decodeURIComponent(gameName).split("-");
+
+  let profileData;
+  try {
+    profileData = await getSummonerData(region, platform, name, tag);
+  } catch (error) {
+    console.log("error fetching summoner", error);
+  }
+
+  if (!profileData)
+    return <SummonerNotFound platformKey={platformKey} name={name} tag={tag} />;
 
   const iconId = profileData.summoner.profileIconId ?? 0;
   const profileIconUrl = DDragon.profileIcon(iconId);
 
   const tier = toNormalCase(
-    getRankData(profileData?.ranked || [], "solo")?.tier ??
-      getRankData(profileData?.ranked || [], "flex")?.tier ??
+    getRankData(profileData?.ranked || [], "Ranked Solo")?.tier ??
+      getRankData(profileData?.ranked || [], "Ranked Flex")?.tier ??
       ""
   );
   const borderColor = rankBorderColors[tier];
@@ -29,11 +47,8 @@ export default function ProfileCard() {
   const topChampId = profileData?.championMastery?.[0]?.championId ?? 92;
   const bgImgChamp = getChampionById(topChampId);
 
-  // --- derive region + platfrom from stored platformKey ---
-  const { region, platform } = regionMap[profileData.platform as RegionKey];
-
   return (
-    <section className="relative flex items-center h-50 lg:h-75">
+    <section className="relative flex items-center h-50 lg:h-65">
       {/* Background */}
       <div
         className="absolute inset-0 bg-cover -mt-4 -mx-4 lg:m-0 -z-1"

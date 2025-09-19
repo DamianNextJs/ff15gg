@@ -25,7 +25,7 @@ export function formatGameDuration(gameDuration: number) {
 }
 
 // mainly used for showing the rank in NormalCase since its returned in lowercase
-export function toNormalCase(str: string) {
+export function toNormalCase(str: string | undefined) {
   if (!str) return "";
   return str.charAt(0).toUpperCase() + str.slice(1).toLowerCase();
 }

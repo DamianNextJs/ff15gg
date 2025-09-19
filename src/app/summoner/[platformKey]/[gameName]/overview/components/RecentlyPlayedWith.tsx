@@ -1,24 +1,29 @@
+"use client";
 import Image from "next/image";
 import Link from "next/link";
 import { RecentTeammates } from "@/types/riot";
 import { DDragon } from "@/utils/ddragon";
 import { createSummonerUrl } from "@/helper/summoner";
+import { getRecentTeammates } from "@/helper/stats/getRecentTeammates";
+import { useMatches } from "../contexts/MatchesContext";
 
 interface RecentlyPlayedWithProps {
   platformKey: string;
-  recentTeammates: RecentTeammates[]; // already aggregated on server
+  puuid: string;
 }
 
 export default function RecentlyPlayedWith({
   platformKey,
-  recentTeammates,
+  puuid,
 }: RecentlyPlayedWithProps) {
-  if (!recentTeammates || recentTeammates.length === 0) return null;
+  const { matches } = useMatches();
+  const recentTeammates: RecentTeammates[] = getRecentTeammates(matches, puuid);
 
   return (
     <section className="mt-3 bg-secondary rounded-md p-4 pb-0">
-      <h2 className="text-sm lg:text-base font-semibold border-l-2 border-primary ps-3">
+      <h2 className="text-sm lg:text-base font-semibold border-l-2 border-primary ps-3 flex items-center justify-between">
         Recently Played With
+        <p className="text-sm text-subtle">Last {matches.length} Games</p>
       </h2>
 
       <div className="text-xs text-subtle mt-3 font-medium">
@@ -31,7 +36,7 @@ export default function RecentlyPlayedWith({
         </div>
 
         {/* Teammates */}
-        {recentTeammates.map((teammate) => {
+        {recentTeammates.map((teammate: RecentTeammates) => {
           const profileIcon = DDragon.profileIcon(teammate.profileIconId);
           const summonerUrl = createSummonerUrl(
             teammate.gameName,

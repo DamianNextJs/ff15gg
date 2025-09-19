@@ -1,5 +1,5 @@
 "use client";
-import { MatchData } from "@/types/riot";
+
 import MatchHistoryHeader from "./MatchHistoryHeader";
 import MatchCard from "./MatchCard";
 import { queueMap } from "@/lib/maps/queueMap";
@@ -7,21 +7,17 @@ import { getRecentStats } from "@/helper/stats/getRecentStats";
 import MatchHistoryLoader from "./MatchHistoryLoader";
 import { useEffect, useMemo, useState } from "react";
 import { loadCachedMatches } from "../../../actions";
+import { useMatches } from "../../contexts/MatchesContext";
 
 interface MatchHistoryProps {
-  matches: MatchData[];
   participantPuuid: string;
 }
 
-export default function MatchHistory({
-  matches: initialMatches,
-  participantPuuid,
-}: MatchHistoryProps) {
-  const [matches, setMatches] = useState<MatchData[]>(initialMatches);
-  const [offset, setOffset] = useState(initialMatches.length);
+export default function MatchHistory({ participantPuuid }: MatchHistoryProps) {
+  const { matches, setMatches } = useMatches();
+  const [offset, setOffset] = useState(matches.length);
   const [loading, setLoading] = useState(false);
   const [hasMore, setHasMore] = useState(true);
-  const [initialLoading, setInitialLoading] = useState(true);
 
   const recentStats = useMemo(
     () => getRecentStats(matches, participantPuuid),
@@ -29,8 +25,9 @@ export default function MatchHistory({
   );
 
   useEffect(() => {
-    setInitialLoading(false);
-  }, []);
+    setOffset(matches.length);
+    setHasMore(true);
+  }, [matches]);
 
   async function handleLoadMore() {
     setLoading(true);
@@ -48,11 +45,10 @@ export default function MatchHistory({
   }
 
   return (
-    <section className="mt-3 bg-secondary rounded-md p-4">
+    <section className="mt-3  bg-secondary rounded-md p-4">
       <h2 className="text-sm lg:text-base font-semibold border-l-2 border-primary ps-3">
         Match History
       </h2>
-      {initialLoading && <MatchHistoryLoader />}
 
       <MatchHistoryHeader recentStats={recentStats} />
 
@@ -73,20 +69,26 @@ export default function MatchHistory({
         })}
       </div>
 
-      {hasMore && (
-        <div className="flex justify-center mt-4">
+      {hasMore ? (
+        <div className="flex justify-center mt-4 py-8">
           {loading ? (
-            <MatchHistoryLoader />
+            <div className="-my-1.5 lg:-my-2">
+              <MatchHistoryLoader />
+            </div>
           ) : (
             <button
               onClick={handleLoadMore}
               disabled={loading}
-              className="px-4 py-2 bg-primary text-white rounded hover:bg-primary/90 disabled:opacity-50"
+              className="text-sm lg:text-base px-4 py-2 font-medium bg-primary text-white rounded hover:bg-primary/90 disabled:opacity-50 cursor-pointer"
             >
               Load More
             </button>
           )}
         </div>
+      ) : (
+        <p className="text-subtle mt-4 h-25 lg:h-26  flex justify-center items-center">
+          No more matches to load
+        </p>
       )}
     </section>
   );

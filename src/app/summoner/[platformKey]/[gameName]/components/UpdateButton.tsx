@@ -95,7 +95,7 @@ export default function UpdateButton({
   }
   return (
     <button
-      className={`relative w-30 text-xs lg:text-sm px-2 py-2 rounded-sm font-semibold transition-all duration-300 flex justify-center items-center group ${
+      className={`relative w-30 text-xs lg:text-sm p-2 rounded-sm font-semibold transition-all duration-300 flex justify-center items-center group ${
         flash ? "bg-yellow-400 scale-105" : "bg-primary"
       } ${isDisabled ? "cursor-not-allowed" : "cursor-pointer"}`}
       onClick={handleClick}

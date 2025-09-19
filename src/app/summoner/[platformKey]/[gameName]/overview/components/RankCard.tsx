@@ -2,20 +2,22 @@ import { calculateWinrate } from "@/helper/stats/stats";
 import { toNormalCase, toRoman } from "@/utils/utils";
 import { RankedData } from "@/types/riot";
 import Image from "next/image";
+import { getRankData } from "@/helper/summoner";
 
 export default function RankCard({
   data,
   rankType,
 }: {
-  data: RankedData | null;
-  rankType: string;
+  data: RankedData[];
+  rankType: "Ranked Solo" | "Ranked Flex";
 }) {
-  const wins = data?.wins ?? 0;
-  const losses = data?.losses ?? 0;
-  const leaguePoints = data?.leaguePoints;
+  const rankedData = getRankData(data, rankType);
+  const wins = rankedData?.wins ?? 0;
+  const losses = rankedData?.losses ?? 0;
+  const leaguePoints = rankedData?.leaguePoints;
   const winrate = calculateWinrate(wins, losses);
-  const tier = data ? toNormalCase(data?.tier) : ""; //The actual rank like Diamond
-  const rank = data ? toRoman(data?.rank, tier) : ""; //The division like Diamond 1
+  const tier = data ? toNormalCase(rankedData?.tier) : ""; //The actual rank like Diamond
+  const rank = data ? toRoman(rankedData?.rank, tier) : ""; //The division like Diamond 1
 
   const hasRankInfo = !!rank || !!tier;
 
