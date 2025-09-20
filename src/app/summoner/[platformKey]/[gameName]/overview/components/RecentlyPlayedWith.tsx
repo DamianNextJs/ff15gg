@@ -23,7 +23,9 @@ export default function RecentlyPlayedWith({
     <section className="mt-3 bg-secondary rounded-md p-4 pb-0">
       <h2 className="text-sm lg:text-base font-semibold border-l-2 border-primary ps-3 flex items-center justify-between">
         Recently Played With
-        <p className="text-sm text-subtle">Last {matches.length} Games</p>
+        <p className="text-xs lg:text-sm text-subtle">
+          Last {matches.length} Games
+        </p>
       </h2>
 
       <div className="text-xs text-subtle mt-3 font-medium">
