@@ -6,6 +6,8 @@ import { DDragon } from "@/utils/ddragon";
 import { createSummonerUrl } from "@/helper/summoner";
 import { getRecentTeammates } from "@/helper/stats/getRecentTeammates";
 import { useMatches } from "../contexts/MatchesContext";
+import { useMemo } from "react";
+import { queueMap } from "@/lib/maps/queueMap";
 
 interface RecentlyPlayedWithProps {
   platformKey: string;
@@ -16,15 +18,27 @@ export default function RecentlyPlayedWith({
   platformKey,
   puuid,
 }: RecentlyPlayedWithProps) {
-  const { matches } = useMatches();
-  const recentTeammates: RecentTeammates[] = getRecentTeammates(matches, puuid);
+  const { matches, currentQueue } = useMatches();
+  const filteredMatches = useMemo(() => {
+    return matches.filter((m) => {
+      if (currentQueue === "all") {
+        return m.info.queueId in queueMap;
+      } else {
+        return m.info.queueId === currentQueue;
+      }
+    });
+  }, [matches, currentQueue]);
+  const recentTeammates: RecentTeammates[] = getRecentTeammates(
+    filteredMatches,
+    puuid
+  );
 
   return (
     <section className="mt-3 bg-secondary rounded-md p-4 pb-0">
       <h2 className="text-sm lg:text-base font-semibold border-l-2 border-primary ps-3 flex items-center justify-between">
         Recently Played With
         <p className="text-xs lg:text-sm text-subtle">
-          Last {matches.length} Games
+          Last {filteredMatches.length} Games
         </p>
       </h2>
 

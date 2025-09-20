@@ -14,6 +14,8 @@ import { MatchData } from "@/types/riot";
 interface MatchesContextType {
   matches: MatchData[];
   setMatches: Dispatch<SetStateAction<MatchData[]>>;
+  currentQueue: number | "all";
+  setCurrentQueue: Dispatch<SetStateAction<number | "all">>;
 }
 
 const MatchesContext = createContext<MatchesContextType | null>(null);
@@ -26,13 +28,16 @@ export function MatchesProvider({
   children: ReactNode;
 }) {
   const [matches, setMatches] = useState<MatchData[]>(initialMatches);
+  const [currentQueue, setCurrentQueue] = useState<number | "all">("all");
 
   useEffect(() => {
     setMatches(initialMatches);
   }, [initialMatches]);
 
   return (
-    <MatchesContext.Provider value={{ matches, setMatches }}>
+    <MatchesContext.Provider
+      value={{ matches, setMatches, currentQueue, setCurrentQueue }}
+    >
       {children}
     </MatchesContext.Provider>
   );

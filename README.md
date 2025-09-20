@@ -8,14 +8,15 @@ Live demo: [ff15gg.vercel.app](https://ff15gg.vercel.app)
 
 - View summoner profiles: rank, LP and match history
 - Search suggestions when typing
+- Handles whitespace input gracefully: recent searches are still shown
 - Recent searches with persistence across sessions
+- Region selection integrated with search (recent searches respect region per summoner)
 - Persistent caching to reduce Riot API requests
 - Responsive design with Tailwind CSS
 - Update Button for fetching fresh data straight from Riot API (includes a cooldown to prevent spamming and API rate limit abuse)
 - Load More Matches: View more than the last 20 matches if available in the database (additional matches are fetched and stored olny when the Update Button is pressed)
-- Region selection integrated with search (recent searches respect region per summoner)
-- Handles whitespace input gracefully: recent searches are still shown
 - Detailed Match Loadouts: Hover over items, summoner spells, and runes to view tooltips with full details. Modular component structure ensures clean and maintainable code.
+- Filter matches by queue using Queue Selector in Match History (syncs with Recently Played With)
 
 ## Notes / Usage Tips
 

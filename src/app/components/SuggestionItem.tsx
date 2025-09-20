@@ -21,7 +21,7 @@ export default function SuggestionItem({
 
   return (
     <li
-      className="p-2 hover:bg-gray-200 cursor-pointer flex justify-between items-center rounded-md"
+      className="p-2 hover:bg-gray-200 cursor-pointer flex justify-between items-center"
       onClick={() => onSelect(summoner)}
     >
       <div className="flex items-center gap-1.5">

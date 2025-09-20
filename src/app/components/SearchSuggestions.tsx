@@ -61,8 +61,8 @@ export default function SearchSuggestions({
   if (!suggestions.length) return null;
 
   return (
-    <ul className="absolute mt-1 w-full bg-white border z-10 rounded-md">
-      <h2 className="bg-subtle text-xs lg:text-sm p-2 rounded-t-md">
+    <ul className="absolute mt-1 w-full bg-white border z-10 rounded-md overflow-hidden">
+      <h2 className="bg-subtle text-xs lg:text-sm p-2">
         {!trimmedInput ? "Recent Searches" : "Summoner Profile"}
       </h2>
       {suggestions.map((s, i) => (
