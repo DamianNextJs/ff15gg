@@ -5,9 +5,9 @@ import Image from "next/image";
 import { DDragon } from "@/utils/ddragon";
 import UpdateButton from "./UpdateButton";
 import { getChampionById } from "@/helper/getChampionById";
-import { RegionKey, regionMap } from "@/lib/maps/regionMap";
 import { getSummonerData } from "@/helper/getSummonerData";
 import ProfileLinks from "./ProfileLinks";
+import { parseSummonerParams } from "@/helper/parseSummonerParams";
 
 interface ProfileCardProps {
   params: {
@@ -17,10 +17,7 @@ interface ProfileCardProps {
 }
 
 export default async function ProfileCard({ params }: ProfileCardProps) {
-  const { platformKey, gameName } = params;
-
-  const { platform, region } = regionMap[platformKey as RegionKey];
-  const [name, tag = ""] = decodeURIComponent(gameName).split("-");
+  const { name, tag, platform, region } = parseSummonerParams(params);
 
   let profileData;
   try {

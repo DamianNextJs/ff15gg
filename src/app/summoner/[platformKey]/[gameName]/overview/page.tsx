@@ -4,9 +4,9 @@ import ChampMasteryCard from "./components/ChampMasteryCard";
 import RecentlyPlayedWith from "./components/RecentlyPlayedWith";
 import MatchHistory from "./components/MatchHistoryComponents/MatchHistory";
 import { getSummonerData } from "@/helper/getSummonerData";
-import { RegionKey, regionMap } from "@/lib/maps/regionMap";
 import { MatchesProvider } from "./contexts/MatchesContext";
 import { notFound } from "next/navigation";
+import { parseSummonerParams } from "@/helper/parseSummonerParams";
 
 interface OverviewProps {
   params: Promise<{
@@ -16,10 +16,7 @@ interface OverviewProps {
 }
 
 export default async function Overview({ params }: OverviewProps) {
-  const { platformKey, gameName } = await params;
-
-  const { platform, region } = regionMap[platformKey as RegionKey];
-  const [name, tag = ""] = decodeURIComponent(gameName).split("-");
+  const { name, tag, platform, region } = parseSummonerParams(await params);
 
   let profileData;
   try {
