@@ -6,6 +6,7 @@ import { DDragon } from "@/utils/ddragon";
 import { SummonerSpellIcon } from "./PlayerLoadoutComponents/SummonerSpellIcon";
 import { RuneIcon } from "./PlayerLoadoutComponents/RuneIcon";
 import { getRuneData, getSummonerSpellData } from "@/utils/playerLoadout";
+import { getChampionById } from "@/helper/getChampionById";
 
 export default function PlayerLoadout({
   myParticipant,
@@ -13,7 +14,9 @@ export default function PlayerLoadout({
   myParticipant: ParticipantData;
 }) {
   // Champion
-  const champIconUrl = DDragon.championIcon(myParticipant.championName);
+  const champ = getChampionById(myParticipant.championId);
+
+  const champIconUrl = DDragon.championIcon(champ?.id ?? "");
   const champLevel = myParticipant.champLevel;
 
   // Summoner Spells
