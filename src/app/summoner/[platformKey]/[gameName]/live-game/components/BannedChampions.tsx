@@ -8,6 +8,7 @@ export default function BannedChampions({
 }: {
   bannedChampions: BannedChampion[];
 }) {
+  if (!bannedChampions) return null;
   return (
     <div className="flex justify-between border-accent border-t border-b -mx-4 px-4 p-2">
       {[100, 200].map((teamId) => (

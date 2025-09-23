@@ -68,7 +68,7 @@ export default function LiveGameParticipant({
           myParticipant ? "pointer-events-none text-orange-500" : ""
         } hover:underline text-sm`}
       >
-        {participant.riotId}
+        {name} #{tag}
       </Link>
     </div>
   );
