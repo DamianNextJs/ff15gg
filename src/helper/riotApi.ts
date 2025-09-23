@@ -11,7 +11,7 @@ export async function getRiotAccount(
     `https://${region}.api.riotgames.com/riot/account/v1/accounts/by-riot-id/${gameName}/${tagLine}`,
     { headers }
   );
-  if (!res.ok) throw new Error("Riot account not found");
+  // if (!res.ok) throw new Error("Riot account not found");
   return res.json();
 }
 
@@ -20,7 +20,7 @@ export async function getSummonerByPuuid(puuid: string, platform: string) {
     `https://${platform}.api.riotgames.com/lol/summoner/v4/summoners/by-puuid/${puuid}`,
     { headers }
   );
-  if (!res.ok) throw new Error("Summoner not found");
+  // if (!res.ok) throw new Error("Summoner not found");
   return res.json();
 }
 
@@ -29,7 +29,7 @@ export async function getChampionMastery(puuid: string, platform: string) {
     `https://${platform}.api.riotgames.com/lol/champion-mastery/v4/champion-masteries/by-puuid/${puuid}/top?count=3`,
     { headers }
   );
-  if (!res.ok) throw new Error("Champion Mastery not found");
+  // if (!res.ok) throw new Error("Champion Mastery not found");
   return res.json();
 }
 
@@ -38,7 +38,7 @@ export async function getRankedInfo(puuid: string, platform: string) {
     `https://${platform}.api.riotgames.com/lol/league/v4/entries/by-puuid/${puuid}`,
     { headers }
   );
-  if (!res.ok) throw new Error("Ranked info not found");
+  // if (!res.ok) throw new Error("Ranked info not found");
   return res.json();
 }
 
@@ -51,7 +51,7 @@ export async function getRecentMatchIds(
     `https://${region}.api.riotgames.com/lol/match/v5/matches/by-puuid/${puuid}/ids?count=${count}`,
     { headers }
   );
-  if (!res.ok) throw new Error("Match IDs not found");
+  // if (!res.ok) throw new Error("Match IDs not found");
   return res.json();
 }
 
@@ -60,6 +60,15 @@ export async function getMatch(matchId: string, region: string) {
     `https://${region}.api.riotgames.com/lol/match/v5/matches/${matchId}`,
     { headers }
   );
-  if (!res.ok) throw new Error("Match not found");
+  // if (!res.ok) throw new Error("Match not found");
+  return res.json();
+}
+
+export async function getLiveGame(puuid: string, platform: string) {
+  const res = await fetch(
+    `https://${platform}.api.riotgames.com/lol/spectator/v5/active-games/by-summoner/${puuid}`,
+    { headers }
+  );
+  // if (!res.ok) throw new Error("Live Game not found");
   return res.json();
 }

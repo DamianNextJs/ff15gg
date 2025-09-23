@@ -1,4 +1,5 @@
 import { queueMap } from "@/lib/maps/queueMap";
+import { LiveGame } from "@/types/live-game";
 import { ChampionMastery, MatchData, SummonerData } from "@/types/riot";
 
 // --- Mapping helpers ---
@@ -63,4 +64,33 @@ export function mapMatches(raw: MatchData[]): MatchData[] {
         })),
       },
     }));
+}
+
+export function mapLiveGame(raw: LiveGame | null): LiveGame | null {
+  // Only keep supported queue
+  if (!raw || !(raw.gameQueueConfigId in queueMap)) return null;
+
+  return {
+    gameQueueConfigId: raw.gameQueueConfigId,
+    gameLength: raw.gameLength,
+    bannedChampions: raw.bannedChampions.map((b) => ({
+      championId: b.championId,
+      teamId: b.teamId,
+      pickTurn: b.pickTurn,
+    })),
+    participants: raw.participants.map((p) => ({
+      puuid: p.puuid,
+      teamId: p.teamId,
+      spell1Id: p.spell1Id,
+      spell2Id: p.spell2Id,
+      championId: p.championId,
+      profileIconId: p.profileIconId,
+      riotId: p.riotId,
+      perks: {
+        perkIds: p.perks.perkIds,
+        perkStyle: p.perks.perkStyle,
+        perkSubStyle: p.perks.perkSubStyle,
+      },
+    })),
+  };
 }

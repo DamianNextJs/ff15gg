@@ -5,7 +5,7 @@ import ProfileSkeleton from "./components/ProfileSkeleton";
 
 export const metadata: Metadata = {
   title: "Summoner page",
-  description: "Summoner page of asf",
+  description: "Summoner page",
 };
 
 interface SummonerLayoutProps {
