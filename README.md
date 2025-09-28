@@ -6,25 +6,24 @@ Live demo: [ff15gg.vercel.app](https://ff15gg.vercel.app)
 
 ## Features
 
-- View summoner profiles: rank, LP and match history
-- Search suggestions when typing
-- Handles whitespace input gracefully: recent searches are still shown
-- Recent searches with persistence across sessions
-- Region selection integrated with search (recent searches respect region per summoner)
-- Persistent caching to reduce Riot API requests
+- View League of Legends summoner profiles
+- Show search suggestions while typing
+- Show recent searches when clicking on the search bar
+- Show a Not Found page if the searched summoner doesn't exist
+- Region selection to search for summoners on different regions
+- Persistent caching to reduce API requests
 - Responsive design with Tailwind CSS
-- Update Button for fetching fresh data straight from Riot API (includes a cooldown to prevent spamming and API rate limit abuse)
-- Load More Matches: View more than the last 20 matches if available in the database (additional matches are fetched and stored olny when the Update Button is pressed)
-- Detailed Match Loadouts: Hover over items, summoner spells, and runes to view tooltips with full details. Modular component structure ensures clean and maintainable code.
-- Filter matches by queue using Queue Selector in Match History (syncs with Recently Played With)
+- Update button for fetching new data from Riot API (includes cooldown to prevent spam)
+- Hover tooltip for summoner spells, runes and items
+- Ability to load more than 20 matches if enough are stored in the database
+- Filter matches with queue selector
+- Queue filtering syncs with Recently Played With component
 
 ## Notes / Usage Tips
 
-- Recent searches are stored locally in the browser (using localStorage)
-- Clicking on a suggestion adds it to recent searches and navigates to the correct region.
-- Input trimming ensures searches with leading/trailing whitespace don't trigger API requests unnecessarily
 - ℹ️ **Hosting Info**: FF15GG is hosted on Vercel’s free tier, so the first request after a period of inactivity may take a few extra seconds while the server “warms up.” Subsequent requests are faster.
-- Versioned localStorage ensures old data strucutres don't break the app after updates
+- Recent searches are stored in localStorage
+- **Try it out without a Riot ID**: just type a letter into the search bar (e.g., 'm') and select any suggestion that appears
 
 ## Tech Stack
 
