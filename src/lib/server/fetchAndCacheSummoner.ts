@@ -14,7 +14,6 @@ import {
 import { mapChampionMastery, mapMatches, mapRanked } from "@/helper/mappers";
 import { mergeMatches } from "@/helper/mergeMatches";
 
-// --- Server-side helper ---
 export async function fetchAndCacheSummoner(
   region: string,
   platform: string,

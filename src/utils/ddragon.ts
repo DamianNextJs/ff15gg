@@ -1,4 +1,3 @@
-// utils/ddragon.ts
 const LATEST_VERSION = "15.18.1";
 
 export const DDragon = {

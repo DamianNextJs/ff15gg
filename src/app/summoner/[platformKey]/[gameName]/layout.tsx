@@ -4,8 +4,9 @@ import ProfileCard from "./components/ProfileCard";
 import ProfileSkeleton from "./components/ProfileSkeleton";
 
 export const metadata: Metadata = {
-  title: "Summoner page",
-  description: "Summoner page",
+  title: "Summoner Page | FF15",
+  description:
+    "View Summoner stats, match history and live game for your League of Legends Summoner",
 };
 
 interface SummonerLayoutProps {

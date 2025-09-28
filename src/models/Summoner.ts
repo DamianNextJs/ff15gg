@@ -17,7 +17,6 @@ const SummonerSchema = new Schema<ISummoner>({
     required: true,
   },
   lastUpdated: { type: Date, default: Date.now },
-  // Store all Summoner data her (riot account, ranked, mastery, matchets, etc.)
   data: {
     type: Schema.Types.Mixed,
   },

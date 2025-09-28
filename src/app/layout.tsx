@@ -16,7 +16,7 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "FF15 GG",
+  title: "FF15",
   description: "Search League of Legends Summoners",
 };
 

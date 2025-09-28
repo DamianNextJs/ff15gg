@@ -123,5 +123,5 @@ export interface RecentTeammates {
   gamesPlayed: number;
   wins: number;
   losses: number;
-  winRate: number; // 0-100 percentage
+  winRate: number;
 }

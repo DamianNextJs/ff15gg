@@ -1,4 +1,4 @@
-// format time values we get from api or db to show in human time
+// format time values we get from api
 export function formatTimeAgo(timeStamp: Date | string | number) {
   const time =
     timeStamp instanceof Date
@@ -30,7 +30,7 @@ export function toNormalCase(str: string | undefined) {
   return str.charAt(0).toUpperCase() + str.slice(1).toLowerCase();
 }
 
-// as riots api return rank divisions, for example Diamond 1 as I instead of 1, we gonna map over them and get the corresponding number.   We also check if the tier is master or higher because those would show 1 for the rank which is unnecessary and instead just return nothing
+// since riots api return rank divisions, for example Diamond 1 as I instead of 1, map over them and get the corresponding number. also check if the tier is master or higher because those would show 1 for the rank which is unnecessary and instead just return nothing
 export function toRoman(num?: string, tier?: string) {
   const noDivisionTiers = ["Master", "Grandmaster", "Challenger"];
   if (!num || !tier) return;

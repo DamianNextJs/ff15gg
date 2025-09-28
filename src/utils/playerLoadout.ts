@@ -1,4 +1,3 @@
-// helpers/playerLoadoutUtils.ts
 import { SummonerSpellInfo } from "@/types/summonerSpell";
 import { DDragon } from "@/utils/ddragon";
 import { SummonerSpellMap } from "@/lib/maps/summonerSpellMap";

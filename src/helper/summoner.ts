@@ -18,7 +18,7 @@ export function normalizeSummonerName(gameName?: string, tagLine?: string) {
   };
 }
 
-// src/helper/summonerUrl.ts
+// used to create consistent url's for summoner pages
 export function createSummonerUrl(gameName: string, tagLine: string) {
   const { gameName: normalizedName, tagLine: normalizedTag } =
     normalizeSummonerName(gameName, tagLine);
