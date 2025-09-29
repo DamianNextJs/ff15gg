@@ -1,4 +1,4 @@
-import { MatchData } from "@/types/riot";
+import { MatchData } from "@/types/match";
 
 interface MatchResultUI {
   bg: string;

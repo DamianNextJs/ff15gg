@@ -1,4 +1,4 @@
-import { MatchData } from "@/types/riot";
+import { MatchData } from "@/types/match";
 
 export interface RecentStats {
   wins: number;

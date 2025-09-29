@@ -1,4 +1,4 @@
-import { RiotAccount } from "./riot";
+import { RiotAccount } from "./summoner";
 
 export interface LiveGameData {
   riotAccount: RiotAccount;

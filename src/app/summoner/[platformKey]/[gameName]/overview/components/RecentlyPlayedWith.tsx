@@ -1,7 +1,7 @@
 "use client";
 import Image from "next/image";
 import Link from "next/link";
-import { RecentTeammates } from "@/types/riot";
+import { RecentTeammates } from "@/types/summoner";
 import { DDragon } from "@/utils/ddragon";
 import { createSummonerUrl } from "@/helper/summoner";
 import { getRecentTeammates } from "@/helper/stats/getRecentTeammates";

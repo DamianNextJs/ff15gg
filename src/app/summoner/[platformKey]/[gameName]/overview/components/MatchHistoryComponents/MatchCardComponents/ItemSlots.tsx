@@ -1,4 +1,4 @@
-import { ParticipantData } from "@/types/riot";
+import { ParticipantData } from "@/types/match";
 import { ItemIcon } from "./ItemSlotComponents/ItemIcon";
 
 export default function ItemSlots({

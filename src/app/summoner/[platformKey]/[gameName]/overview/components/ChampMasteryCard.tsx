@@ -1,6 +1,6 @@
 import { getChampionById } from "@/helper/getChampionById";
 import { DDragon } from "@/utils/ddragon";
-import { ChampionMastery } from "@/types/riot";
+import { ChampionMastery } from "@/types/summoner";
 import Image from "next/image";
 
 export default function ChampMasteryCard({

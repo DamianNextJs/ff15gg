@@ -1,6 +1,8 @@
 import { connectToDB } from "@/lib/mongodb";
 import Summoner, { ISummoner } from "@/models/Summoner";
-import { MatchData, SummonerData } from "@/types/riot";
+import Match, { IMatch } from "@/models/Match";
+import { SummonerData } from "@/types/summoner";
+import { MatchData } from "@/types/match";
 import { normalizeSummonerName } from "@/helper/summoner";
 import { calculateChampionStats } from "@/helper/stats/calculateChampionStats";
 import {
@@ -12,7 +14,6 @@ import {
   getMatch,
 } from "@/helper/riotApi";
 import { mapChampionMastery, mapMatches, mapRanked } from "@/helper/mappers";
-import { mergeMatches } from "@/helper/mergeMatches";
 
 export async function fetchAndCacheSummoner(
   region: string,
@@ -40,7 +41,6 @@ export async function fetchAndCacheSummoner(
     );
     return {
       ...existingSummoner.data,
-      matches: existingSummoner?.data?.matches?.slice(0, 20),
       lastUpdated: existingSummoner.lastUpdated,
       platform: existingSummoner.platform,
     };
@@ -66,9 +66,8 @@ export async function fetchAndCacheSummoner(
   );
   const ranked = mapRanked(await getRankedInfo(riotAccount.puuid, platform));
 
-  // --- Fetch recent matches ---
+  // --- Fetch recent match IDs ---
   const recentMatchIds = await getRecentMatchIds(riotAccount.puuid, region, 20);
-  await new Promise((res) => setTimeout(res, 1000)); // rate limit pause
 
   // Get the platform prefix of the first match to check for platform mismatch
   const firstMatchPlatform = recentMatchIds[0]?.split("_")[0].toLowerCase();
@@ -80,20 +79,38 @@ export async function fetchAndCacheSummoner(
     return null;
   }
 
+  // --- Deduplicate matches already in DB ---
+  const existingMatchesInDB = await Match.find({
+    "data.metadata.matchId": { $in: recentMatchIds },
+  }).lean<IMatch[]>();
+
+  const existingIds = new Set(
+    existingMatchesInDB.map((m) => m.data.metadata.matchId)
+  );
+
+  const newMatchIds: string[] = recentMatchIds.filter(
+    (id: string) => !existingIds.has(id)
+  );
+
+  // --- Fetch new matches from Riot API ---
+  await new Promise((res) => setTimeout(res, 1000)); // rate limit pause
   const newMatches: MatchData[] = mapMatches(
-    await Promise.all(
-      recentMatchIds.map((matchId: string) => getMatch(matchId, region))
-    )
+    await Promise.all(newMatchIds.map((matchId) => getMatch(matchId, region)))
   );
 
-  // --- Merge with existing matches ---
-  const mergedMatches = mergeMatches(
-    existingSummoner?.data?.matches ?? [],
-    newMatches
-  );
+  // --- Insert new matches ---
+  if (newMatches.length > 0) {
+    await Match.insertMany(newMatches.map((m) => ({ data: m })));
+  }
 
-  // --- Aggregations ---
-  const champStats = calculateChampionStats(mergedMatches, riotAccount.puuid);
+  // --- Calculate champ stats based on all matches ---
+  const allMatchesForSummoner = await Match.find({
+    "data.info.participants.puuid": riotAccount.puuid,
+  }).lean<IMatch[]>();
+  const champStats = calculateChampionStats(
+    allMatchesForSummoner.map((m) => m.data),
+    riotAccount.puuid
+  );
 
   // --- Build the profile data ---
   const profileData: SummonerData = {
@@ -104,7 +121,6 @@ export async function fetchAndCacheSummoner(
     },
     ranked,
     championMastery,
-    matches: mergedMatches,
     champStats,
   };
 
@@ -129,7 +145,6 @@ export async function fetchAndCacheSummoner(
 
   return {
     ...profileData,
-    matches: profileData.matches?.slice(0, 20),
     lastUpdated: new Date(),
     platform,
   };

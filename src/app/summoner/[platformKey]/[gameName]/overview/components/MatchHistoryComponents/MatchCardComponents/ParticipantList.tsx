@@ -1,5 +1,5 @@
 import Image from "next/image";
-import { MatchData, ParticipantData } from "@/types/riot";
+import { MatchData, ParticipantData } from "@/types/match";
 import Link from "next/link";
 import { RegionKey, regionMap } from "@/lib/maps/regionMap";
 import { DDragon } from "@/utils/ddragon";

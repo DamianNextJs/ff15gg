@@ -1,7 +1,7 @@
 import { calculateAverageStats, calculateWinrate } from "@/helper/stats/stats";
 import { calculateKDA } from "@/helper/stats/stats";
 import Image from "next/image";
-import { ChampStats } from "@/types/riot";
+import { ChampStats } from "@/types/summoner";
 import { DDragon } from "@/utils/ddragon";
 import { getChampionById } from "@/helper/getChampionById";
 

@@ -1,5 +1,5 @@
 import WinRateDonut from "@/components/WinRateDonut";
-import { RecentStats } from "@/types/riot";
+import { RecentStats } from "@/types/summoner";
 import {
   calculateAverageStats,
   calculateWinrate,

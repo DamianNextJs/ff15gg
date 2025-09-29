@@ -1,15 +1,21 @@
-import Summoner, { ISummoner } from "@/models/Summoner";
+import Match, { IMatch } from "@/models/Match";
 import { connectToDB } from "../mongodb";
+import { MatchData } from "@/types/match";
 
 export async function fetchCachedMatches(
   puuid: string,
   offset: number,
   limit: number
-) {
+): Promise<MatchData[]> {
   await connectToDB();
-  const summoner = await Summoner.findOne({
-    "data.riotAccount.puuid": puuid,
-  }).lean<ISummoner>();
-  if (!summoner?.data.matches) return [];
-  return summoner.data.matches.slice(offset, offset + limit);
+
+  const matches = await Match.find({
+    "data.info.participants.puuid": puuid,
+  })
+    .sort({ "data.info.gameEndTimestamp": -1 })
+    .skip(offset)
+    .limit(limit)
+    .lean<IMatch[]>();
+
+  return matches.map((m) => m.data);
 }

@@ -1,4 +1,5 @@
-import { ChampStats, MatchData } from "@/types/riot";
+import { ChampStats } from "@/types/summoner";
+import { MatchData } from "@/types/match";
 
 export function calculateChampionStats(
   matches: MatchData[],

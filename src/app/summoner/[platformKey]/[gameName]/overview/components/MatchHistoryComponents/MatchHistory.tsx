@@ -9,6 +9,7 @@ import { loadCachedMatches } from "../../../actions";
 import { useMatches } from "../../contexts/MatchesContext";
 import QueueSelector from "./QueueSelector";
 import { queueMap } from "@/lib/maps/queueMap";
+import { MatchData } from "@/types/match";
 
 interface MatchHistoryProps {
   participantPuuid: string;
@@ -21,7 +22,7 @@ export default function MatchHistory({ participantPuuid }: MatchHistoryProps) {
   const [hasMore, setHasMore] = useState(true);
 
   // Filter matches based on queue selection
-  const filteredMatches = useMemo(() => {
+  const filteredMatches: MatchData[] = useMemo(() => {
     return matches.filter((m) => {
       if (currentQueue === "all") {
         return m.info.queueId in queueMap;

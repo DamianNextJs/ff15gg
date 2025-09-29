@@ -1,6 +1,7 @@
 import { queueMap } from "@/lib/maps/queueMap";
 import { LiveGame } from "@/types/live-game";
-import { ChampionMastery, MatchData, SummonerData } from "@/types/riot";
+import { ChampionMastery, SummonerData } from "@/types/summoner";
+import { MatchData } from "@/types/match";
 
 // --- Mapping helpers ---
 export function mapChampionMastery(raw: ChampionMastery[]): ChampionMastery[] {

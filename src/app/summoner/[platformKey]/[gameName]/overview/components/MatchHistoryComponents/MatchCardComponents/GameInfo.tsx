@@ -1,4 +1,4 @@
-import { MatchData } from "@/types/riot";
+import { MatchData } from "@/types/match";
 import { queueMap } from "@/lib/maps/queueMap";
 import { formatGameDuration, formatTimeAgo } from "@/utils/utils";
 import { getMatchResultUI } from "@/utils/matchResult";

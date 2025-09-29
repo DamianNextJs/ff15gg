@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { SummonerData } from "@/types/riot";
+import { SummonerData } from "@/types/summoner";
 import { regionMap, RegionKey } from "@/lib/maps/regionMap";
 import { useDebounce } from "./useDebounce";
 

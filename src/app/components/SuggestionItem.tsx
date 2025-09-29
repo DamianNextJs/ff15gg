@@ -1,7 +1,7 @@
 "use client";
 
 import Image from "next/image";
-import { SummonerData } from "@/types/riot";
+import { SummonerData } from "@/types/summoner";
 import { regionMap, type RegionKey } from "@/lib/maps/regionMap";
 import { DDragon } from "@/utils/ddragon";
 

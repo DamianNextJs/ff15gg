@@ -1,6 +1,6 @@
 import { getLiveGame, getRiotAccount } from "@/helper/riotApi";
 import { LiveGameData } from "@/types/live-game";
-import { RiotAccount } from "@/types/riot";
+import { RiotAccount } from "@/types/summoner";
 import { getCachedLiveGame, setCachedLiveGame } from "./cacheLiveGame";
 import { mapLiveGame } from "@/helper/mappers";
 

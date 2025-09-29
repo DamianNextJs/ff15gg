@@ -1,4 +1,4 @@
-import { RankedData } from "@/types/riot";
+import { RankedData } from "@/types/summoner";
 
 // fetch corresponding data for solo or flex
 export function getRankData(

@@ -1,4 +1,4 @@
-import { MatchData, ParticipantData } from "@/types/riot";
+import { MatchData, ParticipantData } from "@/types/match";
 import PlayerLoadout from "./MatchCardComponents/PlayerLoadout";
 import GameInfo from "./MatchCardComponents/GameInfo";
 import ItemSlots from "./MatchCardComponents/ItemSlots";

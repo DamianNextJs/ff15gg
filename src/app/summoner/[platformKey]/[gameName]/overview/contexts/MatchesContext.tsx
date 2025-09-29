@@ -9,7 +9,7 @@ import {
   Dispatch,
   useEffect,
 } from "react";
-import { MatchData } from "@/types/riot";
+import { MatchData } from "@/types/match";
 
 interface MatchesContextType {
   matches: MatchData[];

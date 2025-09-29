@@ -1,6 +1,6 @@
 "use client";
 
-import { ParticipantData } from "@/types/riot";
+import { ParticipantData } from "@/types/match";
 import Image from "next/image";
 import { DDragon } from "@/utils/ddragon";
 import { SummonerSpellIcon } from "./PlayerLoadoutComponents/SummonerSpellIcon";

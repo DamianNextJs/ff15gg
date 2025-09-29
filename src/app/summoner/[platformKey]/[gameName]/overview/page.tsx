@@ -7,6 +7,7 @@ import { getSummonerData } from "@/helper/getSummonerData";
 import { MatchesProvider } from "./contexts/MatchesContext";
 import { notFound } from "next/navigation";
 import { parseSummonerParams } from "@/helper/parseSummonerParams";
+import { fetchCachedMatches } from "@/lib/server/fetchCachedMatches";
 
 interface OverviewProps {
   params: Promise<{
@@ -27,9 +28,15 @@ export default async function Overview({ params }: OverviewProps) {
 
   if (!profileData) return notFound();
 
+  const initialMatches = await fetchCachedMatches(
+    profileData.riotAccount.puuid,
+    0,
+    20
+  );
+
   return (
     <div className="lg:flex gap-3 -mt-4">
-      <MatchesProvider initialMatches={profileData?.matches || []}>
+      <MatchesProvider initialMatches={initialMatches ?? []}>
         <div className="flex-1">
           <RankCard data={profileData?.ranked || []} rankType="Ranked Solo" />
           <RankCard data={profileData?.ranked || []} rankType="Ranked Flex" />

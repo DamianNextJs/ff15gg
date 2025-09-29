@@ -2,7 +2,7 @@
 
 import { useCachedSummoners } from "@/hooks/useCachedSummoners";
 import { useRecentSearches } from "@/hooks/useRecentSearches";
-import { SummonerData } from "@/types/riot";
+import { SummonerData } from "@/types/summoner";
 import { useEffect, useState, useMemo } from "react";
 import { useRouter } from "next/navigation";
 import { RegionKey } from "@/lib/maps/regionMap";

@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { SummonerData } from "@/types/riot";
+import { SummonerData } from "@/types/summoner";
 
 const STORAGE_KEY = "recentSummoners";
 const MAX_RECENT = 5;

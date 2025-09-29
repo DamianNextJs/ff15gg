@@ -1,5 +1,5 @@
 import mongoose, { Schema, Document } from "mongoose";
-import { SummonerData } from "@/types/riot";
+import { SummonerData } from "@/types/summoner";
 
 export interface ISummoner extends Document {
   normalizedGameName: string;
