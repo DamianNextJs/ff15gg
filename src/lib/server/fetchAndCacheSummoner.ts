@@ -56,6 +56,10 @@ export async function fetchAndCacheSummoner(
 
   // --- Fetch Riot data ---
   const riotAccount = await getRiotAccount(gameName, tagLine, region);
+  if (!riotAccount) {
+    console.log(`[RIOT MISS] No Riot account for ${gameName}#${tagLine}`);
+    return null;
+  }
   const summoner = await getSummonerByPuuid(riotAccount.puuid, platform);
   const championMastery = mapChampionMastery(
     await getChampionMastery(riotAccount.puuid, platform)
