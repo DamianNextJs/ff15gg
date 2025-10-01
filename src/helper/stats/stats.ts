@@ -1,3 +1,5 @@
+import { ParticipantData } from "@/types/match";
+
 export function calculateKDA(
   kills: number,
   deaths: number,
@@ -36,4 +38,24 @@ export function calculateCSPerMin(
   if (gameDuration <= 0) return 0;
   const durationInMin = gameDuration / 60;
   return +(creepScore / durationInMin).toFixed(1);
+}
+
+export function getDamageStats(
+  participant: ParticipantData,
+  participants: ParticipantData[]
+) {
+  const maxDamage = Math.max(
+    ...participants.map((p) => p.totalDamageDealtToChampions)
+  );
+  const damagePercent =
+    maxDamage > 0
+      ? (participant.totalDamageDealtToChampions / maxDamage) * 100
+      : 0;
+
+  const damageDisplay =
+    participant.totalDamageDealtToChampions >= 1000
+      ? (participant.totalDamageDealtToChampions / 1000).toFixed(1) + "k"
+      : participant.totalDamageDealtToChampions;
+
+  return { damagePercent, damageDisplay };
 }

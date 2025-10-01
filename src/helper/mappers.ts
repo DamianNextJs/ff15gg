@@ -36,6 +36,14 @@ export function mapMatches(raw: MatchData[]): MatchData[] {
         gameDuration: m.info.gameDuration,
         queueId: m.info.queueId,
         platformId: m.info.platformId,
+        teams: m.info.teams.map((t) => ({
+          bans: t.bans.map((b) => ({
+            championId: b.championId,
+            pickTurn: b.pickTurn,
+          })),
+          teamId: t.teamId,
+          win: t.win,
+        })),
         participants: m.info.participants.map((p) => ({
           puuid: p.puuid,
           riotIdGameName: p.riotIdGameName,
@@ -62,6 +70,12 @@ export function mapMatches(raw: MatchData[]): MatchData[] {
           item4: p.item4,
           item5: p.item5,
           item6: p.item6,
+          goldEarned: p.goldEarned,
+          totalDamageDealtToChampions: p.totalDamageDealtToChampions,
+          doubleKills: p.doubleKills,
+          tripleKills: p.tripleKills,
+          quadraKills: p.quadraKills,
+          pentaKills: p.pentaKills,
         })),
       },
     }));

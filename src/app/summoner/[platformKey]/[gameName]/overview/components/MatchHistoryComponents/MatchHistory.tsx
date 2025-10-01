@@ -1,7 +1,7 @@
 "use client";
 
 import MatchHistoryHeader from "./MatchHistoryHeader";
-import MatchCard from "./MatchCard";
+import MatchCard from "./MatchCardComponents/MatchCard";
 import { getRecentStats } from "@/helper/stats/getRecentStats";
 import MatchHistoryLoader from "./MatchHistoryLoader";
 import { useEffect, useMemo, useState } from "react";
@@ -11,11 +11,11 @@ import QueueSelector from "./QueueSelector";
 import { queueMap } from "@/lib/maps/queueMap";
 import { MatchData } from "@/types/match";
 
-interface MatchHistoryProps {
+export default function MatchHistory({
+  participantPuuid,
+}: {
   participantPuuid: string;
-}
-
-export default function MatchHistory({ participantPuuid }: MatchHistoryProps) {
+}) {
   const { matches, setMatches, currentQueue, setCurrentQueue } = useMatches();
   const [offset, setOffset] = useState(matches.length);
   const [loading, setLoading] = useState(false);

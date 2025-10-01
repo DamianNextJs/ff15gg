@@ -5,12 +5,14 @@ import { DDragon } from "@/utils/ddragon";
 
 export default function BannedChampions({
   bannedChampions,
+  sm,
 }: {
   bannedChampions: BannedChampion[];
+  sm?: boolean;
 }) {
   if (!bannedChampions) return null;
   return (
-    <div className="flex justify-between border-accent border-t border-b -mx-4 px-4 p-2">
+    <div className="flex justify-between">
       {[100, 200].map((teamId) => (
         <div className="flex gap-1 lg:gap-2" key={teamId}>
           {bannedChampions
@@ -30,23 +32,24 @@ export default function BannedChampions({
 
               if (!champIcon) return null;
               return (
-                <div className="relative size-6.5 lg:size-9" key={i}>
+                <div
+                  className={`relative ${sm ? " size-6.5" : "lg:size-9"} `}
+                  key={i}
+                >
                   <Image
                     src={champIcon}
                     alt="Champ Icon"
                     fill
-                    className={`${
-                      bannedChampion.teamId === 100
-                        ? "border-blue-500"
-                        : "border-red-500"
-                    } border rounded-md`}
+                    className={`border-subtle border rounded-md`}
                   />
 
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
                     viewBox="0 0 16 16"
                     fill="currentColor"
-                    className="size-3 lg:size-3.5 absolute left-1/2 -translate-x-1/2 -bottom-1 bg-black rounded-full opacity-80"
+                    className={`${
+                      sm ? "size-3" : "lg:size-3.5"
+                    }  absolute left-1/2 -translate-x-1/2 -bottom-1 bg-black rounded-full opacity-80`}
                   >
                     <path
                       fillRule="evenodd"

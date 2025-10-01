@@ -1,27 +1,22 @@
 import Image from "next/image";
-import { MatchData, ParticipantData } from "@/types/match";
 import Link from "next/link";
 import { RegionKey, regionMap } from "@/lib/maps/regionMap";
 import { DDragon } from "@/utils/ddragon";
 import { getChampionById } from "@/helper/getChampionById";
 import { createSummonerUrl } from "@/helper/summoner";
+import { useMatchContext } from "../../../contexts/MatchContext";
 
-export default function ParticipantList({
-  match,
-  myParticipant,
-}: {
-  match: MatchData;
-  myParticipant: ParticipantData;
-}) {
+export default function ParticipantList() {
+  const { match, myParticipant } = useMatchContext();
   const regionKey =
     regionMap[match.info.platformId.toLowerCase() as RegionKey].platform;
 
   return (
     <div className="hidden lg:flex gap-5">
-      {[100, 200].map((teamId) => (
-        <div key={teamId}>
+      {match.info.teams.map((team) => (
+        <div key={team.teamId}>
           {match.info.participants
-            .filter((p) => p.teamId === teamId)
+            .filter((p) => p.teamId === team.teamId)
             .map((p) => {
               const champ = getChampionById(p.championId);
               if (!champ) return null;

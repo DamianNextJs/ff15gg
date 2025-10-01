@@ -47,7 +47,7 @@ export default function ChampStatsCard({
                 width={35}
                 height={35}
               />
-              <p className="font-semibold lg:text-sm">{champ.name}</p>
+              <p className="font-semibold lg:text-sm text-left">{champ.name}</p>
             </div>
 
             {/* stats container */}

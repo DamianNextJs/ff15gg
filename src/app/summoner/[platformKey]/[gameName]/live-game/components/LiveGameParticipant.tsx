@@ -3,8 +3,8 @@ import { LiveParticipant } from "@/types/live-game";
 import { DDragon } from "@/utils/ddragon";
 import { getRuneData, getSummonerSpellData } from "@/utils/playerLoadout";
 import Image from "next/image";
-import { SummonerSpellIcon } from "../../overview/components/MatchHistoryComponents/MatchCardComponents/PlayerLoadoutComponents/SummonerSpellIcon";
-import { RuneIcon } from "../../overview/components/MatchHistoryComponents/MatchCardComponents/PlayerLoadoutComponents/RuneIcon";
+import SummonerSpellIcon from "../../overview/components/MatchHistoryComponents/MatchCardComponents/PlayerLoadoutComponents/SummonerSpellIcon";
+import RuneIcon from "../../overview/components/MatchHistoryComponents/MatchCardComponents/PlayerLoadoutComponents/RuneIcon";
 import Link from "next/link";
 import { createSummonerUrl } from "@/helper/summoner";
 
@@ -51,12 +51,18 @@ export default function LiveGameParticipant({
           <Image src={championIcon} alt="Champ Icon" fill />
         </div>
         <div className="size-3.5 lg:size-4.5 flex flex-col justify-center gap-0.5">
-          {SummonerSpellIcon(summoner1Data, summoner1Icon)}
-          {SummonerSpellIcon(summoner2Data, summoner2Icon)}
+          <SummonerSpellIcon
+            spellData={summoner1Data}
+            iconUrl={summoner1Icon}
+          />
+          <SummonerSpellIcon
+            spellData={summoner2Data}
+            iconUrl={summoner2Icon}
+          />
         </div>
         <div className="size-3.5 lg:size-4.5 flex flex-col justify-center gap-0.5">
-          {RuneIcon(keyStoneData, keyStoneIcon)}
-          {RuneIcon(subStyleData, subStyleIcon)}
+          <RuneIcon runeData={keyStoneData} iconUrl={keyStoneIcon} />
+          <RuneIcon runeData={subStyleData} iconUrl={subStyleIcon} />
         </div>
       </div>
       <Link

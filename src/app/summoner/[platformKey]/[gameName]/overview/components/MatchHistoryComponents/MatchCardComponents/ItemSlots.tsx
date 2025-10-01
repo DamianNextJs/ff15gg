@@ -1,10 +1,12 @@
 import { ParticipantData } from "@/types/match";
-import { ItemIcon } from "./ItemSlotComponents/ItemIcon";
+import ItemIcon from "./ItemSlotComponents/ItemIcon";
 
 export default function ItemSlots({
-  myParticipant,
+  participant,
+  sm,
 }: {
-  myParticipant: ParticipantData;
+  participant: ParticipantData;
+  sm: boolean;
 }) {
   const itemKeys = [
     "item0",
@@ -20,11 +22,11 @@ export default function ItemSlots({
     <div className="flex gap-1">
       <div className="flex lg:grid lg:grid-cols-3 gap-1">
         {itemKeys.slice(0, 6).map((key) => (
-          <ItemIcon key={key} itemId={myParticipant[key] as number} />
+          <ItemIcon sm={sm} key={key} itemId={participant[key] as number} />
         ))}
       </div>
       <div className="shrink-0">
-        <ItemIcon itemId={myParticipant.item6!} />
+        <ItemIcon sm={sm} itemId={participant.item6!} />
       </div>
     </div>
   );

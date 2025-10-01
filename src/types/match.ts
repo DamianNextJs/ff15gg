@@ -10,7 +10,17 @@ export interface MatchData {
     queueId: number;
     platformId: string;
     participants: ParticipantData[];
+    teams: TeamData[];
   };
+}
+
+export interface TeamData {
+  bans: {
+    championId: number;
+    pickTurn: number;
+  }[];
+  teamId: number;
+  win: boolean;
 }
 
 export interface ParticipantData {
@@ -38,6 +48,12 @@ export interface ParticipantData {
   item4: number | null;
   item5: number | null;
   item6: number | null;
+  totalDamageDealtToChampions: number;
+  goldEarned: number;
+  doubleKills: number;
+  tripleKills: number;
+  quadraKills: number;
+  pentaKills: number;
   perks: {
     styles: {
       description: string;

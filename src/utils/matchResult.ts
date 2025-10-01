@@ -4,6 +4,7 @@ interface MatchResultUI {
   bg: string;
   text: string;
   textColor: string;
+  hoverBg: string;
 }
 
 /**
@@ -23,13 +24,24 @@ export function isRemake(match: MatchData): boolean {
  */
 export function getMatchResultUI(
   match: MatchData,
-  isWin: boolean
+  isWin: boolean,
+  isMine: boolean = false
 ): MatchResultUI {
   if (isRemake(match)) {
     return {
       bg: "bg-gray-500/40",
       text: "Remake",
       textColor: "text-gray-200",
+      hoverBg: "hover:bg-gray-500/30",
+    };
+  }
+
+  if (isMine) {
+    return {
+      bg: isWin ? "bg-blue-500/45" : "bg-red-500/45", // slightly different shade for your own
+      text: isWin ? "WIN" : "LOSS",
+      textColor: isWin ? "text-blue-500" : "text-red-500",
+      hoverBg: isWin ? "hover:bg-win/70" : "hover:bg-lose/70",
     };
   }
 
@@ -38,10 +50,12 @@ export function getMatchResultUI(
         bg: "bg-win/90",
         text: "WIN",
         textColor: "text-blue-500",
+        hoverBg: "hover:bg-win/70",
       }
     : {
         bg: "bg-lose/90",
         text: "LOSS",
         textColor: "text-red-500",
+        hoverBg: "hover:bg-lose/70",
       };
 }

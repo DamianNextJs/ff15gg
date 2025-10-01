@@ -3,64 +3,73 @@
 import { ParticipantData } from "@/types/match";
 import Image from "next/image";
 import { DDragon } from "@/utils/ddragon";
-import { SummonerSpellIcon } from "./PlayerLoadoutComponents/SummonerSpellIcon";
-import { RuneIcon } from "./PlayerLoadoutComponents/RuneIcon";
+import SummonerSpellIcon from "./PlayerLoadoutComponents/SummonerSpellIcon";
+import RuneIcon from "./PlayerLoadoutComponents/RuneIcon";
 import { getRuneData, getSummonerSpellData } from "@/utils/playerLoadout";
 import { getChampionById } from "@/helper/getChampionById";
 
 export default function PlayerLoadout({
-  myParticipant,
+  participant,
+  sm,
 }: {
-  myParticipant: ParticipantData;
+  participant: ParticipantData;
+  sm?: boolean;
 }) {
   // Champion
-  const champ = getChampionById(myParticipant.championId);
+  const champ = getChampionById(participant.championId);
 
   const champIconUrl = DDragon.championIcon(champ?.id ?? "");
-  const champLevel = myParticipant.champLevel;
+  const champLevel = participant.champLevel;
 
   // Summoner Spells
   const { data: summoner1Data, icon: summoner1Icon } = getSummonerSpellData(
-    myParticipant.summoner1Id
+    participant.summoner1Id
   );
   const { data: summoner2Data, icon: summoner2Icon } = getSummonerSpellData(
-    myParticipant.summoner2Id
+    participant.summoner2Id
   );
 
   // Runes
   const { data: keyStoneData, icon: keyStoneIcon } = getRuneData(
-    myParticipant.perks.styles[0].selections[0].perk
+    participant.perks.styles[0].selections[0].perk
   );
   const { data: subStyleData, icon: subStyleIcon } = getRuneData(
-    myParticipant.perks.styles[1].style
+    participant.perks.styles[1].style
   );
 
   return (
-    <div className="grid grid-cols-4 gap-1 max-w-fit">
+    <div className={`grid grid-cols-4 ${sm ? "gap-0.5" : "gap-1"} max-w-fit`}>
       {/* Champ Icon */}
-      <div className="col-span-2 relative h-13 w-13">
-        <Image
-          src={champIconUrl}
-          width={52}
-          height={52}
-          alt={myParticipant.championName}
-        />
-        <span className="text-xs font-medium absolute right-0 bottom-0 bg-accent px-0.5">
+      <div className={`col-span-2 relative ${sm ? "size-9" : "size-13"}`}>
+        <Image src={champIconUrl} fill alt={participant.championName} />
+        <span
+          className={`${
+            sm ? "text-[0.5rem]" : "text-xs"
+          } font-medium absolute right-0 bottom-0 bg-accent px-0.5`}
+        >
           {champLevel}
         </span>
       </div>
 
       {/* Summoner Spells */}
       <div className="col-span-1 flex flex-col gap-1">
-        {SummonerSpellIcon(summoner1Data, summoner1Icon)}
-        {SummonerSpellIcon(summoner2Data, summoner2Icon)}
+        <SummonerSpellIcon
+          sm={sm}
+          spellData={summoner1Data}
+          iconUrl={summoner1Icon}
+        />
+        <SummonerSpellIcon
+          sm={sm}
+          spellData={summoner2Data}
+          iconUrl={summoner2Icon}
+        />
       </div>
 
       {/* Runes */}
       {keyStoneIcon && subStyleIcon ? (
         <div className="col-span-1 flex flex-col gap-1">
-          {RuneIcon(keyStoneData, keyStoneIcon)}
-          {RuneIcon(subStyleData, subStyleIcon)}
+          <RuneIcon sm={sm} runeData={keyStoneData} iconUrl={keyStoneIcon} />
+          <RuneIcon sm={sm} runeData={subStyleData} iconUrl={subStyleIcon} />
         </div>
       ) : null}
     </div>

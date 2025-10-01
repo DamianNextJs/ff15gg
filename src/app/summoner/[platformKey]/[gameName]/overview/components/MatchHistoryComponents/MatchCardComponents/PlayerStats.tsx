@@ -2,17 +2,19 @@ import { calculateCSPerMin, calculateKDA } from "@/helper/stats/stats";
 import { ParticipantData } from "@/types/match";
 
 export default function PlayerStats({
-  myParticipant,
+  participant,
   gameDuration,
+  showCS,
 }: {
-  myParticipant: ParticipantData;
+  participant: ParticipantData;
   gameDuration: number;
+  showCS?: boolean;
 }) {
-  const kills = myParticipant.kills;
-  const deaths = myParticipant.deaths;
-  const assists = myParticipant.assists;
+  const kills = participant.kills;
+  const deaths = participant.deaths;
+  const assists = participant.assists;
   const creepScore =
-    myParticipant.neutralMinionsKilled + myParticipant.totalMinionsKilled;
+    participant.neutralMinionsKilled + participant.totalMinionsKilled;
 
   const csPerMin = calculateCSPerMin(creepScore, gameDuration);
   const kda = calculateKDA(kills, deaths, assists);
@@ -28,11 +30,11 @@ export default function PlayerStats({
       </div>
       {/* kda */}
       <div className="flex gap-0.5">
-        <p>{kda}</p>
+        <p className="text-white">{kda}</p>
         <p className="text-subtle font-normal">KDA</p>
       </div>
       {/* CREEP SCORE */}
-      <div className="flex gap-0.5">
+      <div className={`${showCS ? "" : "lg:hidden"} flex gap-0.5`}>
         {creepScore}
         <p className="font-normal text-subtle"> CS ({csPerMin})</p>
       </div>
