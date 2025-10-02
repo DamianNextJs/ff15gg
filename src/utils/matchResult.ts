@@ -1,17 +1,16 @@
-import { MatchData } from "@/types/match";
-
 interface MatchResultUI {
   bg: string;
   text: string;
   textColor: string;
   hoverBg: string;
+  progressBarBg: string;
 }
 
 /**
  * Riot remakes happen if the game ends very early (usually < 5 minutes).
  */
-export function isRemake(match: MatchData): boolean {
-  return !!match.info.gameDuration && match.info.gameDuration < 300; // 300s = 5min
+export function isRemake(gameDuration: number): boolean {
+  return !!gameDuration && gameDuration < 300; // 300s = 5min
 }
 
 /**
@@ -23,16 +22,17 @@ export function isRemake(match: MatchData): boolean {
  * - Otherwise, it returns win or loss styles depending on `isWin`.
  */
 export function getMatchResultUI(
-  match: MatchData,
+  gameDuration: number,
   isWin: boolean,
   isMine: boolean = false
 ): MatchResultUI {
-  if (isRemake(match)) {
+  if (isRemake(gameDuration)) {
     return {
       bg: "bg-gray-500/40",
       text: "Remake",
       textColor: "text-gray-200",
       hoverBg: "hover:bg-gray-500/30",
+      progressBarBg: "bg-gray-600",
     };
   }
 
@@ -42,6 +42,7 @@ export function getMatchResultUI(
       text: isWin ? "WIN" : "LOSS",
       textColor: isWin ? "text-blue-500" : "text-red-500",
       hoverBg: isWin ? "hover:bg-win/70" : "hover:bg-lose/70",
+      progressBarBg: isWin ? "bg-blue-600" : "bg-red-600",
     };
   }
 
@@ -51,11 +52,13 @@ export function getMatchResultUI(
         text: "WIN",
         textColor: "text-blue-500",
         hoverBg: "hover:bg-win/70",
+        progressBarBg: "bg-blue-600",
       }
     : {
         bg: "bg-lose/90",
         text: "LOSS",
         textColor: "text-red-500",
         hoverBg: "hover:bg-lose/70",
+        progressBarBg: "bg-red-600",
       };
 }

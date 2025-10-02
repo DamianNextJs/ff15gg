@@ -19,7 +19,10 @@ export default function MatchCard({
   const [open, setOpen] = useState(false);
   //Game Info
   const gameDuration = match.info.gameDuration;
-  const { bg, hoverBg } = getMatchResultUI(match, myParticipant.win);
+  const { bg, hoverBg } = getMatchResultUI(
+    match.info.gameDuration,
+    myParticipant.win
+  );
 
   return (
     <MatchProvider match={match} myParticipant={myParticipant}>

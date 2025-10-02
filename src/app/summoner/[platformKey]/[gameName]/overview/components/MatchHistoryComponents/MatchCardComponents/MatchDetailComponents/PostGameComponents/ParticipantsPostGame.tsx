@@ -5,7 +5,6 @@ import { createSummonerUrl } from "@/helper/summoner";
 import PlayerStats from "../../PlayerStats";
 import ItemSlots from "../../ItemSlots";
 import { calculateCSPerMin, getDamageStats } from "@/helper/stats/stats";
-import DamageBar from "../DamageBar";
 import { ParticipantData } from "@/types/match";
 import { useMatchContext } from "../../../../../contexts/MatchContext";
 import { getMatchResultUI } from "@/utils/matchResult";
@@ -30,8 +29,8 @@ export default function ParticipantPostGame({
   allParticipants,
 }: ParticipantPostGameProps) {
   const { match, myParticipant } = useMatchContext();
-  const { bg } = getMatchResultUI(
-    match,
+  const { bg, progressBarBg } = getMatchResultUI(
+    match.info.gameDuration,
     participant.win,
     participant.puuid === myParticipant.puuid
   );
@@ -78,7 +77,7 @@ export default function ParticipantPostGame({
             href={`/summoner/${match.info.platformId.toLowerCase()}/${encodeURIComponent(
               summonerUrl
             )}/overview`}
-            className={`truncate text-xs w-20 lg:w-25  ${
+            className={`truncate text-xs w-25  ${
               myParticipant.puuid === participant.puuid
                 ? "pointer-events-none"
                 : "hover:underline"
@@ -103,13 +102,20 @@ export default function ParticipantPostGame({
             />
           </div>
 
-          {/* Damage */}
+          {/* Damage Bar */}
           <div className="flex justify-center">
-            <DamageBar
-              isWin={participant.win}
-              damageDisplay={damageDisplay}
-              damagePercent={damagePercent}
-            />
+            <div>
+              <div className="hidden lg:block mb-1">{damageDisplay}</div>
+              <div className="h-3 lg:h-1 w-12.5 bg-accent/50 flex text-center relative rounded-sm overflow-hidden">
+                <div
+                  className={`${progressBarBg}`}
+                  style={{ width: `${damagePercent}%` }}
+                />
+                <div className="absolute inset-0 flex items-center justify-center font-semibold text-xs lg:hidden">
+                  {damageDisplay}
+                </div>
+              </div>
+            </div>
           </div>
           {/* Extra stats (desktop only) */}
 

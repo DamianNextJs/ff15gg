@@ -10,7 +10,10 @@ export default function GameInfo() {
   const timeAgo = formatTimeAgo(match.info.gameEndTimestamp);
   const formattedGameDuration = formatGameDuration(match.info.gameDuration);
 
-  const { text, textColor } = getMatchResultUI(match, myParticipant.win);
+  const { text, textColor } = getMatchResultUI(
+    match.info.gameDuration,
+    myParticipant.win
+  );
 
   return (
     <div className="text-xs font-medium flex lg:flex-col-reverse justify-between lg:justify-around items-center text-center gap-1">

@@ -5,7 +5,10 @@ import { useMatchContext } from "../../../../../contexts/MatchContext";
 
 export default function PostGameHeader({ team }: { team: TeamData }) {
   const { match } = useMatchContext();
-  const { text, textColor } = getMatchResultUI(match, team.win);
+  const { text, textColor } = getMatchResultUI(
+    match.info.gameDuration,
+    team.win
+  );
 
   return (
     <div className="flex items-center justify-between py-2 text-xs lg:flex-col-reverse lg:items-start lg:gap-2">
