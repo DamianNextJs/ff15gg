@@ -51,7 +51,7 @@ export default function MatchCard({
         </div>
         {/* Dropdown indicator */}
         <div
-          className={`${bg} hidden lg:flex items-end saturate-175 brightness-125 rounded-br-md rounded-tr-md -me-2 -my-2 h-27 p-1`}
+          className={`${bg} hidden lg:flex items-end saturate-150 brightness-110 rounded-br-md rounded-tr-md -me-2 -my-2 h-27 p-1`}
         >
           <button
             className={`${bg} saturate-200 brightness-125 p-1 rounded-sm mb-1 cursor-pointer`}
