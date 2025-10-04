@@ -60,5 +60,10 @@ export interface ParticipantData {
       style: number;
       selections: { perk: number }[];
     }[];
+    statPerks: {
+      defense: number;
+      flex: number;
+      offense: number;
+    };
   };
 }
