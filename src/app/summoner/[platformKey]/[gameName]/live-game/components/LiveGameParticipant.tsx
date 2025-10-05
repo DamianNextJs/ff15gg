@@ -47,22 +47,24 @@ export default function LiveGameParticipant({
       }`}
     >
       <div className="flex items-center gap-1">
-        <div className="relative size-8 lg:size-10">
+        <div className="relative size-9 mr-0.5">
           <Image src={championIcon} alt="Champ Icon" fill />
         </div>
-        <div className="size-3.5 lg:size-4.5 flex flex-col justify-center gap-0.5">
+        <div className="flex flex-col justify-center gap-1">
           <SummonerSpellIcon
             spellData={summoner1Data}
             iconUrl={summoner1Icon}
+            sm={true}
           />
           <SummonerSpellIcon
             spellData={summoner2Data}
             iconUrl={summoner2Icon}
+            sm={true}
           />
         </div>
-        <div className="size-3.5 lg:size-4.5 flex flex-col justify-center gap-0.5">
-          <RuneIcon runeData={keyStoneData} iconUrl={keyStoneIcon} />
-          <RuneIcon runeData={subStyleData} iconUrl={subStyleIcon} />
+        <div className="flex flex-col justify-center gap-1">
+          <RuneIcon runeData={keyStoneData} iconUrl={keyStoneIcon} sm={true} />
+          <RuneIcon runeData={subStyleData} iconUrl={subStyleIcon} sm={true} />
         </div>
       </div>
       <Link
@@ -72,7 +74,7 @@ export default function LiveGameParticipant({
         prefetch={false}
         className={`${
           myParticipant ? "pointer-events-none text-orange-500" : ""
-        } hover:underline text-sm`}
+        } hover:underline text-sm truncate`}
       >
         {name} #{tag}
       </Link>

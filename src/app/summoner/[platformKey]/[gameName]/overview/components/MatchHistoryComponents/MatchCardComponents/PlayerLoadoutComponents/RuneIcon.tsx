@@ -12,7 +12,7 @@ interface RuneIconProps {
 export default function RuneIcon({ sm, runeData, iconUrl }: RuneIconProps) {
   if (!runeData || !iconUrl)
     return (
-      <div className={`${sm ? "size-4" : "size-6"} bg-white/10 rounded-sm`} />
+      <div className={`${sm ? "size-4" : "size-6"} bg-white/10 rounded-xs`} />
     );
   return (
     <Tooltip content={<RuneTooltip rune={runeData} />}>
@@ -21,7 +21,7 @@ export default function RuneIcon({ sm, runeData, iconUrl }: RuneIconProps) {
           src={iconUrl}
           fill
           alt={runeData.name}
-          className="bg-white/10 rounded-sm p-0.5"
+          className="bg-white/10 rounded-xs p-0.5"
         />
       </div>
     </Tooltip>

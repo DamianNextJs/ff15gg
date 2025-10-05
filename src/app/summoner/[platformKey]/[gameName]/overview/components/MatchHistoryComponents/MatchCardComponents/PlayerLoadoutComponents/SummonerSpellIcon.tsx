@@ -16,12 +16,12 @@ export default function SummonerSpellIcon({
 }: SummonerSpellIconProps) {
   if (!spellData || !iconUrl)
     return (
-      <div className={`${sm ? "size-4" : "size-6"} bg-white/10 rounded-sm`} />
+      <div className={`${sm ? "size-4" : "size-6"} bg-white/10 rounded-xs`} />
     );
   return (
     <Tooltip content={<SummonerSpellTooltip summonerSpell={spellData} />}>
       <div className={`${sm ? "size-4" : "size-6"} relative`}>
-        <Image src={iconUrl} fill alt={spellData.name} />
+        <Image src={iconUrl} fill alt={spellData.name} className="rounded-xs" />
       </div>
     </Tooltip>
   );

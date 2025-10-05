@@ -30,9 +30,11 @@ export default async function LiveGame({ params }: LiveGameProps) {
         gameQueue={liveGameData.liveGame.gameQueueConfigId}
         gameLength={liveGameData.liveGame.gameLength}
       />
-      <BannedChampions
-        bannedChampions={liveGameData.liveGame.bannedChampions}
-      />
+      <div className="mb-4">
+        <BannedChampions
+          bannedChampions={liveGameData.liveGame.bannedChampions}
+        />
+      </div>
       <LiveGameParticipants
         platform={platform}
         myPuuid={liveGameData.riotAccount.puuid}

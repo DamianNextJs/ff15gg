@@ -33,14 +33,22 @@ export default function BannedChampions({
               if (!champIcon) return null;
               return (
                 <div
-                  className={`relative ${sm ? " size-6.5" : "lg:size-9"} `}
+                  className={`relative ${
+                    sm ? "size-6.5" : "size-6.5 lg:size-8"
+                  } `}
                   key={i}
                 >
                   <Image
                     src={champIcon}
                     alt="Champ Icon"
                     fill
-                    className={`border-subtle border rounded-md`}
+                    className={`${
+                      sm
+                        ? "border-subtle"
+                        : teamId === 100
+                        ? "border-blue-500"
+                        : "border-red-500"
+                    } border rounded-md`}
                   />
 
                   <svg
