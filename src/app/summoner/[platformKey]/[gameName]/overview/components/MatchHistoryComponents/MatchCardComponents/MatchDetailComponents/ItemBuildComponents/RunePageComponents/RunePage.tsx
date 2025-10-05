@@ -8,7 +8,7 @@ export default function RunePage({
   runes: ParticipantData["perks"];
 }) {
   return (
-    <div className="p-2">
+    <div>
       <h2 className="text-sm lg:text-base font-semibold border-l-2 border-primary ps-3">
         Runes
       </h2>

@@ -12,6 +12,7 @@ export interface MatchData {
     participants: ParticipantData[];
     teams: TeamData[];
   };
+  timeLine?: TimeLineData;
 }
 
 export interface TeamData {
@@ -66,4 +67,26 @@ export interface ParticipantData {
       offense: number;
     };
   };
+}
+
+export interface TimeLineData {
+  info: {
+    frames: {
+      events: EventData[];
+    }[];
+    participants: TimeLineParticipants[];
+  };
+}
+
+export interface EventData {
+  type: "SKILL_LEVEL_UP" | "ITEM_PURCHASED" | "ITEM_SOLD";
+  timestamp: number;
+  participantId: number;
+  itemId?: number;
+  skillSlot?: number;
+}
+
+export interface TimeLineParticipants {
+  participantId: number;
+  puuid: string;
 }

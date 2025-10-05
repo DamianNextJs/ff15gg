@@ -2,7 +2,7 @@ import { connectToDB } from "@/lib/mongodb";
 import Summoner, { ISummoner } from "@/models/Summoner";
 import Match, { IMatch } from "@/models/Match";
 import { SummonerData } from "@/types/summoner";
-import { MatchData } from "@/types/match";
+import { MatchData, TimeLineData } from "@/types/match";
 import { normalizeSummonerName } from "@/helper/summoner";
 import { calculateChampionStats } from "@/helper/stats/calculateChampionStats";
 import {
@@ -12,8 +12,14 @@ import {
   getRankedInfo,
   getRecentMatchIds,
   getMatch,
+  getTimeLine,
 } from "@/helper/riotApi";
-import { mapChampionMastery, mapMatches, mapRanked } from "@/helper/mappers";
+import {
+  mapChampionMastery,
+  mapMatches,
+  mapRanked,
+  mapTimeLine,
+} from "@/helper/mappers";
 
 export async function fetchAndCacheSummoner(
   region: string,
@@ -98,9 +104,19 @@ export async function fetchAndCacheSummoner(
     await Promise.all(newMatchIds.map((matchId) => getMatch(matchId, region)))
   );
 
+  // --- Fetch Timelines based on the Id's already filtered with mapMatches ---
+  await new Promise((res) => setTimeout(res, 1000)); // rate limit pause
+  const timeLineData: TimeLineData[] = mapTimeLine(
+    await Promise.all(
+      newMatches.map((m) => getTimeLine(m.metadata.matchId, region))
+    )
+  );
+
   // --- Insert new matches ---
   if (newMatches.length > 0) {
-    await Match.insertMany(newMatches.map((m) => ({ data: m })));
+    await Match.insertMany(
+      newMatches.map((m, i) => ({ data: { ...m, timeLine: timeLineData[i] } }))
+    );
   }
 
   // --- Calculate champ stats based on all matches ---

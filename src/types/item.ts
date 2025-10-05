@@ -6,7 +6,5 @@ export interface ItemInfo {
   name: string;
   plaintext: string;
   description: string;
-  gold: {
-    total: number;
-  };
+  gold: number;
 }

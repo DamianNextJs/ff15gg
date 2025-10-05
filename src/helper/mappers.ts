@@ -1,7 +1,7 @@
 import { queueMap } from "@/lib/maps/queueMap";
 import { LiveGame } from "@/types/live-game";
 import { ChampionMastery, SummonerData } from "@/types/summoner";
-import { MatchData } from "@/types/match";
+import { MatchData, TimeLineData } from "@/types/match";
 
 // --- Mapping helpers ---
 export function mapChampionMastery(raw: ChampionMastery[]): ChampionMastery[] {
@@ -79,6 +79,33 @@ export function mapMatches(raw: MatchData[]): MatchData[] {
         })),
       },
     }));
+}
+
+export function mapTimeLine(raw: TimeLineData[]): TimeLineData[] {
+  return raw.map((t) => ({
+    info: {
+      frames: t.info.frames.map((f) => ({
+        events: f.events
+          .filter(
+            (e) =>
+              e.type === "SKILL_LEVEL_UP" ||
+              e.type === "ITEM_PURCHASED" ||
+              e.type === "ITEM_SOLD"
+          )
+          .map((e) => ({
+            type: e.type,
+            timestamp: e.timestamp,
+            participantId: e.participantId,
+            itemId: e.itemId,
+            skillSlot: e.skillSlot,
+          })),
+      })),
+      participants: t.info.participants.map((p) => ({
+        participantId: p.participantId,
+        puuid: p.puuid,
+      })),
+    },
+  }));
 }
 
 export function mapLiveGame(raw: LiveGame | null): LiveGame | null {

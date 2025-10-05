@@ -71,6 +71,13 @@ export async function getMatch(matchId: string, region: string) {
   );
 }
 
+export async function getTimeLine(matchId: string, region: string) {
+  return safeFetch(
+    `https://${region}.api.riotgames.com/lol/match/v5/matches/${matchId}/timeline`,
+    "getTimeLine"
+  );
+}
+
 export async function getLiveGame(puuid: string, platform: string) {
   return safeFetch(
     `https://${platform}.api.riotgames.com/lol/spectator/v5/active-games/by-summoner/${puuid}`,

@@ -25,4 +25,8 @@ export const DDragon = {
   summonerSpell(spellName: string) {
     return `https://ddragon.leagueoflegends.com/cdn/${LATEST_VERSION}/img/spell/${spellName}.png`;
   },
+
+  championSpell(championSpellImage: string) {
+    return `https://ddragon.leagueoflegends.com/cdn/${LATEST_VERSION}/img/spell/${championSpellImage}`;
+  },
 };

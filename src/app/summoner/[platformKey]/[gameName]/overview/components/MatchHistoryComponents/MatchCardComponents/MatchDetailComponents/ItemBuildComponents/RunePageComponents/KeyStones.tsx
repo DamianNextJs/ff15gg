@@ -10,7 +10,7 @@ export default function KeyStones({
   selectedRuneIds: number[];
 }) {
   return (
-    <div className="flex border-b border-white/10 pb-3 w-full justify-around">
+    <div className="flex border-b border-white/10 pb-3 lg:pb-6 w-full justify-around">
       {keystones.map((k) => {
         const { icon, data } = getRuneData(k.id);
         const isSelected = selectedRuneIds.includes(k.id);

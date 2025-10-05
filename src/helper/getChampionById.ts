@@ -1,14 +1,8 @@
-import championData from "@/lib/data/champions.json";
+import championData from "@/lib/data/championFiltered.json";
+import { ChampionData } from "@/types/champion";
 
-interface Champion {
-  id: string;
-  key: string;
-  name: string;
-  image: string;
-}
+const championMap: Record<string, ChampionData> = championData;
 
-const championMap: Record<string, Champion> = championData;
-
-export function getChampionById(id: number): Champion | undefined {
+export function getChampionById(id: number): ChampionData | undefined {
   return championMap[id.toString()];
 }
