@@ -90,7 +90,8 @@ export function mapTimeLine(raw: TimeLineData[]): TimeLineData[] {
             (e) =>
               e.type === "SKILL_LEVEL_UP" ||
               e.type === "ITEM_PURCHASED" ||
-              e.type === "ITEM_SOLD"
+              e.type === "ITEM_SOLD" ||
+              e.type === "ITEM_UNDO"
           )
           .map((e) => ({
             type: e.type,
@@ -98,6 +99,8 @@ export function mapTimeLine(raw: TimeLineData[]): TimeLineData[] {
             participantId: e.participantId,
             itemId: e.itemId,
             skillSlot: e.skillSlot,
+            afterId: e.afterId,
+            beforeId: e.beforeId,
           })),
       })),
       participants: t.info.participants.map((p) => ({

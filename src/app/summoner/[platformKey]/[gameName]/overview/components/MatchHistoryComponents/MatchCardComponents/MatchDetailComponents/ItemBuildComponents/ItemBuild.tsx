@@ -19,7 +19,10 @@ export default function ItemBuild() {
   const levelUpEvents = myEvents?.filter((e) => e.type === "SKILL_LEVEL_UP");
 
   const itemEvents = myEvents?.filter(
-    (e) => e.type === "ITEM_PURCHASED" || e.type === "ITEM_SOLD"
+    (e) =>
+      e.type === "ITEM_PURCHASED" ||
+      e.type === "ITEM_SOLD" ||
+      e.type === "ITEM_UNDO"
   );
 
   return (

@@ -79,10 +79,12 @@ export interface TimeLineData {
 }
 
 export interface EventData {
-  type: "SKILL_LEVEL_UP" | "ITEM_PURCHASED" | "ITEM_SOLD";
+  type: "SKILL_LEVEL_UP" | "ITEM_PURCHASED" | "ITEM_SOLD" | "ITEM_UNDO";
   timestamp: number;
   participantId: number;
   itemId?: number;
+  beforeId?: number;
+  afterId?: number;
   skillSlot?: number;
 }
 

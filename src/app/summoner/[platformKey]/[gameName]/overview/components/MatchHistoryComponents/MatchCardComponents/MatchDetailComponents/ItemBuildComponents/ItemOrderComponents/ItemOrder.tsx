@@ -13,19 +13,25 @@ function groupItemEventsByMinute(
   const eventsByMinute = new Map<number, GroupedItem[]>();
 
   for (const event of events) {
-    if (!event.itemId) continue;
+    const id = event.type === "ITEM_UNDO" ? event.beforeId : event.itemId;
+    if (!id) continue;
 
     const minute = Math.floor(event.timestamp / 1000 / 60);
 
     if (!eventsByMinute.has(minute)) eventsByMinute.set(minute, []);
-
     const items = eventsByMinute.get(minute);
-
     if (!items) continue;
 
-    const existing = items.find((i) => i.item.itemId === event.itemId);
+    const existing = items.find((i) => i.item.itemId === id);
 
-    if (existing) {
+    if (event.type === "ITEM_UNDO") {
+      if (existing) {
+        existing.count -= 1;
+        if (existing.count <= 0) {
+          items.splice(items.indexOf(existing), 1);
+        }
+      }
+    } else if (existing) {
       existing.count += 1;
       if (event.type === "ITEM_SOLD") existing.sold = true;
     } else {
