@@ -41,7 +41,7 @@ export default function ItemIcon({
       >
         <Image
           src={itemIconUrl}
-          alt={itemData.name}
+          alt="item icon"
           fill
           className={`rounded-sm ${sold ? "opacity-30" : ""}`}
         />
