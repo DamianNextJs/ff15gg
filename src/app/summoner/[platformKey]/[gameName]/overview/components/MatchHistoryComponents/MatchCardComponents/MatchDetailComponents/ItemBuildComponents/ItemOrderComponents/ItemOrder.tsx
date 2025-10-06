@@ -27,13 +27,17 @@ function groupItemEventsByMinute(
     if (event.type === "ITEM_UNDO") {
       if (existing) {
         existing.count -= 1;
+
         if (existing.count <= 0) {
           items.splice(items.indexOf(existing), 1);
         }
       }
     } else if (existing) {
       existing.count += 1;
-      if (event.type === "ITEM_SOLD") existing.sold = true;
+      if (event.type === "ITEM_SOLD") {
+        existing.sold = true;
+        existing.count -= 1;
+      }
     } else {
       items.push({
         item: event,
