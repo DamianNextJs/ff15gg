@@ -16,7 +16,7 @@ Live demo: [ff15gg.vercel.app](https://ff15gg.vercel.app)
 - Update button for fetching fresh data from Riot API (includes cooldown to prevent spam)
 - Hover tooltip for summoner spells, runes and items
 - Ability to load more than 20 matches if enough are stored in the database
-- Filter matches with queue selector
+- Filter matches using the queue selector or by searching for champions played or participants played with
 - Queue filtering syncs with Recently Played With component
 - Click Matches to view detailed information in a dropdown
   - **Post Game Tab**: shows information about all players in that match
