@@ -4,11 +4,10 @@ import MatchHistoryHeader from "./MatchHistoryHeader";
 import MatchCard from "./MatchCardComponents/MatchCard";
 import { getRecentStats } from "@/helper/stats/getRecentStats";
 import MatchHistoryLoader from "./MatchHistoryLoader";
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useMemo, useState, useDeferredValue } from "react";
 import { loadCachedMatches } from "../../../actions";
 import { useMatches } from "../../contexts/MatchesContext";
 import QueueSelector from "./QueueSelector";
-import { queueMap } from "@/lib/maps/queueMap";
 import { MatchData } from "@/types/match";
 import SectionHeading from "@/components/SectionHeading";
 
@@ -21,17 +20,37 @@ export default function MatchHistory({
   const [offset, setOffset] = useState(matches.length);
   const [loading, setLoading] = useState(false);
   const [hasMore, setHasMore] = useState(true);
+  const [searchFilter, setSearchFilter] = useState("");
+
+  const deferredSearch = useDeferredValue(searchFilter);
 
   // Filter matches based on queue selection
   const filteredMatches: MatchData[] = useMemo(() => {
+    const normalizedSearch = deferredSearch.trim().toLowerCase();
+
     return matches.filter((m) => {
-      if (currentQueue === "all") {
-        return m.info.queueId in queueMap;
-      } else {
-        return m.info.queueId === currentQueue;
-      }
+      const queueMatches =
+        currentQueue === "all" ? true : m.info.queueId === currentQueue;
+
+      if (!queueMatches) return false;
+
+      if (!normalizedSearch.trim()) return true;
+
+      const myParticipant = m.info.participants.find(
+        (p) => p.puuid === participantPuuid
+      );
+
+      const championMatch = myParticipant?.championName
+        .toLowerCase()
+        .includes(normalizedSearch);
+
+      const nameMatch = m.info.participants.some((p) =>
+        p.riotIdGameName.toLowerCase().includes(normalizedSearch)
+      );
+
+      return championMatch || nameMatch;
     });
-  }, [matches, currentQueue]);
+  }, [matches, currentQueue, deferredSearch]);
 
   // Compute recent stats only for displayed matches
   const recentStats = useMemo(
@@ -63,13 +82,37 @@ export default function MatchHistory({
   }
 
   return (
-    <section className="mt-3  bg-secondary rounded-md p-4">
+    <section className="mt-3 bg-secondary rounded-md p-4 pt-4">
       <div className="flex items-center justify-between">
         <SectionHeading text="Match History" />
-        <QueueSelector
-          currentQueue={currentQueue}
-          setCurrentQueue={setCurrentQueue}
-        />
+        <div className="flex items-center lg:gap-4">
+          <QueueSelector
+            currentQueue={currentQueue}
+            setCurrentQueue={setCurrentQueue}
+          />
+          <div className="relative lg:w-67">
+            <input
+              value={searchFilter}
+              onChange={(e) => setSearchFilter(e.target.value)}
+              placeholder="Search Champion or Played With..."
+              className="bg-accent p-2.5 pr-8 rounded-md outline-none hover:bg-subtle/10 w-full text-sm hidden lg:block"
+            />
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              fill="none"
+              viewBox="0 0 24 24"
+              strokeWidth={1.5}
+              stroke="currentColor"
+              className="size-4 absolute right-2.5 top-1/2 -translate-y-1/2 opacity-50 hidden lg:block"
+            >
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                d="m21 21-5.197-5.197m0 0A7.5 7.5 0 1 0 5.196 5.196a7.5 7.5 0 0 0 10.607 10.607Z"
+              />
+            </svg>
+          </div>
+        </div>
       </div>
 
       <MatchHistoryHeader recentStats={recentStats} />

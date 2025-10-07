@@ -28,10 +28,10 @@ export default function MatchHistoryHeader({
   const KDA = calculateKDA(kills, deaths, assists);
 
   return (
-    <div className="-mx-4 px-4 py-3 bg-accent mt-3 flex items-center gap-5">
+    <div className="-mx-4 px-4 py-3 bg-accent/75 mt-4 flex items-center gap-5">
       <WinRateDonut winRate={winRate} size={30} strokeWidth={7} />
 
-      <div className="flex flex-col">
+      <div className="flex flex-col w-25">
         <span className="text-sm lg:text-base font-semibold">
           {winRate}% WR
         </span>
@@ -40,7 +40,7 @@ export default function MatchHistoryHeader({
         </span>
       </div>
 
-      <div className="flex flex-col text-center">
+      <div className="flex flex-col text-center w-25">
         <span className="text-sm lg:text-base font-semibold">{KDA} KDA</span>
         <span className="text-xs lg:text-sm text-subtle">
           {averageKills} <span className="text-subtle/50">/</span>{" "}
