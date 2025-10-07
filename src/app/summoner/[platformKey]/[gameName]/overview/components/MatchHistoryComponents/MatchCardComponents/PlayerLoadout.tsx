@@ -43,9 +43,9 @@ export default function PlayerLoadout({
       <div className={`col-span-2 relative ${sm ? "size-9" : "size-13"}`}>
         <Image src={champIconUrl} fill alt={participant.championName} />
         <span
-          className={`${
-            sm ? "text-[0.5rem]" : "text-xs"
-          } font-medium absolute right-0 bottom-0 bg-accent px-0.5`}
+          className={`text-[10px] lg:text-xs ${
+            sm ? "rounded-md -bottom-0.5" : "bottom-0 "
+          } font-medium absolute right-0  bg-accent px-0.5`}
         >
           {champLevel}
         </span>
