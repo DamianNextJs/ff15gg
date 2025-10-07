@@ -1,6 +1,7 @@
 import { EventData } from "@/types/match";
 import ChampionSpellSlots from "./ChampionSpellSlots";
 import LevelUpSlots from "./LevelUpSlots";
+import SectionHeading from "@/components/SectionHeading";
 
 export default function SkillOrder({
   participantChampionId,
@@ -11,9 +12,7 @@ export default function SkillOrder({
 }) {
   return (
     <div>
-      <h2 className="text-sm lg:text-base font-semibold border-l-2 border-primary ps-3">
-        Skill Order
-      </h2>
+      <SectionHeading text="Skill Order" />
       <div className="mt-3 overflow-x-auto lg:overflow-visible">
         <div className="min-w-fit flex gap-2 justify-start lg:justify-center pb-3 lg:p-0">
           <ChampionSpellSlots participantChampionId={participantChampionId} />

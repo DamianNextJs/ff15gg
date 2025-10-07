@@ -2,6 +2,7 @@ import { getChampionById } from "@/helper/getChampionById";
 import { DDragon } from "@/utils/ddragon";
 import { ChampionMastery } from "@/types/summoner";
 import Image from "next/image";
+import SectionHeading from "@/components/SectionHeading";
 
 export default function ChampMasteryCard({
   championMastery,
@@ -16,9 +17,7 @@ export default function ChampMasteryCard({
   ].filter(Boolean); // remove nulls if <3 champions
   return (
     <section className="mt-3 bg-secondary rounded-md p-4">
-      <h2 className="text-sm lg:text-base font-semibold border-l-2 border-primary ps-3">
-        Champion Mastery
-      </h2>
+      <SectionHeading text="Champion Mastery" />
       <div className="flex justify-around mt-4">
         {reordered.map((c: ChampionMastery) => {
           if (!c.championLevel) return null;

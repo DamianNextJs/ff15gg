@@ -4,6 +4,7 @@ import Image from "next/image";
 import { ChampStats } from "@/types/summoner";
 import { DDragon } from "@/utils/ddragon";
 import { getChampionById } from "@/helper/getChampionById";
+import SectionHeading from "@/components/SectionHeading";
 
 export default function ChampStatsCard({
   recentChampStats,
@@ -12,9 +13,7 @@ export default function ChampStatsCard({
 }) {
   return (
     <section className="mt-3 bg-secondary rounded-md p-4">
-      <h2 className="text-sm lg:text-base font-semibold border-l-2 border-primary ps-3">
-        Champion Stats
-      </h2>
+      <SectionHeading text="Champion Stats" />
       {(recentChampStats || []).map((champStats: ChampStats) => {
         const champ = getChampionById(champStats.champId);
         if (!champ) return null; // skip if champion not found

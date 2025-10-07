@@ -3,6 +3,7 @@ import { toNormalCase, toRoman } from "@/utils/utils";
 import { RankedData } from "@/types/summoner";
 import Image from "next/image";
 import { getRankData } from "@/helper/summoner";
+import SectionHeading from "@/components/SectionHeading";
 
 export default function RankCard({
   data,
@@ -24,9 +25,7 @@ export default function RankCard({
   return (
     <section className="mt-3 bg-secondary rounded-md p-4">
       <div className={`relative ${hasRankInfo && "space-y-4"}`}>
-        <h2 className="text-sm lg:text-base font-semibold border-l-2 border-primary ps-3">
-          {rankType}
-        </h2>
+        <SectionHeading text={rankType} />
 
         {hasRankInfo ? (
           <div className="flex items-center justify-between ">

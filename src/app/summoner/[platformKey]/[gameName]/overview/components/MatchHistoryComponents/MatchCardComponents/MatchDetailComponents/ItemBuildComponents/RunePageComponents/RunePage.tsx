@@ -1,6 +1,7 @@
 import { ParticipantData } from "@/types/match";
 
 import RuneTree from "./RuneTree";
+import SectionHeading from "@/components/SectionHeading";
 
 export default function RunePage({
   runes,
@@ -9,9 +10,7 @@ export default function RunePage({
 }) {
   return (
     <div>
-      <h2 className="text-sm lg:text-base font-semibold border-l-2 border-primary ps-3">
-        Runes
-      </h2>
+      <SectionHeading text="Runes" />
       <div className="grid grid-cols-2 gap-3 lg:justify-items-center mt-3">
         <RuneTree
           runeStyle={runes.styles[0].style}

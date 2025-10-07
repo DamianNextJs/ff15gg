@@ -8,6 +8,7 @@ import { getRecentTeammates } from "@/helper/stats/getRecentTeammates";
 import { useMatches } from "../contexts/MatchesContext";
 import { useMemo } from "react";
 import { queueMap } from "@/lib/maps/queueMap";
+import SectionHeading from "@/components/SectionHeading";
 
 interface RecentlyPlayedWithProps {
   platformKey: string;
@@ -35,12 +36,12 @@ export default function RecentlyPlayedWith({
 
   return (
     <section className="mt-3 bg-secondary rounded-md p-4 pb-0">
-      <h2 className="text-sm lg:text-base font-semibold border-l-2 border-primary ps-3 flex items-center justify-between">
-        Recently Played With
+      <div className="flex items-center justify-between">
+        <SectionHeading text="Recently Played With" />
         <p className="text-xs lg:text-sm text-subtle">
           Last {filteredMatches.length} Games
         </p>
-      </h2>
+      </div>
 
       <div className="text-xs text-subtle mt-3 font-medium">
         {/* Headers */}

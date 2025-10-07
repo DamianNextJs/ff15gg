@@ -1,5 +1,6 @@
 import { EventData } from "@/types/match";
 import ItemMinuteBlock from "./ItemMinuteBlock";
+import SectionHeading from "@/components/SectionHeading";
 
 export interface GroupedItem {
   item: EventData;
@@ -54,9 +55,7 @@ export default function ItemOrder({ itemEvents }: { itemEvents: EventData[] }) {
   const eventsByMinute = groupItemEventsByMinute(itemEvents);
   return (
     <div>
-      <h2 className="text-sm lg:text-base font-semibold border-l-2 border-primary ps-3">
-        Items
-      </h2>
+      <SectionHeading text="Items" />
       <div className="mt-3 flex w-full justify-center">
         <div className="flex flex-wrap w-141.5">
           {Array.from(eventsByMinute.entries()).map(

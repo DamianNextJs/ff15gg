@@ -10,6 +10,7 @@ import { useMatches } from "../../contexts/MatchesContext";
 import QueueSelector from "./QueueSelector";
 import { queueMap } from "@/lib/maps/queueMap";
 import { MatchData } from "@/types/match";
+import SectionHeading from "@/components/SectionHeading";
 
 export default function MatchHistory({
   participantPuuid,
@@ -64,9 +65,7 @@ export default function MatchHistory({
   return (
     <section className="mt-3  bg-secondary rounded-md p-4">
       <div className="flex items-center justify-between">
-        <h2 className="text-sm lg:text-base font-semibold border-l-2 border-primary ps-3">
-          Match History
-        </h2>
+        <SectionHeading text="Match History" />
         <QueueSelector
           currentQueue={currentQueue}
           setCurrentQueue={setCurrentQueue}
