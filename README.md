@@ -19,7 +19,7 @@ Live demo: [ff15gg.vercel.app](https://ff15gg.vercel.app)
 - Filter matches with queue selector
 - Queue filtering syncs with Recently Played With component
 - Click Matches to view detailed information in a dropdown
-  - **Post Game Tab**: shows information about all in that match
+  - **Post Game Tab**: shows information about all players in that match
   - **Performance Tab**: allows filtering all players in that match by various stats
   - **Item Build**: displays the detailed build of the profile's player
 
