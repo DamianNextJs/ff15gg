@@ -52,6 +52,8 @@ export type ChampStats = {
   kills: number;
   deaths: number;
   assists: number;
+  winRate: number;
+  kda: number;
 };
 
 // Aggregated recent stats for the summoner
@@ -62,6 +64,13 @@ export interface RecentStats {
   deaths: number;
   assists: number;
   gamesPlayed: number;
+  winRate: number;
+  kda: number;
+  mostPlayedChampion: ChampStats;
+  mostPlayedRole: {
+    role: string;
+    percentage: number;
+  };
 }
 
 // Aggregated Recently played teammates summary

@@ -5,15 +5,26 @@ import {
   calculateWinrate,
   calculateKDA,
 } from "@/helper/stats/stats";
-
-interface MatchHistoryHeaderProps {
-  recentStats: RecentStats;
-}
+import { getChampionById } from "@/helper/getChampionById";
+import { DDragon } from "@/utils/ddragon";
+import Image from "next/image";
+import Tooltip from "@/components/Tooltip";
 
 export default function MatchHistoryHeader({
   recentStats,
-}: MatchHistoryHeaderProps) {
-  const { wins, losses, kills, deaths, assists, gamesPlayed } = recentStats;
+}: {
+  recentStats: RecentStats;
+}) {
+  const {
+    winRate,
+    kda,
+    kills,
+    deaths,
+    assists,
+    gamesPlayed,
+    mostPlayedChampion,
+    mostPlayedRole,
+  } = recentStats;
 
   // --- Safely calculate averages ---
   const safeGames = gamesPlayed || 1;
@@ -24,30 +35,74 @@ export default function MatchHistoryHeader({
     safeGames
   );
 
-  const winRate = calculateWinrate(wins, losses);
-  const KDA = calculateKDA(kills, deaths, assists);
+  const champ =
+    mostPlayedChampion && getChampionById(mostPlayedChampion.champId);
+
+  const champIcon = DDragon.championIcon(champ?.id ?? "");
 
   return (
-    <div className="-mx-4 px-4 py-3 bg-accent/75 mt-4 flex items-center gap-5">
-      <WinRateDonut winRate={winRate} size={30} strokeWidth={7} />
+    <div className="-mx-4 px-4 py-3 bg-accent/75 mt-4 grid grid-cols-2 lg:grid-cols-4 items-center justify-items-center">
+      {/* --- Winrate --- */}
+      <div className="flex items-center gap-4 w-35">
+        <WinRateDonut winRate={winRate} size={30} strokeWidth={7} />
 
-      <div className="flex flex-col w-25">
-        <span className="text-sm lg:text-base font-semibold">
-          {winRate}% WR
-        </span>
-        <span className="text-xs lg:text-sm text-subtle">
-          Last {gamesPlayed} Games
-        </span>
+        <div className="flex flex-col">
+          <span className="text-sm lg:text-base font-semibold">
+            {winRate}% WR
+          </span>
+          <span className="text-xs lg:text-sm text-subtle">
+            Last {gamesPlayed} Games
+          </span>
+        </div>
       </div>
 
-      <div className="flex flex-col text-center w-25">
-        <span className="text-sm lg:text-base font-semibold">{KDA} KDA</span>
+      {/* --- Stats --- */}
+      <div className="flex flex-col text-center w-30">
+        <span className="text-sm lg:text-base font-semibold">{kda} KDA</span>
         <span className="text-xs lg:text-sm text-subtle">
           {averageKills} <span className="text-subtle/50">/</span>{" "}
           {averageDeaths} <span className="text-subtle/50">/</span>{" "}
           {averageAssists}
         </span>
       </div>
+
+      {/* --- Most Played Champion --- */}
+      {mostPlayedChampion && (
+        <div className="hidden lg:flex gap-2 w-35">
+          <Image src={champIcon} width={40} height={40} alt="champ icon" />
+          <div className="text-xs flex flex-col justify-between font-medium">
+            <div className="flex gap-1">
+              {mostPlayedChampion.winRate}%
+              <p className="text-subtle">
+                ({mostPlayedChampion.wins}W {mostPlayedChampion.losses}L)
+              </p>
+            </div>
+            <div>{mostPlayedChampion.kda} KDA</div>
+          </div>
+        </div>
+      )}
+
+      {/* --- Most Played Role --- */}
+      {mostPlayedRole.role !== "Unknown" && (
+        <div className="hidden lg:flex items-center gap-2">
+          <Tooltip content={<p className="text-sm">Preferred Role</p>}>
+            <Image
+              src={`/Role_Icons/Role=${mostPlayedRole.role}.png`}
+              width={20}
+              height={20}
+              alt="role icon"
+            />
+          </Tooltip>
+          <div className="h-1.5 bg-primary/25 rounded-md overflow-hidden w-25">
+            <div
+              className={`$ bg-primary h-full`}
+              style={{
+                width: `${mostPlayedRole.percentage}%`,
+              }}
+            />
+          </div>
+        </div>
+      )}
     </div>
   );
 }

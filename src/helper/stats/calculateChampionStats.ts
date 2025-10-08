@@ -1,10 +1,12 @@
 import { ChampStats } from "@/types/summoner";
 import { MatchData } from "@/types/match";
+import { calculateKDA, calculateWinrate } from "./stats";
 
 export function calculateChampionStats(
   matches: MatchData[],
   summonerPuuid: string
 ): ChampStats[] {
+  if (!matches || matches.length === 0) return [];
   const statsMap: Record<number, ChampStats> = {};
 
   for (const match of matches) {
@@ -24,6 +26,8 @@ export function calculateChampionStats(
         kills: 0,
         deaths: 0,
         assists: 0,
+        winRate: 0,
+        kda: 0,
       };
     }
 
@@ -36,7 +40,10 @@ export function calculateChampionStats(
     stats.assists += participant.assists;
   }
 
-  return Object.values(statsMap)
-    .sort((a, b) => b.games - a.games)
-    .slice(0, 5);
+  for (const stats of Object.values(statsMap)) {
+    stats.winRate = calculateWinrate(stats.wins, stats.losses);
+    stats.kda = calculateKDA(stats.kills, stats.deaths, stats.assists);
+  }
+
+  return Object.values(statsMap).sort((a, b) => b.games - a.games);
 }

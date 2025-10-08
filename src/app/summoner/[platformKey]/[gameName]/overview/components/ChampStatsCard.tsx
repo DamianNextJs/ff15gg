@@ -19,7 +19,6 @@ export default function ChampStatsCard({
         if (!champ) return null; // skip if champion not found
 
         const champIcon = DDragon.championIcon(champ.id);
-        const winRate = calculateWinrate(champStats.wins, champStats.losses);
         const { averageKills, averageDeaths, averageAssists } =
           calculateAverageStats(
             champStats.kills,
@@ -28,11 +27,6 @@ export default function ChampStatsCard({
             champStats.games
           );
 
-        const kda = calculateKDA(
-          champStats.kills,
-          champStats.deaths,
-          champStats.assists
-        );
         return (
           <div
             className="mt-3 grid grid-cols-[2fr_1fr_1fr] border-t border-accent -mx-4 px-4 pt-2 font-medium text-xs  text-center"
@@ -51,7 +45,7 @@ export default function ChampStatsCard({
 
             {/* stats container */}
             <div>
-              <p className="font-semibold">{kda} KDA</p>
+              <p className="font-semibold">{champStats.kda} KDA</p>
               <p className="text-subtle text-nowrap">
                 {averageKills} <span className="text-subtle/50">/</span>{" "}
                 {averageDeaths} <span className="text-subtle/50">/</span>{" "}
@@ -61,7 +55,7 @@ export default function ChampStatsCard({
 
             {/* games amount and winrate */}
             <div className="text-right">
-              <p>{winRate}%</p>
+              <p>{champStats.winRate}%</p>
               <p className="text-subtle">{champStats.games} games</p>
             </div>
           </div>
