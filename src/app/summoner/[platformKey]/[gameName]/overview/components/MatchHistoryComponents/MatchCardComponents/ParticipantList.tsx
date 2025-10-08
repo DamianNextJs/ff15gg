@@ -48,6 +48,7 @@ export default function ParticipantList() {
                     className={`truncate flex-1 hover:underline ${
                       isMyParticipant && "pointer-events-none"
                     }`}
+                    onClick={(e) => e.stopPropagation()}
                   >
                     {p.riotIdGameName}
                   </Link>

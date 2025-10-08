@@ -44,8 +44,10 @@ export default function MatchHistory({
         .toLowerCase()
         .includes(normalizedSearch);
 
-      const nameMatch = m.info.participants.some((p) =>
-        p.riotIdGameName.toLowerCase().includes(normalizedSearch)
+      const nameMatch = m.info.participants.some(
+        (p) =>
+          p.puuid !== participantPuuid &&
+          p.riotIdGameName.toLowerCase().includes(normalizedSearch)
       );
 
       return championMatch || nameMatch;
