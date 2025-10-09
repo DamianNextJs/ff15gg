@@ -1,10 +1,6 @@
 import WinRateDonut from "@/components/WinRateDonut";
 import { RecentStats } from "@/types/summoner";
-import {
-  calculateAverageStats,
-  calculateWinrate,
-  calculateKDA,
-} from "@/helper/stats/stats";
+import { calculateAverageStats } from "@/helper/stats/stats";
 import { getChampionById } from "@/helper/getChampionById";
 import { DDragon } from "@/utils/ddragon";
 import Image from "next/image";

@@ -52,7 +52,7 @@ export default function MatchHistory({
 
       return championMatch || nameMatch;
     });
-  }, [matches, currentQueue, deferredSearch]);
+  }, [matches, currentQueue, deferredSearch, participantPuuid]);
 
   // Compute recent stats only for displayed matches
   const recentStats = useMemo(

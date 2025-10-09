@@ -1,3 +1,5 @@
+import { queueMap } from "@/lib/maps/queueMap";
+
 // -- Custom extended Types
 export interface SummonerData {
   // Riot Types
@@ -44,7 +46,7 @@ export interface ChampionMastery {
 
 // --- Aggregation Types
 // Aggregated champion stats
-export type ChampStats = {
+export interface ChampStats {
   champId: number;
   games: number;
   wins: number;
@@ -54,7 +56,20 @@ export type ChampStats = {
   assists: number;
   winRate: number;
   kda: number;
-};
+  maxKills: number;
+  maxDeaths: number;
+  CS: number;
+  damage: number;
+  gold: number;
+  doubleKills: number;
+  trippleKills: number;
+  quadraKills: number;
+  pentaKills: number;
+  role: RoleType;
+  queue: (typeof queueMap)[keyof typeof queueMap];
+}
+
+export type RoleType = "Top" | "Jungle" | "Mid" | "Bot" | "Support" | "Unknown";
 
 // Aggregated recent stats for the summoner
 export interface RecentStats {
@@ -66,11 +81,20 @@ export interface RecentStats {
   gamesPlayed: number;
   winRate: number;
   kda: number;
-  mostPlayedChampion: ChampStats;
-  mostPlayedRole: {
-    role: string;
-    percentage: number;
-  };
+  mostPlayedChampion: RecentChampStats;
+  mostPlayedRole: { role: RoleType; percentage: number };
+}
+
+export interface RecentChampStats {
+  champId: number;
+  games: number;
+  wins: number;
+  losses: number;
+  kills: number;
+  deaths: number;
+  assists: number;
+  winRate: number;
+  kda: number;
 }
 
 // Aggregated Recently played teammates summary

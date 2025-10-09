@@ -1,4 +1,5 @@
 import { ParticipantData } from "@/types/match";
+import { RoleType } from "@/types/summoner";
 
 export function calculateKDA(
   kills: number,
@@ -58,4 +59,10 @@ export function getDamageStats(
       : participant.totalDamageDealtToChampions;
 
   return { damagePercent, damageDisplay };
+}
+
+export function getRoleFromIndex(index: number): RoleType {
+  const roleOrder = ["Top", "Jungle", "Mid", "Bot", "Support"];
+  const teamIndex = index % 5;
+  return roleOrder[teamIndex] as RoleType;
 }
