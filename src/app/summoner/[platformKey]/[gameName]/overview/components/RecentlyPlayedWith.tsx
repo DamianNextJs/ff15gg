@@ -35,7 +35,7 @@ export default function RecentlyPlayedWith({
   );
 
   return (
-    <section className="mt-3 bg-secondary rounded-md p-4 pb-0">
+    <section className="mt-3 bg-secondary rounded-md p-4 pb-0 overflow-hidden">
       <div className="flex items-center justify-between">
         <SectionHeading text="Recently Played With" />
         <p className="text-xs lg:text-sm text-subtle">
@@ -45,7 +45,7 @@ export default function RecentlyPlayedWith({
 
       <div className="text-xs text-subtle mt-3 font-medium">
         {/* Headers */}
-        <div className="grid grid-cols-[2fr_1fr_1fr_1fr] bg-subtle/15 -mx-4 px-4 py-4 border-t border-accent">
+        <div className="grid grid-cols-[2fr_1fr_1fr_1fr] bg-subtle/15 -mx-4 px-4 py-3 border-t border-accent">
           <p>Summoner</p>
           <p className="text-center">Played</p>
           <p className="text-center">W - L</p>
@@ -67,7 +67,7 @@ export default function RecentlyPlayedWith({
               )}/overview`}
               prefetch={false}
               key={teammate.puuid}
-              className="grid grid-cols-[2fr_1fr_1fr_1fr] -mx-4 px-4 py-3 border-t border-accent hover:bg-subtle/15 cursor-pointer"
+              className="grid grid-cols-[2fr_1fr_1fr_1fr] items-center -mx-4 px-4 py-2 border-t border-accent hover:bg-subtle/15 cursor-pointer"
             >
               {/* Name + Icon */}
               <div className="flex items-center gap-2">
