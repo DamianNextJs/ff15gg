@@ -40,9 +40,7 @@ export default async function Overview({ params }: OverviewProps) {
         <div className="flex-1">
           <RankCard data={profileData?.ranked || []} rankType="Ranked Solo" />
           <RankCard data={profileData?.ranked || []} rankType="Ranked Flex" />
-          <ChampStatsCard
-            recentChampStats={profileData?.champStats?.splice(0, 5) || []}
-          />
+          <ChampStatsCard championStats={profileData?.champStats || []} />
           <ChampMasteryCard
             championMastery={profileData?.championMastery || []}
           />

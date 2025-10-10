@@ -39,7 +39,7 @@ export default function MatchHistoryHeader({
   return (
     <div className="-mx-4 px-4 py-3 bg-accent/75 mt-4 grid grid-cols-2 lg:grid-cols-4 items-center justify-items-center">
       {/* --- Winrate --- */}
-      <div className="flex items-center gap-4 w-35">
+      <div className="flex items-center gap-4 w-36">
         <WinRateDonut winRate={winRate} size={30} strokeWidth={7} />
 
         <div className="flex flex-col">
