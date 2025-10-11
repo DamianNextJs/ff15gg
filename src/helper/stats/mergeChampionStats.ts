@@ -19,9 +19,16 @@ export function mergeChampionStats(championStats: ChampStats[]): ChampStats[] {
       existing.kills += stat.kills;
       existing.deaths += stat.deaths;
       existing.assists += stat.assists;
+
+      existing.maxKills = Math.max(existing.maxKills, stat.maxKills);
+      existing.maxDeaths = Math.max(existing.maxDeaths, stat.maxDeaths);
+
       existing.CS += stat.CS;
+      existing.csPerMin += stat.csPerMin;
+      existing.vision += stat.vision;
       existing.damage += stat.damage;
       existing.gold += stat.gold;
+
       existing.doubleKills += stat.doubleKills;
       existing.trippleKills += stat.trippleKills;
       existing.quadraKills += stat.quadraKills;
