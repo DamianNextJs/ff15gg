@@ -101,7 +101,7 @@ export default function ChampionStatsRow({
       </p>
       {/* Tripple Kills */}
       <p className="hidden lg:block">
-        {stat.trippleKills ? stat.trippleKills : "-"}
+        {stat.tripleKills ? stat.tripleKills : "-"}
       </p>
       {/* Quadra Kills */}
       <p className="hidden lg:block">

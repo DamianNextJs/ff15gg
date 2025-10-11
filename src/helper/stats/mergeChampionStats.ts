@@ -30,7 +30,7 @@ export function mergeChampionStats(championStats: ChampStats[]): ChampStats[] {
       existing.gold += stat.gold;
 
       existing.doubleKills += stat.doubleKills;
-      existing.trippleKills += stat.trippleKills;
+      existing.tripleKills += stat.tripleKills;
       existing.quadraKills += stat.quadraKills;
       existing.pentaKills += stat.pentaKills;
 

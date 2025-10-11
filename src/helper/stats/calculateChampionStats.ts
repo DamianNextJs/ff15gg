@@ -53,7 +53,7 @@ export function calculateChampionStats(
         damage: 0,
         gold: 0,
         doubleKills: 0,
-        trippleKills: 0,
+        tripleKills: 0,
         quadraKills: 0,
         pentaKills: 0,
         role,
@@ -85,7 +85,7 @@ export function calculateChampionStats(
     );
 
     stats.doubleKills += participant.doubleKills;
-    stats.trippleKills += participant.trippleKills;
+    stats.tripleKills += participant.tripleKills;
     stats.quadraKills += participant.quadraKills;
     stats.pentaKills += participant.pentaKills;
   }

@@ -73,7 +73,7 @@ export function mapMatches(raw: MatchData[]): MatchData[] {
           goldEarned: p.goldEarned,
           totalDamageDealtToChampions: p.totalDamageDealtToChampions,
           doubleKills: p.doubleKills,
-          trippleKills: p.trippleKills,
+          tripleKills: p.tripleKills,
           quadraKills: p.quadraKills,
           pentaKills: p.pentaKills,
         })),

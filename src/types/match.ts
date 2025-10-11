@@ -52,7 +52,7 @@ export interface ParticipantData {
   totalDamageDealtToChampions: number;
   goldEarned: number;
   doubleKills: number;
-  trippleKills: number;
+  tripleKills: number;
   quadraKills: number;
   pentaKills: number;
   perks: {

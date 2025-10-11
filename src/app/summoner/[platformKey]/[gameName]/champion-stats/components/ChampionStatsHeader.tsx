@@ -45,7 +45,7 @@ export default function ChmapionStatsHeader() {
       </div>
       {/* Tripple Kills */}
       <div className="hidden lg:block">
-        <Tooltip content={<p>Tripple Kills</p>}>Tripple</Tooltip>
+        <Tooltip content={<p>Triple Kills</p>}>Triple</Tooltip>
       </div>
       {/* Quadra Kills */}
       <div className="hidden lg:block">

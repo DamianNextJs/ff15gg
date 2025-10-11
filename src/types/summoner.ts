@@ -65,7 +65,7 @@ export interface ChampStats {
   damage: number;
   gold: number;
   doubleKills: number;
-  trippleKills: number;
+  tripleKills: number;
   quadraKills: number;
   pentaKills: number;
   role: RoleType;
