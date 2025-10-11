@@ -1,7 +1,7 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
 import { regionMap, type RegionKey } from "@/lib/maps/regionMap";
+import { useDropDown } from "@/hooks/useDropdown";
 
 export default function RegionSelect({
   value,
@@ -12,19 +12,7 @@ export default function RegionSelect({
   onChange: (region: RegionKey) => void;
   onOpen?: () => void;
 }) {
-  const [open, setOpen] = useState(false);
-  const ref = useRef<HTMLDivElement>(null);
-
-  // Close dropdown if click happens outside
-  useEffect(() => {
-    function handleClickOutside(event: MouseEvent) {
-      if (ref.current && !ref.current.contains(event.target as Node)) {
-        setOpen(false);
-      }
-    }
-    document.addEventListener("mousedown", handleClickOutside);
-    return () => document.removeEventListener("mousedown", handleClickOutside);
-  }, []);
+  const { open, setOpen, ref } = useDropDown();
 
   const toggleDropdown = () => {
     const newOpenState = !open;

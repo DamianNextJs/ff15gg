@@ -1,6 +1,11 @@
 import { ChampStats } from "@/types/summoner";
 import { MatchData } from "@/types/match";
-import { calculateKDA, calculateWinrate, getRoleFromIndex } from "./stats";
+import {
+  calculateCSPerMin,
+  calculateKDA,
+  calculateWinrate,
+  getRoleFromIndex,
+} from "./stats";
 import { queueMap } from "@/lib/maps/queueMap";
 
 export function calculateChampionStats(
@@ -31,6 +36,7 @@ export function calculateChampionStats(
     if (!statsMap[key]) {
       statsMap[key] = {
         champId,
+        champName: participant.championName,
         games: 0,
         wins: 0,
         losses: 0,
@@ -42,6 +48,8 @@ export function calculateChampionStats(
         maxKills: 0,
         maxDeaths: 0,
         CS: 0,
+        csPerMin: 0,
+        vision: 0,
         damage: 0,
         gold: 0,
         doubleKills: 0,
@@ -64,15 +72,20 @@ export function calculateChampionStats(
     stats.assists += participant.assists;
 
     // Aggregate additional stats
-    stats.maxKills = Math.max(stats.maxKills ?? 0, participant.kills);
-    stats.maxDeaths = Math.max(stats.maxDeaths ?? 0, participant.deaths);
+    stats.maxKills = Math.max(stats.maxKills, participant.kills);
+    stats.maxDeaths = Math.max(stats.maxDeaths, participant.deaths);
     stats.CS +=
       participant.totalMinionsKilled + participant.neutralMinionsKilled;
-    stats.damage += participant.totalDamageDealtToChampions ?? 0;
-    stats.gold += participant.goldEarned ?? 0;
+    stats.damage += participant.totalDamageDealtToChampions;
+    stats.gold += participant.goldEarned;
+    stats.vision += participant.visionScore;
+    stats.csPerMin += calculateCSPerMin(
+      participant.totalMinionsKilled + participant.neutralMinionsKilled,
+      match.info.gameDuration
+    );
 
     stats.doubleKills += participant.doubleKills;
-    stats.trippleKills += participant.tripleKills;
+    stats.trippleKills += participant.trippleKills;
     stats.quadraKills += participant.quadraKills;
     stats.pentaKills += participant.pentaKills;
   }

@@ -53,7 +53,7 @@ export default async function ProfileCard({ params }: ProfileCardProps) {
         }}
       >
         {/* Gradient overlay */}
-        <div className="absolute inset-0 bg-linear-to-r from-bg from-35% via-bg/60 via-75% to-bg to-100%" />
+        <div className="absolute inset-0 bg-linear-to-r from-bg from-35% via-bg/75 via-75% to-bg to-100%" />
       </div>
 
       {/* Foreground content */}

@@ -1,6 +1,7 @@
 "use client";
+import { useDropDown } from "@/hooks/useDropdown";
 import { queueMap } from "@/lib/maps/queueMap";
-import { SetStateAction, useState, Dispatch, useRef, useEffect } from "react";
+import { SetStateAction, Dispatch } from "react";
 
 interface QueueSelectorProps {
   currentQueue: number | "all";
@@ -11,24 +12,7 @@ export default function QueueSelector({
   currentQueue,
   setCurrentQueue,
 }: QueueSelectorProps) {
-  const [open, setOpen] = useState(false);
-  const ref = useRef<HTMLDivElement>(null);
-
-  useEffect(() => {
-    function handleClickOutside(event: MouseEvent) {
-      if (ref.current && !ref.current.contains(event.target as Node)) {
-        setOpen(false);
-      }
-    }
-
-    if (open) {
-      document.addEventListener("mousedown", handleClickOutside);
-    }
-
-    return () => {
-      document.removeEventListener("mousedown", handleClickOutside);
-    };
-  }, [open]);
+  const { open, setOpen, ref } = useDropDown();
 
   return (
     <div ref={ref} className="relative text-sm lg:text-base z-1">
@@ -57,11 +41,11 @@ export default function QueueSelector({
         </svg>
       </div>
       {open && (
-        <div className="absolute bg-accent rounded-md top-7.5 lg:top-9 shadow-2xl right-5 cursor-pointer text-sm overflow-hidden text-center">
+        <div className="absolute bg-accent rounded-md top-7.5 lg:top-9 shadow-2xl right-5 cursor-pointer text-sm overflow-hidden text-center w-25">
           <div
             className={`${
-              currentQueue === "all" ? "bg-subtle/30" : ""
-            } p-2   hover:bg-subtle/30`}
+              currentQueue === "all" ? "bg-subtle/15" : ""
+            } p-2   hover:bg-subtle/15`}
             onClick={() => {
               setCurrentQueue("all");
               setOpen(!open);
@@ -74,8 +58,8 @@ export default function QueueSelector({
               <div
                 key={queueId}
                 className={`${
-                  currentQueue === Number(queueId) ? "bg-subtle/30" : ""
-                } p-2  hover:bg-subtle/30 `}
+                  currentQueue === Number(queueId) ? "bg-subtle/15" : ""
+                } p-2  hover:bg-subtle/15 `}
                 onClick={() => {
                   setCurrentQueue(Number(queueId));
                   setOpen(!open);

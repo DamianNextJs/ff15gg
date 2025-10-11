@@ -20,15 +20,38 @@ export function calculateAverageStats(
   kills: number,
   deaths: number,
   assists: number,
-  gamesPlayed: number
-): { averageKills: number; averageDeaths: number; averageAssists: number } {
+  gamesPlayed: number,
+  cs?: number,
+  csPerMin?: number,
+  damage?: number,
+  gold?: number,
+  vision?: number
+): {
+  averageKills: number;
+  averageDeaths: number;
+  averageAssists: number;
+  averageCS?: number;
+  averageCsPerMin?: number;
+  averageDamage?: number;
+  averageGold?: number;
+  averageVision?: number;
+} {
   if (gamesPlayed === 0) {
     return { averageKills: 0, averageDeaths: 0, averageAssists: 0 };
   }
+
+  const avg = (v: number) => +(v / gamesPlayed).toFixed(1);
+  const avg0 = (v: number) => +(v / gamesPlayed).toFixed(0);
+
   return {
-    averageKills: +(kills / gamesPlayed).toFixed(1),
-    averageDeaths: +(deaths / gamesPlayed).toFixed(1),
-    averageAssists: +(assists / gamesPlayed).toFixed(1),
+    averageKills: avg(kills),
+    averageDeaths: avg(deaths),
+    averageAssists: avg(assists),
+    ...(cs && { averageCS: avg0(cs) }),
+    ...(csPerMin && { averageCsPerMin: avg(csPerMin) }),
+    ...(damage && { averageDamage: avg0(damage) }),
+    ...(gold && { averageGold: avg0(gold) }),
+    ...(vision && { averageVision: avg0(vision) }),
   };
 }
 

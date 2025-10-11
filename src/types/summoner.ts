@@ -48,6 +48,7 @@ export interface ChampionMastery {
 // Aggregated champion stats
 export interface ChampStats {
   champId: number;
+  champName: string;
   games: number;
   wins: number;
   losses: number;
@@ -59,6 +60,8 @@ export interface ChampStats {
   maxKills: number;
   maxDeaths: number;
   CS: number;
+  csPerMin: number;
+  vision: number;
   damage: number;
   gold: number;
   doubleKills: number;
