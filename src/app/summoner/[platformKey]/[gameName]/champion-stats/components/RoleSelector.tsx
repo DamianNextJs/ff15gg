@@ -64,7 +64,7 @@ export default function RoleSelector({
         </svg>
       </div>
       {open && (
-        <div className="absolute bg-accent rounded-md top-7.5 lg:top-9 shadow-2xl right-5 cursor-pointer text-sm overflow-hidden w-25">
+        <div className="absolute bg-accent rounded-md top-7.5 lg:top-9 right-5 cursor-pointer text-sm overflow-hidden w-25">
           <div
             className={`${
               currentRole === "all" ? "bg-subtle/15" : ""
@@ -88,7 +88,7 @@ export default function RoleSelector({
                   key={role}
                   className={`${
                     currentRole === role ? "bg-subtle/15" : ""
-                  } p-2 hover:bg-subtle/15 flex items-center justify-between`}
+                  }  hover:bg-subtle/15 px-2 flex items-center justify-between min-h-9`}
                   onClick={() => {
                     setCurrentRole(role as RoleType);
                     setOpen(!open);

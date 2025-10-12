@@ -41,7 +41,7 @@ export default function ChampionStatsRow({
   return (
     <div
       className={`grid grid-cols-6 lg:grid-cols-17 py-2 items-center justify-items-center lg:justify-items-normal text-center text-xs lg:text-sm text-subtle ${
-        index % 2 === 0 ? "bg-accent/75" : ""
+        index % 2 === 0 ? "bg-accent/50" : ""
       } ${isLast ? "rounded-b-md" : ""}`}
     >
       {/* Rank */}
