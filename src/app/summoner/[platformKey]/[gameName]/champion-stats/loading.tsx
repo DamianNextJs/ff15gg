@@ -42,7 +42,7 @@ export default function Loading() {
         {/* Double Kills */}
         <div className="hidden lg:block">Double</div>
         {/* Tripple Kills */}
-        <div className="hidden lg:block">Tripple</div>
+        <div className="hidden lg:block">Triple</div>
         {/* Quadra Kills */}
         <div className="hidden lg:block">Quadra</div>
         {/* Penta Kills */}
