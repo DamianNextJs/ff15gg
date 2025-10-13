@@ -1,60 +1,42 @@
-import Tooltip from "@/components/Tooltip";
+import HeaderCell from "./ChampionStatsHeaderCell";
 
 export default function ChmapionStatsHeader() {
+  const headers = [
+    { label: "#" },
+    { label: "Champion", className: "lg:col-span-2" },
+    { label: "Win Rate", className: "col-span-2" },
+    {
+      label: "KDA",
+      tooltip: "Avg. KDA and Avg. Kills/Deaths/Assists",
+      className: "col-span-2",
+    },
+    {
+      label: "Max",
+      subLabel: "Kills",
+      tooltip: "Max amount of Kills",
+      showOnLgOnly: true,
+    },
+    {
+      label: "Max",
+      subLabel: "Deaths",
+      tooltip: "Max amount of Deaths",
+      showOnLgOnly: true,
+    },
+    { label: "CS", tooltip: "Avg. CS and Avg. CS per Min", showOnLgOnly: true },
+    { label: "Damage", tooltip: "Avg. Damage", showOnLgOnly: true },
+    { label: "Gold", tooltip: "Avg. Gold", showOnLgOnly: true },
+    { label: "Vision", tooltip: "Avg. Vision Score", showOnLgOnly: true },
+    { label: "Double", tooltip: "Double Kills", showOnLgOnly: true },
+    { label: "Triple", tooltip: "Triple Kills", showOnLgOnly: true },
+    { label: "Quadra", tooltip: "Quadra Kills", showOnLgOnly: true },
+    { label: "Penta", tooltip: "Penta Kills", showOnLgOnly: true },
+  ];
+
   return (
-    <div className="grid grid-cols-6 lg:grid-cols-17 py-4 items-center justify-items-center lg:justify-items-normal text-center text-sm text-subtle">
-      {/* Rank */}
-      <p className="">#</p>
-
-      {/* Champion */}
-      <p className="lg:col-span-2">Champion</p>
-
-      {/* Winrate */}
-      <p className="col-span-2">Win Rate</p>
-
-      {/* KDA */}
-      <p className="col-span-2">KDA</p>
-
-      {/* Max Kills */}
-      <div className="hidden lg:block">
-        <p>Max</p>
-        <p>Kills</p>
-      </div>
-
-      {/* Max Deaths */}
-      <div className="hidden lg:block">
-        <p>Max</p>
-        <p>Deaths</p>
-      </div>
-
-      {/* CS */}
-      <p className="hidden lg:block">CS</p>
-
-      {/* Damage */}
-      <p className="hidden lg:block">Damage</p>
-
-      {/* Gold */}
-      <p className="hidden lg:block">Gold</p>
-
-      {/* Vision */}
-      <p className="hidden lg:block">Vision</p>
-
-      {/* Double Kills */}
-      <div className="hidden lg:block">
-        <Tooltip content={<p>Double Kills</p>}>Double</Tooltip>
-      </div>
-      {/* Tripple Kills */}
-      <div className="hidden lg:block">
-        <Tooltip content={<p>Triple Kills</p>}>Triple</Tooltip>
-      </div>
-      {/* Quadra Kills */}
-      <div className="hidden lg:block">
-        <Tooltip content={<p>Quadra Kills</p>}>Quadra</Tooltip>
-      </div>
-      {/* Penta Kills */}
-      <div className="hidden lg:block">
-        <Tooltip content={<p>Penta Kills</p>}>Penta</Tooltip>
-      </div>
+    <div className="grid grid-cols-6 lg:grid-cols-17 h-12 lg:h-18 items-center justify-items-center lg:justify-items-normal text-center text-sm text-subtle">
+      {headers.map((props, i) => (
+        <HeaderCell key={i} {...props} />
+      ))}
     </div>
   );
 }
