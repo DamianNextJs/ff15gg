@@ -6,28 +6,57 @@ Live demo: [ff15gg.vercel.app](https://ff15gg.vercel.app)
 
 ## Features
 
+### General
+
 - View League of Legends summoner profiles
-- Show search suggestions while typing
-- Show recent searches when clicking on the search bar
 - Show a Not Found page if the searched summoner doesn't exist
-- Region selection to search for summoners in different regions
 - Persistent caching to reduce API requests
 - Responsive design with Tailwind CSS
-- Update button for fetching fresh data from Riot API (includes cooldown to prevent spam)
 - Hover tooltip for summoner spells, runes and items
-- Ability to load more than 20 matches if enough are stored in the database
-- Filter matches using the queue selector or by searching for champions played or participants played with
-- Queue filtering syncs with Recently Played With component
-- Click Matches to view detailed information in a dropdown
-  - **Post Game Tab**: shows information about all players in that match
-  - **Performance Tab**: allows filtering all players in that match by various stats
-  - **Item Build**: displays the detailed build of the profile's player
+
+---
+
+### Landing Page
+
+- Search for League of Legends summoners in different regions
+- Show search suggestions while typing
+- Show recent searches when clicking on the search bar
+
+---
+
+### Profile Page
+
+- **Overview Page**
+  - Update button for fetching fresh data from Riot API (includes cooldown to prevent spam)
+  - Filter champion stats by queue
+  - Show recently played with players including links to their profiles
+  - **Match History**
+    - View recent matches
+    - Show information about recent matches in match history header
+    - Ability to load more than 20 matches if enough are stored in the database
+    - Filter matches using the queue selector or by searching for champions played or participants played with
+    - Queue filtering syncs with Recently Played With component
+    - Click Matches to view detailed information in a dropdown:
+    - **Post Game Tab**: shows information about all players in that match
+    - **Performance Tab**: allows filtering all players in that match by various stats
+    - **Item Build**: displays the detailed build of the profile's player
+- **Champion Stats Page**
+  - View champion stats of the profile's player
+  - Shows stats based on all matches of that player stored in the database
+  - Filter by Queue, Role or Champion
+  - Sort stats ascending or descending
+- **Live Game Page**
+  - Show information about the live game if the player is currently in a match
+
+---
 
 ## Notes / Usage Tips
 
 - ℹ️ **Hosting Info**: FF15GG is hosted on Vercel’s free tier, so the first request after a period of inactivity may take a few extra seconds while the server “warms up.” Subsequent requests are faster.
 - Recent searches are stored in localStorage
 - **Try it out without a Riot ID**: just type a letter into the search bar (e.g., 'm') and select any suggestion that appears
+
+---
 
 ## Tech Stack
 
