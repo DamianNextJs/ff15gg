@@ -1,56 +1,43 @@
 import { getChampionById } from "@/helper/getChampionById";
-import { calculateAverageStats } from "@/helper/stats/stats";
-import { ChampStats } from "@/types/summoner";
+import { ChampStatsWithAvg } from "@/types/summoner";
 import { DDragon } from "@/utils/ddragon";
 import Image from "next/image";
 import ChampionStatsRowCell from "./ChampionStatsRowCell";
+import { SortableChampionStats } from "./ChampionStatsTable";
 
 export default function ChampionStatsRow({
   stat,
   index,
   isLast,
+  sortBy,
 }: {
-  stat: ChampStats;
+  stat: ChampStatsWithAvg;
   index: number;
   isLast: boolean;
+  sortBy: SortableChampionStats | undefined;
 }) {
   const champ = getChampionById(stat.champId);
   if (!champ) return null;
   const champIcon = DDragon.championIcon(champ.id);
 
-  const {
-    averageKills,
-    averageAssists,
-    averageDeaths,
-    averageCS,
-    averageCsPerMin,
-    averageDamage,
-    averageGold,
-    averageVision,
-  } = calculateAverageStats(
-    stat.kills,
-    stat.deaths,
-    stat.assists,
-    stat.games,
-    stat.CS,
-    stat.csPerMin,
-    stat.damage,
-    stat.gold,
-    stat.vision
-  );
-
-  const cells = [
+  const cells: {
+    content: React.ReactNode;
+    sortKey: SortableChampionStats;
+    className?: string;
+    showOnLgOnly?: boolean;
+  }[] = [
     // Index
-    { content: <p>{index + 1}</p> },
+    { content: index + 1, sortKey: "#" },
     // Champion
     {
       content: (
-        <div className="flex items-center text-start gap-1  ml-2">
+        <div className="flex items-center text-start gap-1 lg:ml-2">
           <Image src={champIcon} alt="champ icon" width={30} height={30} />
           <p className="hidden lg:block">{champ.name}</p>
         </div>
       ),
       className: "lg:col-span-2",
+      sortKey: "Champion",
     },
     // Winrate
     {
@@ -64,6 +51,7 @@ export default function ChampionStatsRow({
         </div>
       ),
       className: "col-span-2",
+      sortKey: "WinRate",
     },
     // KDA
     {
@@ -71,85 +59,98 @@ export default function ChampionStatsRow({
         <div className="flex flex-col items-center ">
           <p className="font-semibold text-white">{stat.kda}</p>
           <div className="flex gap-0.5 text-xs">
-            <p>{averageKills}</p>
+            <p>{stat.averageKills}</p>
             <p className="text-subtle/30">/</p>
-            <p>{averageDeaths}</p>
+            <p>{stat.averageDeaths}</p>
             <p className="text-subtle/30">/</p>
-            <p>{averageAssists}</p>
+            <p>{stat.averageAssists}</p>
           </div>
         </div>
       ),
       className: "col-span-2",
+      sortKey: "KDA",
     },
     // Max Kills
-    { content: <p className="hidden lg:block">{stat.maxKills}</p> },
+    {
+      content: stat.maxKills,
+      sortKey: "MaxKills",
+      showOnLgOnly: true,
+    },
     // Max Deaths
-    { content: <p className="hidden lg:block">{stat.maxDeaths}</p> },
+    {
+      content: stat.maxDeaths,
+      sortKey: "MaxDeaths",
+      showOnLgOnly: true,
+    },
     // Cs
     {
       content: (
-        <div className="hidden lg:block">
-          <p>{averageCS}</p>
-          <p className="text-xs">({averageCsPerMin})</p>
+        <div>
+          <p>{stat.averageCS}</p>
+          <p className="text-xs">({stat.averageCsPerMin})</p>
         </div>
       ),
+      sortKey: "CS",
+      showOnLgOnly: true,
     },
     // Damage
     {
-      content: (
-        <p className="hidden lg:block">{averageDamage?.toLocaleString()}</p>
-      ),
+      content: stat.averageDamage?.toLocaleString(),
+      sortKey: "Damage",
+      showOnLgOnly: true,
     },
     // Gold
     {
-      content: (
-        <p className="hidden lg:block">{averageGold?.toLocaleString()}</p>
-      ),
+      content: stat.averageGold?.toLocaleString(),
+      sortKey: "Gold",
+      showOnLgOnly: true,
     },
     // Vision
-    { content: <p className="hidden lg:block">{averageVision}</p> },
+    {
+      content: stat.averageVision || "-",
+      sortKey: "Vision",
+      showOnLgOnly: true,
+    },
     // Double Kills
     {
-      content: (
-        <p className="hidden lg:block">
-          {stat.doubleKills ? stat.doubleKills : "-"}
-        </p>
-      ),
+      content: stat.doubleKills || "-",
+      sortKey: "Double",
+      showOnLgOnly: true,
     },
     // Triple kills
     {
-      content: (
-        <p className="hidden lg:block">
-          {stat.tripleKills ? stat.tripleKills : "-"}
-        </p>
-      ),
+      content: stat.tripleKills || "-",
+      sortKey: "Triple",
+      showOnLgOnly: true,
     },
     // Quadra Kills
     {
-      content: (
-        <p className="hidden lg:block">
-          {stat.quadraKills ? stat.quadraKills : "-"}
-        </p>
-      ),
+      content: stat.quadraKills || "-",
+      sortKey: "Quadra",
+      showOnLgOnly: true,
     },
     // Penta kills
     {
-      content: (
-        <p className="hidden lg:block">
-          {stat.pentaKills ? stat.pentaKills : "-"}
-        </p>
-      ),
+      content: stat.pentaKills || "-",
+      sortKey: "Penta",
+      showOnLgOnly: true,
     },
   ];
 
   return (
     <div
-      className={`grid grid-cols-6 lg:grid-cols-17 py-2 items-center justify-items-center lg:justify-items-normal text-center text-xs lg:text-sm text-subtle ${
+      className={`grid grid-cols-6 lg:grid-cols-17 h-10 lg:h-13 text-center text-xs lg:text-sm text-subtle overflow-hidden ${
         index % 2 === 0 ? "bg-accent/50" : ""
       } ${isLast ? "rounded-b-md" : ""}`}
     >
       {cells.map((cell, i) => (
-        <ChampionStatsRowCell key={i} className={cell.className}>
+        <ChampionStatsRowCell
+          key={i}
+          className={cell.className}
+          isSortedBy={sortBy === cell.sortKey}
+          align={cell.sortKey === "Champion" ? "start" : "center"}
+          showOnLgOnly={cell.showOnLgOnly}
+        >
           {cell.content}
         </ChampionStatsRowCell>
       ))}

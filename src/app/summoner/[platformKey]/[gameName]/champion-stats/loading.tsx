@@ -2,7 +2,7 @@ export default function Loading() {
   return (
     <div className="bg-secondary rounded-md -mt-1">
       <div className="bg-accent/50  lg:p-4  lg:gap-4 text-sm lg:text-base rounded-t-md h-13 lg:h-18" />
-      <div className="grid grid-cols-6 lg:grid-cols-17 h-12 lg:h-18 items-center justify-items-center lg:justify-items-normal text-center text-sm text-subtle">
+      <div className="grid grid-cols-6 lg:grid-cols-17 h-12 lg:h-18 items-center justify-items-center lg:justify-items-normal border-y-2 border-transparent text-center text-sm text-subtle">
         {/* Rank */}
         <p className="">#</p>
 

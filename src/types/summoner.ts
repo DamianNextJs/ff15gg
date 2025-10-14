@@ -72,6 +72,17 @@ export interface ChampStats {
   queue: (typeof queueMap)[keyof typeof queueMap];
 }
 
+export interface ChampStatsWithAvg extends ChampStats {
+  averageKills: number;
+  averageDeaths: number;
+  averageAssists: number;
+  averageCS: number;
+  averageCsPerMin: number;
+  averageDamage: number;
+  averageGold: number;
+  averageVision: number;
+}
+
 export type RoleType = "Top" | "Jungle" | "Mid" | "Bot" | "Support" | "Unknown";
 
 // Aggregated recent stats for the summoner

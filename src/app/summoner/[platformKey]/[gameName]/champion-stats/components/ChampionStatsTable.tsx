@@ -1,13 +1,30 @@
 "use client";
-import { ChampStats } from "@/types/summoner";
+import { ChampStats, ChampStatsWithAvg } from "@/types/summoner";
 import ChampionStatsFilters from "./ChampionStatsFilters";
 import { useEffect, useState } from "react";
 import { RoleType } from "@/types/summoner";
-import ChmapionStatsHeader from "./ChampionStatsHeader";
+import ChampionStatsHeader from "./ChampionStatsHeader";
 import { mergeChampionStats } from "@/helper/stats/mergeChampionStats";
 import { queueMap } from "@/lib/maps/queueMap";
 import ChampionStatsRow from "./ChampionStatsRow";
 import { roleMap } from "@/lib/maps/roleMap";
+import { calculateAverageStats } from "@/helper/stats/stats";
+
+export type SortableChampionStats =
+  | "#"
+  | "Champion"
+  | "WinRate"
+  | "KDA"
+  | "MaxKills"
+  | "MaxDeaths"
+  | "CS"
+  | "Damage"
+  | "Gold"
+  | "Vision"
+  | "Double"
+  | "Triple"
+  | "Quadra"
+  | "Penta";
 
 export default function ChampionStatsTable({
   championStats,
@@ -17,6 +34,10 @@ export default function ChampionStatsTable({
   const [currentQueue, setCurrentQueue] = useState<number | "all">("all");
   const [currentRole, setCurrentRole] = useState<RoleType | "all">("all");
   const [searchFilter, setSearchFilter] = useState("");
+  const [sortBy, setSortBy] = useState<SortableChampionStats | undefined>(
+    undefined
+  );
+  const [sortDirection, setSortDirection] = useState<"asc" | "desc">("desc");
 
   useEffect(() => {
     // reset role when ARAM is selected
@@ -25,7 +46,7 @@ export default function ChampionStatsTable({
     }
   }, [currentQueue]);
 
-  let filteredStats;
+  let filteredStats: ChampStats[];
 
   if (currentQueue === "all" && currentRole === "all") {
     filteredStats = mergeChampionStats(championStats);
@@ -52,6 +73,89 @@ export default function ChampionStatsTable({
     );
   }
 
+  const statsWithAvg: ChampStatsWithAvg[] = filteredStats.map((stat) => {
+    const avg = calculateAverageStats(
+      stat.kills,
+      stat.deaths,
+      stat.assists,
+      stat.games,
+      stat.CS,
+      stat.csPerMin,
+      stat.damage,
+      stat.gold,
+      stat.vision
+    );
+    return { ...stat, ...avg };
+  });
+
+  if (sortBy) {
+    statsWithAvg.sort((a, b) => {
+      let result = 0;
+      switch (sortBy) {
+        case "#":
+          result = b.games - a.games;
+          break;
+
+        case "Champion":
+          result = a.champName.localeCompare(b.champName);
+          break;
+
+        case "WinRate":
+          result = b.winRate - a.winRate;
+          break;
+
+        case "KDA":
+          result = b.kda - a.kda;
+          break;
+
+        case "MaxKills":
+          result = b.maxKills - a.maxKills;
+          break;
+
+        case "MaxDeaths":
+          result = b.maxDeaths - a.maxDeaths;
+          break;
+
+        case "CS":
+          result = b.averageCS - a.averageCS;
+          break;
+
+        case "Damage":
+          result = b.averageDamage - a.averageDamage;
+          break;
+
+        case "Gold":
+          result = b.averageGold - a.averageGold;
+          break;
+
+        case "Vision":
+          result = b.averageVision - a.averageVision;
+          break;
+
+        case "Double":
+          result = b.doubleKills - a.doubleKills;
+          break;
+
+        case "Triple":
+          result = b.tripleKills - a.tripleKills;
+          break;
+
+        case "Quadra":
+          result = b.quadraKills - a.quadraKills;
+          break;
+
+        case "Penta":
+          result = b.pentaKills - a.pentaKills;
+          break;
+
+        default:
+          return 0;
+      }
+
+      return sortDirection === "asc" ? -result : result;
+    });
+  }
+
   return (
     <div className="-mt-1 bg-secondary rounded-md">
       <ChampionStatsFilters
@@ -62,15 +166,21 @@ export default function ChampionStatsTable({
         searchFilter={searchFilter}
         setSearchFilter={setSearchFilter}
       />
-      <ChmapionStatsHeader />
+      <ChampionStatsHeader
+        sortBy={sortBy}
+        setSortBy={setSortBy}
+        sortDirection={sortDirection}
+        setSortDirection={setSortDirection}
+      />
       <div>
-        {filteredStats.length > 0 ? (
-          filteredStats.map((stat, i) => (
+        {statsWithAvg.length > 0 ? (
+          statsWithAvg.map((stat, i) => (
             <ChampionStatsRow
               stat={stat}
               key={i}
               index={i}
-              isLast={i === filteredStats.length - 1}
+              isLast={i === statsWithAvg.length - 1}
+              sortBy={sortBy}
             />
           ))
         ) : (
