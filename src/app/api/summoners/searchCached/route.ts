@@ -1,7 +1,8 @@
-import { normalizeSummonerName } from "@/helper/summoner";
-import { connectToDB } from "@/lib/mongodb";
-import Summoner from "@/models/Summoner";
+import Summoner from "@/database/models/Summoner";
+import { connectToDB } from "@/database/mongodb";
 import { SummonerData } from "@/types/summoner";
+import { normalizeSummonerName } from "@/utils/summoner";
+
 import { NextRequest, NextResponse } from "next/server";
 
 export async function GET(req: NextRequest) {

@@ -1,5 +1,5 @@
+import { RuneInfo, RuneStyle } from "@/features/shared/icons/types/rune";
 import runesData from "@/lib/data/runesReforged.json";
-import { RuneInfo, RuneStyle } from "@/types/rune";
 
 // Flatten rune styles + runes into a Record
 export const RuneMapBase: Record<number, RuneInfo> = (() => {

@@ -1,7 +1,7 @@
-import { parseSummonerParams } from "@/helper/parseSummonerParams";
-import { fetchChampionStatsData } from "@/lib/server/fetchChampionStatsData";
+import ChampionStatsTable from "@/features/profilepage/champion-stats/components/ChampionStatsTable";
+import { fetchChampionStatsData } from "@/features/profilepage/champion-stats/lib/fetchChampionStatsData";
+import { parseSummonerParams } from "@/features/profilepage/utils/parseSummonerParams";
 import { notFound } from "next/navigation";
-import ChampionStatsTable from "./components/ChampionStatsTable";
 
 interface ChampionStatsProps {
   params: Promise<{

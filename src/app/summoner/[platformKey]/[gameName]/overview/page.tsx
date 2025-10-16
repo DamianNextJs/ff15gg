@@ -1,13 +1,13 @@
-import RankCard from "./components/RankCard";
-import ChampStatsCard from "./components/ChampStatsCard";
-import ChampMasteryCard from "./components/ChampMasteryCard";
-import RecentlyPlayedWith from "./components/RecentlyPlayedWith";
-import MatchHistory from "./components/MatchHistoryComponents/MatchHistory";
-import { getSummonerData } from "@/helper/getSummonerData";
-import { MatchesProvider } from "./contexts/MatchesContext";
 import { notFound } from "next/navigation";
-import { parseSummonerParams } from "@/helper/parseSummonerParams";
-import { fetchCachedMatches } from "@/lib/server/fetchCachedMatches";
+import RankCard from "@/features/profilepage/overview/components/RankCard";
+import ChampStatsCard from "@/features/profilepage/overview/components/ChampStatsCard";
+import ChampMasteryCard from "@/features/profilepage/overview/components/ChampMasteryCard";
+import RecentlyPlayedWith from "@/features/profilepage/overview/components/RecentlyPlayedWith";
+import MatchHistory from "@/features/profilepage/overview/matchhistory/components/MatchHistory";
+import { parseSummonerParams } from "@/features/profilepage/utils/parseSummonerParams";
+import { fetchCachedMatches } from "@/features/profilepage/overview/lib/fetchCachedMatches";
+import { getSummonerData } from "@/features/profilepage/utils/getSummonerData";
+import { MatchesProvider } from "@/features/profilepage/overview/context/MatchesContext";
 
 interface OverviewProps {
   params: Promise<{

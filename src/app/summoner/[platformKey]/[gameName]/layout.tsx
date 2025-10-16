@@ -1,7 +1,7 @@
+import ProfileCard from "@/features/profilepage/components/ProfileCard";
+import ProfileSkeleton from "@/features/profilepage/components/ProfileSkeleton";
 import type { Metadata } from "next";
 import { ReactNode, Suspense } from "react";
-import ProfileCard from "./components/ProfileCard";
-import ProfileSkeleton from "./components/ProfileSkeleton";
 
 export const metadata: Metadata = {
   title: "Summoner Page | FF15",

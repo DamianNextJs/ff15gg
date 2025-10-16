@@ -1,5 +1,5 @@
 import SectionHeading from "@/components/SectionHeading";
-import MatchHistoryLoader from "./components/MatchHistoryComponents/MatchHistoryLoader";
+import MatchHistoryLoader from "@/features/profilepage/overview/matchhistory/components/MatchHistoryLoader";
 
 export default function Loading() {
   return (

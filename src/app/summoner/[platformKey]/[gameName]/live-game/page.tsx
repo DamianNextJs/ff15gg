@@ -1,9 +1,9 @@
-import { parseSummonerParams } from "@/helper/parseSummonerParams";
-import NotInGame from "./components/NotInGame";
-import { fetchLiveGame } from "@/lib/server/fetchLiveGame";
-import BannedChampions from "./components/BannedChampions";
-import LiveGameInfo from "./components/LiveGameInfo";
-import LiveGameParticipants from "./components/LiveGameParticipants";
+import LiveGameInfo from "@/features/profilepage/live-game/components/LiveGameInfo";
+import LiveGameParticipants from "@/features/profilepage/live-game/components/LiveGameParticipants";
+import NotInGame from "@/features/profilepage/live-game/components/NotInGame";
+import { fetchLiveGame } from "@/features/profilepage/live-game/lib/fetchLiveGame";
+import { parseSummonerParams } from "@/features/profilepage/utils/parseSummonerParams";
+import BannedChampions from "@/features/shared/components/BannedChampions";
 
 interface LiveGameProps {
   params: Promise<{

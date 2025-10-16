@@ -1,7 +1,7 @@
 import { queueMap } from "@/lib/maps/queueMap";
 
 // -- Custom extended Types
-export interface SummonerData {
+export type SummonerData = {
   // Riot Types
   riotAccount: RiotAccount;
   summoner: Summoner;
@@ -11,42 +11,42 @@ export interface SummonerData {
   champStats?: ChampStats[];
   lastUpdated?: Date;
   platform?: string;
-}
+};
 
 // --- Below are the same shape as riot sends them back but stripped down to what we need
 // Riot Account data
-export interface RiotAccount {
+export type RiotAccount = {
   gameName: string;
   tagLine: string;
   puuid: string;
-}
+};
 
 // Summoner data
-export interface Summoner {
+export type Summoner = {
   profileIconId: number;
   summonerLevel: number;
-}
+};
 
 // Ranked data for the summoner
-export interface RankedData {
+export type RankedData = {
   queueType: "RANKED_SOLO_5x5" | "RANKED_FLEX_SR";
   tier: string;
   rank: string;
   wins: number;
   losses: number;
   leaguePoints: number;
-}
+};
 
 // Champion mastery data
-export interface ChampionMastery {
+export type ChampionMastery = {
   championId: number;
   championLevel: number;
   championPoints: number;
-}
+};
 
 // --- Aggregation Types
 // Aggregated champion stats
-export interface ChampStats {
+export type ChampStats = {
   champId: number;
   champName: string;
   games: number;
@@ -70,9 +70,9 @@ export interface ChampStats {
   pentaKills: number;
   role: RoleType;
   queue: (typeof queueMap)[keyof typeof queueMap];
-}
+};
 
-export interface ChampStatsWithAvg extends ChampStats {
+export type ChampStatsWithAvg = ChampStats & {
   averageKills: number;
   averageDeaths: number;
   averageAssists: number;
@@ -81,12 +81,12 @@ export interface ChampStatsWithAvg extends ChampStats {
   averageDamage: number;
   averageGold: number;
   averageVision: number;
-}
+};
 
 export type RoleType = "Top" | "Jungle" | "Mid" | "Bot" | "Support" | "Unknown";
 
 // Aggregated recent stats for the summoner
-export interface RecentStats {
+export type RecentStats = {
   wins: number;
   losses: number;
   kills: number;
@@ -97,9 +97,9 @@ export interface RecentStats {
   kda: number;
   mostPlayedChampion: RecentChampStats;
   mostPlayedRole: { role: RoleType; percentage: number };
-}
+};
 
-export interface RecentChampStats {
+export type RecentChampStats = {
   champId: number;
   games: number;
   wins: number;
@@ -109,10 +109,10 @@ export interface RecentChampStats {
   assists: number;
   winRate: number;
   kda: number;
-}
+};
 
 // Aggregated Recently played teammates summary
-export interface RecentTeammates {
+export type RecentTeammates = {
   puuid: string;
   gameName: string;
   tagLine: string;
@@ -121,4 +121,4 @@ export interface RecentTeammates {
   wins: number;
   losses: number;
   winRate: number;
-}
+};
