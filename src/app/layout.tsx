@@ -19,7 +19,11 @@ export const metadata: Metadata = {
   title: "FF15",
   description: "Search League of Legends Summoners",
   icons: {
-    icon: "/favicon.ico",
+    icon: [
+      { url: "/FF15Logo.png", media: "(prefers-color-scheme: dark)" },
+      { url: "/FF15Logo-dark.png", media: "(prefers-color-scheme: light)" },
+    ],
+    apple: [{ url: "/FF15Logo-dark.png" }],
   },
 };
 
