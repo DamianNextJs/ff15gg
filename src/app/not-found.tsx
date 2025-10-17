@@ -1,3 +1,4 @@
+import Button from "@/components/Button";
 import Link from "next/link";
 
 export default function NotFound() {
@@ -7,11 +8,8 @@ export default function NotFound() {
         <span>404</span>
         <span>This Page doesn&apos;t exist</span>
       </div>
-      <Link
-        href="/"
-        className="bg-primary text-white px-4 py-2 rounded-md hover:bg-primary/80 transition"
-      >
-        Back to Home
+      <Link href="/">
+        <Button>Back to Home</Button>
       </Link>
     </div>
   );

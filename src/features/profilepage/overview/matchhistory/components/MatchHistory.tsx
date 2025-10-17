@@ -10,6 +10,7 @@ import MatchHistoryLoader from "./MatchHistoryLoader";
 import { useMatches } from "../../context/MatchesContext";
 import { getRecentStats } from "../utils/getRecentStats";
 import { loadCachedMatches } from "../lib/loadCachedMatches";
+import Button from "@/components/Button";
 
 export default function MatchHistory({
   participantPuuid,
@@ -143,13 +144,9 @@ export default function MatchHistory({
               <MatchHistoryLoader />
             </div>
           ) : (
-            <button
-              onClick={handleLoadMore}
-              disabled={loading}
-              className="text-sm lg:text-base px-4 py-2 font-medium bg-primary text-white rounded hover:bg-primary/90 disabled:opacity-50 cursor-pointer"
-            >
+            <Button disabled={loading} onClick={handleLoadMore}>
               Load More
-            </button>
+            </Button>
           )}
         </div>
       ) : (

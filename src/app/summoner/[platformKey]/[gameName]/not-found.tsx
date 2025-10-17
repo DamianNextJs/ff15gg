@@ -1,4 +1,5 @@
 "use client";
+import Button from "@/components/Button";
 import Link from "next/link";
 import { useParams } from "next/navigation";
 
@@ -17,11 +18,8 @@ export default function SummonerNotFound({}) {
         Double check your region, game name and tag.
       </div>
 
-      <Link
-        href="/"
-        className="bg-primary text-white px-4 py-2 rounded-md hover:bg-primary/80 transition"
-      >
-        Back to Search
+      <Link href="/">
+        <Button>Back to Search</Button>
       </Link>
     </div>
   );
