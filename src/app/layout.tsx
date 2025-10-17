@@ -18,6 +18,9 @@ const geistMono = Geist_Mono({
 export const metadata: Metadata = {
   title: "FF15",
   description: "Search League of Legends Summoners",
+  icons: {
+    icon: "/favicon.ico",
+  },
 };
 
 export default function RootLayout({

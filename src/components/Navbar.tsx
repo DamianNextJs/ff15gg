@@ -1,17 +1,13 @@
 "use client";
-import { useRouter } from "next/navigation";
+import Image from "next/image";
+import Link from "next/link";
 
 export default function NavBar() {
-  const router = useRouter();
-
-  const handleClick = () => {
-    router.push("/");
-  };
   return (
-    <div className="w-full fixed z-10  h-16 bg-accent flex p-4 text-white">
-      <h2 className="text-2xl font-bold cursor-pointer" onClick={handleClick}>
-        FF15
-      </h2>
+    <div className="w-full fixed z-10 h-16 bg-accent flex items-center p-4 text-white">
+      <Link href={"/"}>
+        <Image src={"/FF15Logo.png"} alt="FF15 Logo" height={70} width={70} />
+      </Link>
     </div>
   );
 }
