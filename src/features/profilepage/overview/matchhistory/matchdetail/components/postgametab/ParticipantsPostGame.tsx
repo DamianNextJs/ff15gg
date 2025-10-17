@@ -9,9 +9,9 @@ import {
   calculateCSPerMin,
   getDamageStats,
 } from "@/features/profilepage/utils/stats";
-import PlayerLoadout from "../../../components/PlayerLoadout";
-import ItemSlots from "../../../components/ItemSlots";
-import PlayerStats from "../../../components/PlayerStats";
+import PlayerLoadout from "../../../components/matchcard/PlayerLoadout";
+import ItemSlots from "../../../components/matchcard/ItemSlots";
+import PlayerStats from "../../../components/matchcard/PlayerStats";
 
 interface ParticipantPostGameProps {
   participant: ParticipantData;

@@ -5,12 +5,12 @@ import { MatchData } from "@/types/match";
 import SectionHeading from "@/components/SectionHeading";
 import QueueSelector from "@/features/shared/dropdowns/components/QueueSelector";
 import MatchHistoryHeader from "./MatchHistoryHeader";
-import MatchCard from "./MatchCard";
 import MatchHistoryLoader from "./MatchHistoryLoader";
 import { useMatches } from "../../context/MatchesContext";
 import { getRecentStats } from "../utils/getRecentStats";
 import { loadCachedMatches } from "../lib/loadCachedMatches";
 import Button from "@/components/Button";
+import MatchCard from "./matchcard/MatchCard";
 
 export default function MatchHistory({
   participantPuuid,

@@ -1,13 +1,13 @@
 import { MatchData, ParticipantData } from "@/types/match";
-import PlayerLoadout from "./PlayerLoadout";
-import GameInfo from "./GameInfo";
-import ItemSlots from "./ItemSlots";
-import PlayerStats from "./PlayerStats";
 import ParticipantList from "./ParticipantList";
 import { useState } from "react";
-import { MatchProvider } from "../../context/MatchContext";
-import { getMatchResultUI } from "../utils/matchResult";
-import MatchDetail from "../matchdetail/MatchDetail";
+import { MatchProvider } from "../../../context/MatchContext";
+import MatchDetail from "../../matchdetail/MatchDetail";
+import { getMatchResultUI } from "../../utils/matchResult";
+import GameInfo from "./GameInfo";
+import PlayerLoadout from "./PlayerLoadout";
+import ItemSlots from "./ItemSlots";
+import PlayerStats from "./PlayerStats";
 
 export default function MatchCard({
   myParticipant,

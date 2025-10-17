@@ -2,9 +2,9 @@ import Image from "next/image";
 import Link from "next/link";
 import { RegionKey, regionMap } from "@/lib/maps/regionMap";
 import { DDragon } from "@/utils/ddragon";
-import { useMatchContext } from "../../context/MatchContext";
 import { getChampionById } from "@/features/profilepage/utils/getChampionById";
 import { createSummonerUrl } from "@/utils/summoner";
+import { useMatchContext } from "../../../context/MatchContext";
 
 export default function ParticipantList() {
   const { match, myParticipant } = useMatchContext();

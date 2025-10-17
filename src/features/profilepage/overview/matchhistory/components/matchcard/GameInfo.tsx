@@ -1,7 +1,7 @@
 import { queueMap } from "@/lib/maps/queueMap";
 import { formatGameDuration, formatTimeAgo } from "@/utils/utils";
-import { getMatchResultUI } from "../utils/matchResult";
-import { useMatchContext } from "../../context/MatchContext";
+import { useMatchContext } from "../../../context/MatchContext";
+import { getMatchResultUI } from "../../utils/matchResult";
 
 export default function GameInfo() {
   const { match, myParticipant } = useMatchContext();
