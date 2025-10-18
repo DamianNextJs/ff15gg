@@ -4,9 +4,9 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 
 const links = [
-  { label: "Overview", href: "./overview" },
-  { label: "Champion Stats", href: "./champion-stats" },
-  { label: "Live Game", href: "./live-game" },
+  { label: "Overview", href: "overview" },
+  { label: "Champion Stats", href: "champion-stats" },
+  { label: "Live Game", href: "live-game" },
 ];
 
 export default function ProfileLinks() {
@@ -15,7 +15,7 @@ export default function ProfileLinks() {
   return (
     <nav className="absolute bottom-10  left-0 space-x-7 font-semibold text-sm lg:text-base">
       {links.map((link) => {
-        const isActive = pathName.includes(link.href.replace("./", "/"));
+        const isActive = pathName.endsWith(link.href);
 
         return (
           <Link
