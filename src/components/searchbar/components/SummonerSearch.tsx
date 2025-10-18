@@ -7,7 +7,15 @@ import { createSummonerUrl } from "@/utils/summoner";
 import RegionSelect from "@/features/shared/dropdowns/components/RegionSelect";
 import SearchSuggestions from "./SearchSuggestions";
 
-export default function SummonerSearch() {
+type SummonerSearchVariant = "default" | "navbar" | "drawer";
+
+export default function SummonerSearch({
+  variant = "default",
+}: {
+  variant?: SummonerSearchVariant;
+}) {
+  const isNavbar = variant === "navbar";
+
   const [summonerName, setSummonerName] = useState("");
   const [region, setRegion] = useState<RegionKey>("euw1");
   const [focused, setFocused] = useState(false);
@@ -24,6 +32,7 @@ export default function SummonerSearch() {
     router.push(
       `/summoner/${region}/${encodeURIComponent(summonerUrl)}/overview`
     );
+    setFocused(false);
   };
 
   // Close suggestions when clicking outside the search container
@@ -41,9 +50,18 @@ export default function SummonerSearch() {
   }, []);
 
   return (
-    <div ref={containerRef} className="relative w-full lg:w-175 text-secondary">
+    <div
+      ref={containerRef}
+      className={`relative w-full ${
+        isNavbar
+          ? "max-w-125 text-subtle hidden lg:block"
+          : "lg:w-175 text-secondary"
+      } `}
+    >
       <form
-        className="flex justify-between items-center bg-white p-5 rounded-md mx-auto lg:text-xl"
+        className={`flex justify-between items-center  ${
+          isNavbar ? "p-2 bg-secondary" : "p-5 lg:text-xl bg-white"
+        }  rounded-md mx-auto `}
         onSubmit={handleSearch}
       >
         <input
@@ -57,6 +75,7 @@ export default function SummonerSearch() {
           value={region}
           onChange={setRegion}
           onOpen={() => setFocused(false)}
+          isNavbar={isNavbar}
         />
         <svg
           xmlns="http://www.w3.org/2000/svg"
@@ -79,6 +98,8 @@ export default function SummonerSearch() {
         summonerName={summonerName}
         region={region}
         focused={focused}
+        isNavbar={isNavbar}
+        setFocused={setFocused}
       />
     </div>
   );

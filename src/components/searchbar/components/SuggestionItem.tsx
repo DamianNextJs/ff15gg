@@ -8,11 +8,13 @@ import { DDragon } from "@/utils/ddragon";
 interface SuggestionItemProps {
   summoner: SummonerData;
   onSelect: (summoner: SummonerData) => void;
+  isNavbar?: boolean;
 }
 
 export default function SuggestionItem({
   summoner,
   onSelect,
+  isNavbar = false,
 }: SuggestionItemProps) {
   const profileIcon = DDragon.profileIcon(summoner.summoner.profileIconId);
 
@@ -21,7 +23,9 @@ export default function SuggestionItem({
 
   return (
     <li
-      className="p-2 hover:bg-gray-200 cursor-pointer flex justify-between items-center"
+      className={`p-2 ${
+        isNavbar ? "hover:bg-accent/50" : "hover:bg-gray-200"
+      } cursor-pointer flex justify-between items-center`}
       onClick={() => onSelect(summoner)}
     >
       <div className="flex items-center gap-1.5">

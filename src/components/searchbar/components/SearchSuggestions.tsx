@@ -14,12 +14,16 @@ interface SearchSuggestionsProps {
   summonerName: string;
   region: RegionKey;
   focused: boolean;
+  isNavbar?: boolean;
+  setFocused: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
 export default function SearchSuggestions({
   summonerName,
   region,
   focused,
+  setFocused,
+  isNavbar = false,
 }: SearchSuggestionsProps) {
   const { results, loading } = useCachedSummoners(summonerName, region);
   const { recent, addRecent } = useRecentSearches();
@@ -38,6 +42,7 @@ export default function SearchSuggestions({
 
   const handleSelectSuggestion = (summoner: SummonerData) => {
     addRecent(summoner);
+    setFocused(false);
     const summonerUrl = createSummonerUrl(
       summoner.riotAccount.gameName,
       summoner.riotAccount.tagLine
@@ -57,12 +62,20 @@ export default function SearchSuggestions({
     return results; // show cached search results
   }, [focused, trimmedInput, recent, results]);
 
-  if (showLoader) return <SuggestionsLoadingIndicator />;
+  if (showLoader) return <SuggestionsLoadingIndicator isNavbar={isNavbar} />;
   if (!suggestions.length) return null;
 
   return (
-    <ul className="absolute mt-1 w-full bg-white border z-10 rounded-md overflow-hidden">
-      <h2 className="bg-subtle text-xs lg:text-sm p-2">
+    <ul
+      className={`absolute mt-2 w-full ${
+        isNavbar ? "bg-secondary" : "bg-white"
+      }  z-10 rounded-md overflow-hidden`}
+    >
+      <h2
+        className={`${
+          isNavbar ? "bg-primary/50" : "bg-subtle"
+        }  text-xs lg:text-sm p-2`}
+      >
         {!trimmedInput ? "Recent Searches" : "Summoner Profile"}
       </h2>
       {suggestions.map((s, i) => (
@@ -70,6 +83,7 @@ export default function SearchSuggestions({
           key={i}
           summoner={s}
           onSelect={handleSelectSuggestion}
+          isNavbar={isNavbar}
         />
       ))}
     </ul>

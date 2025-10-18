@@ -7,10 +7,12 @@ export default function RegionSelect({
   value,
   onChange,
   onOpen, // optional callback when dropdown opens
+  isNavbar = false,
 }: {
   value: RegionKey;
   onChange: (region: RegionKey) => void;
   onOpen?: () => void;
+  isNavbar?: boolean;
 }) {
   const { open, setOpen, ref } = useDropDown();
 
@@ -25,7 +27,7 @@ export default function RegionSelect({
   return (
     <div
       ref={ref}
-      className="text-white font-bold text-xs lg:text-sm relative cursor-pointer w-12 text-center"
+      className="text-white font-semibold text-xs lg:text-sm relative cursor-pointer w-12 text-center"
     >
       {/* Selected */}
       <div
@@ -37,7 +39,11 @@ export default function RegionSelect({
 
       {/* Dropdown */}
       {open && (
-        <div className="absolute left-1/2 -translate-x-1/2 bg-white mt-7 rounded p-2 space-y-3 z-20">
+        <div
+          className={`absolute left-1/2 -translate-x-1/2 ${
+            isNavbar ? "bg-secondary mt-4" : "bg-white mt-7"
+          }   rounded p-2 space-y-3 z-20`}
+        >
           {Object.entries(regionMap).map(([key, region]) => (
             <div
               key={key}
