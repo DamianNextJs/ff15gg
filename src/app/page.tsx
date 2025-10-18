@@ -1,4 +1,4 @@
-import SummonerSearch from "@/features/homepage/components/SummonerSearch";
+import SummonerSearch from "@/components/searchbar/components/SummonerSearch";
 import Image from "next/image";
 
 export default function Home() {
