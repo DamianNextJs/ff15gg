@@ -15,7 +15,9 @@ interface SearchSuggestionsProps {
   region: RegionKey;
   focused: boolean;
   isNavbar?: boolean;
+  isDrawer?: boolean;
   setFocused: React.Dispatch<React.SetStateAction<boolean>>;
+  setIsOpen?: React.Dispatch<React.SetStateAction<boolean>>; // used for drawer version to close drawer on handleSearch
 }
 
 export default function SearchSuggestions({
@@ -24,6 +26,8 @@ export default function SearchSuggestions({
   focused,
   setFocused,
   isNavbar = false,
+  isDrawer,
+  setIsOpen,
 }: SearchSuggestionsProps) {
   const { results, loading } = useCachedSummoners(summonerName, region);
   const { recent, addRecent } = useRecentSearches();
@@ -47,6 +51,8 @@ export default function SearchSuggestions({
       summoner.riotAccount.gameName,
       summoner.riotAccount.tagLine
     );
+    isDrawer && setIsOpen && setIsOpen(false);
+
     router.push(
       `/summoner/${summoner.platform}/${encodeURIComponent(
         summonerUrl

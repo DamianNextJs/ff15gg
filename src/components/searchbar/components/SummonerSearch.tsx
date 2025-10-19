@@ -9,12 +9,20 @@ import SearchSuggestions from "./SearchSuggestions";
 
 type SummonerSearchVariant = "default" | "navbar" | "drawer";
 
+interface SummonerSearchProps {
+  variant?: SummonerSearchVariant;
+  setIsOpen?: React.Dispatch<React.SetStateAction<boolean>>; // used for drawer version to close drawer on handleSearch
+}
+
 export default function SummonerSearch({
   variant = "default",
-}: {
-  variant?: SummonerSearchVariant;
-}) {
-  const isNavbar = variant === "navbar";
+  setIsOpen,
+}: SummonerSearchProps) {
+  const isNavbar = variant === "navbar" || variant === "drawer";
+  const isDrawer = variant === "drawer";
+
+  const visibilityClasses =
+    variant === "navbar" ? "hidden lg:block" : isDrawer ? "lg:hidden" : "";
 
   const [summonerName, setSummonerName] = useState("");
   const [region, setRegion] = useState<RegionKey>("euw1");
@@ -28,11 +36,13 @@ export default function SummonerSearch({
     const [name, tag] = summonerName.split("#");
     if (!name || !tag) return;
 
+    isDrawer && setIsOpen && setIsOpen(false);
+    setFocused(false);
+
     const summonerUrl = createSummonerUrl(name, tag);
     router.push(
       `/summoner/${region}/${encodeURIComponent(summonerUrl)}/overview`
     );
-    setFocused(false);
   };
 
   // Close suggestions when clicking outside the search container
@@ -52,10 +62,8 @@ export default function SummonerSearch({
   return (
     <div
       ref={containerRef}
-      className={`relative w-full ${
-        isNavbar
-          ? "max-w-125 text-subtle hidden lg:block"
-          : "lg:w-175 text-secondary"
+      className={`relative w-full ${visibilityClasses} ${
+        isNavbar ? "max-w-125 text-subtle" : "lg:w-175 text-secondary"
       } `}
     >
       <form
@@ -99,7 +107,9 @@ export default function SummonerSearch({
         region={region}
         focused={focused}
         isNavbar={isNavbar}
+        isDrawer={isDrawer}
         setFocused={setFocused}
+        setIsOpen={setIsOpen}
       />
     </div>
   );
