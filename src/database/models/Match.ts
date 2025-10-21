@@ -10,7 +10,7 @@ const MatchSchema = new Schema<IMatch>({
 });
 
 // Index nested matchId for fast lookup
-MatchSchema.index({ "data.metadata.matchId": 1 });
+MatchSchema.index({ "data.metadata.matchId": 1 }, { unique: true });
 
 export default mongoose.models.Match ||
   mongoose.model<IMatch>("Match", MatchSchema);
