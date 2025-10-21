@@ -5,10 +5,13 @@ import SummonerSearch from "./searchbar/components/SummonerSearch";
 import { usePathname } from "next/navigation";
 import SidebarDrawer from "./sidebar/SidebarDrawer";
 import { useState } from "react";
+import Button from "./Button";
+import { signIn, signOut, useSession } from "next-auth/react";
 
 export default function NavBar() {
   const pathName = usePathname();
   const [isOpen, setIsOpen] = useState(false);
+  const { data: session } = useSession();
   return (
     <div className="w-full fixed z-10 h-16 bg-accent flex items-center justify-between p-4 text-white">
       <div className="flex items-center gap-2">
@@ -33,9 +36,15 @@ export default function NavBar() {
         </Link>
       </div>
 
+      {/* Search bar - shown on desktop */}
       {pathName !== "/" && <SummonerSearch variant="navbar" />}
 
-      <div>{/* Add login button here */}</div>
+      {/* login / logout button */}
+      {!session ? (
+        <Button onClick={() => signIn("google")}>Log In</Button>
+      ) : (
+        <Button onClick={() => signOut()}>Log Out</Button>
+      )}
 
       <SidebarDrawer isOpen={isOpen} setIsOpen={setIsOpen} />
     </div>
