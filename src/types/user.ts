@@ -1,0 +1,22 @@
+export type User = {
+  _id?: string;
+  email: string;
+  image?: string;
+  name: string;
+  boundRiotAccount?: BoundRiotAccount;
+};
+
+export type BoundRiotAccount = {
+  puuid: string;
+  gameName: string;
+  tagLine: string;
+  profileIconId: number;
+  summonerLevel: number;
+  platform: string;
+  soloRank?: SoloRank | "Unranked";
+};
+
+type SoloRank = {
+  rank?: string;
+  tier?: string;
+};

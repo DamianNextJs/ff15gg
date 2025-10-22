@@ -4,14 +4,28 @@ import Link from "next/link";
 import SummonerSearch from "./searchbar/components/SummonerSearch";
 import { usePathname } from "next/navigation";
 import SidebarDrawer from "./sidebar/SidebarDrawer";
-import { useState } from "react";
+import { useEffect, useState, useTransition } from "react";
 import Button from "./Button";
 import { signIn, signOut, useSession } from "next-auth/react";
+import { saveSessionUser } from "@/features/auth/lib/actions";
+import { User } from "@/types/user";
 
 export default function NavBar() {
   const pathName = usePathname();
   const [isOpen, setIsOpen] = useState(false);
-  const { data: session } = useSession();
+  const { data: session, status } = useSession();
+  const [isPending, startTransition] = useTransition();
+  const [user, setUser] = useState<User | null>(null);
+
+  useEffect(() => {
+    if (status === "authenticated") {
+      startTransition(async () => {
+        const savedUser = await saveSessionUser();
+        setUser(savedUser);
+      });
+    }
+  }, [status]);
+
   return (
     <div className="w-full fixed z-10 h-16 bg-accent flex items-center justify-between p-4 text-white">
       <div className="flex items-center gap-2">
@@ -41,7 +55,9 @@ export default function NavBar() {
 
       {/* login / logout button */}
       {!session ? (
-        <Button onClick={() => signIn("google")}>Log In</Button>
+        <Button onClick={() => signIn("google")} disabled={isPending}>
+          Log In
+        </Button>
       ) : (
         <Button onClick={() => signOut()}>Log Out</Button>
       )}
