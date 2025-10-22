@@ -9,6 +9,7 @@ import SuggestionItem from "./SuggestionItem";
 import { useCachedSummoners } from "../hooks/useCachedSummoners";
 import { useRecentSearches } from "../hooks/useRecentSearches";
 import { createSummonerUrl } from "@/utils/summoner";
+import { useSidebarDrawer } from "@/components/sidebar/context/SidebarDrawerContext";
 
 interface SearchSuggestionsProps {
   summonerName: string;
@@ -17,7 +18,6 @@ interface SearchSuggestionsProps {
   isNavbar?: boolean;
   isDrawer?: boolean;
   setFocused: React.Dispatch<React.SetStateAction<boolean>>;
-  setIsOpen?: React.Dispatch<React.SetStateAction<boolean>>; // used for drawer version to close drawer on handleSearch
 }
 
 export default function SearchSuggestions({
@@ -27,10 +27,10 @@ export default function SearchSuggestions({
   setFocused,
   isNavbar = false,
   isDrawer,
-  setIsOpen,
 }: SearchSuggestionsProps) {
   const { results, loading } = useCachedSummoners(summonerName, region);
   const { recent, addRecent } = useRecentSearches();
+  const { setIsOpen } = useSidebarDrawer();
   const router = useRouter();
   const [showLoader, setShowLoader] = useState(false);
 
@@ -51,7 +51,7 @@ export default function SearchSuggestions({
       summoner.riotAccount.gameName,
       summoner.riotAccount.tagLine
     );
-    isDrawer && setIsOpen && setIsOpen(false);
+    isDrawer && setIsOpen(false);
 
     router.push(
       `/summoner/${summoner.platform}/${encodeURIComponent(

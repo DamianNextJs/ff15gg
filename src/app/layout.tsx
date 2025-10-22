@@ -5,6 +5,8 @@ import NavBar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import { ScrollToTop } from "@/components/ScrollToTop";
 import SessionWrapper from "@/components/SessionWrapper";
+import { UserProvider } from "@/features/auth/context/UserContext";
+import { SidebarDrawerProvider } from "@/components/sidebar/context/SidebarDrawerContext";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -38,11 +40,15 @@ export default function RootLayout({
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased bg-bg flex flex-col min-h-screen scroll-smooth`}
       >
+        <ScrollToTop />
         <SessionWrapper>
-          <ScrollToTop />
-          <NavBar />
-          <main className="my-16">{children}</main>
-          <Footer />
+          <UserProvider>
+            <SidebarDrawerProvider>
+              <NavBar />
+              <main className="my-16">{children}</main>
+              <Footer />
+            </SidebarDrawerProvider>
+          </UserProvider>
         </SessionWrapper>
       </body>
     </html>

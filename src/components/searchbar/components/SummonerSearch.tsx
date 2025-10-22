@@ -6,17 +6,16 @@ import { type RegionKey } from "@/lib/maps/regionMap";
 import { createSummonerUrl } from "@/utils/summoner";
 import RegionSelect from "@/features/shared/dropdowns/components/RegionSelect";
 import SearchSuggestions from "./SearchSuggestions";
+import { useSidebarDrawer } from "@/components/sidebar/context/SidebarDrawerContext";
 
 type SummonerSearchVariant = "default" | "navbar" | "drawer";
 
 interface SummonerSearchProps {
   variant?: SummonerSearchVariant;
-  setIsOpen?: React.Dispatch<React.SetStateAction<boolean>>; // used for drawer version to close drawer on handleSearch
 }
 
 export default function SummonerSearch({
   variant = "default",
-  setIsOpen,
 }: SummonerSearchProps) {
   const isNavbar = variant === "navbar" || variant === "drawer";
   const isDrawer = variant === "drawer";
@@ -27,6 +26,7 @@ export default function SummonerSearch({
   const [summonerName, setSummonerName] = useState("");
   const [region, setRegion] = useState<RegionKey>("euw1");
   const [focused, setFocused] = useState(false);
+  const { setIsOpen } = useSidebarDrawer();
 
   const containerRef = useRef<HTMLDivElement>(null);
   const router = useRouter();
@@ -36,7 +36,7 @@ export default function SummonerSearch({
     const [name, tag] = summonerName.split("#");
     if (!name || !tag) return;
 
-    isDrawer && setIsOpen && setIsOpen(false);
+    isDrawer && setIsOpen(false);
     setFocused(false);
 
     const summonerUrl = createSummonerUrl(name, tag);
@@ -109,7 +109,6 @@ export default function SummonerSearch({
         isNavbar={isNavbar}
         isDrawer={isDrawer}
         setFocused={setFocused}
-        setIsOpen={setIsOpen}
       />
     </div>
   );

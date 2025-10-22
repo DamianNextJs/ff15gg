@@ -4,27 +4,16 @@ import Link from "next/link";
 import SummonerSearch from "./searchbar/components/SummonerSearch";
 import { usePathname } from "next/navigation";
 import SidebarDrawer from "./sidebar/SidebarDrawer";
-import { useEffect, useState, useTransition } from "react";
 import Button from "./Button";
 import { signIn, signOut, useSession } from "next-auth/react";
-import { saveSessionUser } from "@/features/auth/lib/actions";
-import { User } from "@/types/user";
+import { useUser } from "@/features/auth/context/UserContext";
+import { useSidebarDrawer } from "./sidebar/context/SidebarDrawerContext";
 
 export default function NavBar() {
   const pathName = usePathname();
-  const [isOpen, setIsOpen] = useState(false);
-  const { data: session, status } = useSession();
-  const [isPending, startTransition] = useTransition();
-  const [user, setUser] = useState<User | null>(null);
-
-  useEffect(() => {
-    if (status === "authenticated") {
-      startTransition(async () => {
-        const savedUser = await saveSessionUser();
-        setUser(savedUser);
-      });
-    }
-  }, [status]);
+  const { isOpen, setIsOpen } = useSidebarDrawer();
+  const { data: session } = useSession();
+  const { isPending } = useUser();
 
   return (
     <div className="w-full fixed z-10 h-16 bg-accent flex items-center justify-between p-4 text-white">
@@ -62,7 +51,7 @@ export default function NavBar() {
         <Button onClick={() => signOut()}>Log Out</Button>
       )}
 
-      <SidebarDrawer isOpen={isOpen} setIsOpen={setIsOpen} />
+      <SidebarDrawer />
     </div>
   );
 }
