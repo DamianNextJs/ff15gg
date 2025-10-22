@@ -1,4 +1,4 @@
-const LATEST_VERSION = "15.18.1";
+const LATEST_VERSION = "15.21.1";
 
 export const DDragon = {
   profileIcon(id: number) {
