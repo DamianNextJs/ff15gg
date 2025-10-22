@@ -40,7 +40,7 @@ export default function RegionSelect({
       {/* Dropdown */}
       {open && (
         <div
-          className={`absolute left-1/2 -translate-x-1/2 ${
+          className={`absolute shadow shadow-black left-1/2 -translate-x-1/2 ${
             isNavbar ? "bg-secondary mt-4" : "bg-white mt-7"
           }   rounded p-2 space-y-3 z-20`}
         >

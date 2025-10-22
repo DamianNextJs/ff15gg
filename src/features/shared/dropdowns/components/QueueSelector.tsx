@@ -42,7 +42,7 @@ export default function QueueSelector({
         </svg>
       </div>
       {open && (
-        <div className="absolute bg-accent rounded-md top-7.5 lg:top-9 right-5 cursor-pointer text-sm overflow-hidden text-center w-25">
+        <div className="absolute shadow shadow-black bg-accent rounded-md top-7.5 lg:top-9 right-5 cursor-pointer text-sm overflow-hidden text-center w-25">
           <div
             className={`${
               currentQueue === "all" ? "bg-subtle/15" : ""
