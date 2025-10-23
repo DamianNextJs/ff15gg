@@ -46,7 +46,7 @@ export default function UserCardMenu() {
           {user && !user.boundRiotAccount && (
             <Link
               className={`${linkClass} flex items-center gap-2`}
-              href={"/"}
+              href={"/settings/bind-summoner"}
               onClick={handleLinkClick}
             >
               Bind Account
@@ -67,7 +67,11 @@ export default function UserCardMenu() {
             </Link>
           )}
           {user && (
-            <Link className={linkClass} href={"/"} onClick={handleLinkClick}>
+            <Link
+              className={linkClass}
+              href={"/settings/profile"}
+              onClick={handleLinkClick}
+            >
               Profile Settings
             </Link>
           )}
