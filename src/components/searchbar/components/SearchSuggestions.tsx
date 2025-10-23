@@ -1,7 +1,7 @@
 "use client";
 
 import { SummonerData } from "@/types/summoner";
-import { useEffect, useState, useMemo } from "react";
+import { useEffect, useState, useMemo, Dispatch, SetStateAction } from "react";
 import { useRouter } from "next/navigation";
 import { RegionKey } from "@/lib/maps/regionMap";
 import SuggestionsLoadingIndicator from "./SuggestionsLoadingIndicator";
@@ -17,7 +17,9 @@ interface SearchSuggestionsProps {
   focused: boolean;
   isNavbar?: boolean;
   isDrawer?: boolean;
+  isProfileSettings?: boolean;
   setFocused: React.Dispatch<React.SetStateAction<boolean>>;
+  setSummonerToBind?: Dispatch<SetStateAction<SummonerData | null>>;
 }
 
 export default function SearchSuggestions({
@@ -27,6 +29,8 @@ export default function SearchSuggestions({
   setFocused,
   isNavbar = false,
   isDrawer,
+  isProfileSettings,
+  setSummonerToBind,
 }: SearchSuggestionsProps) {
   const { results, loading } = useCachedSummoners(summonerName, region);
   const { recent, addRecent } = useRecentSearches();
@@ -34,7 +38,7 @@ export default function SearchSuggestions({
   const router = useRouter();
   const [showLoader, setShowLoader] = useState(false);
 
-  // Delayed loader: show only if loading >200ms
+  // Delay showing loader to avoid flicker on short requests
   useEffect(() => {
     if (!loading) {
       setShowLoader(false);
@@ -44,7 +48,17 @@ export default function SearchSuggestions({
     return () => clearTimeout(timeout);
   }, [loading]);
 
+  // ─── Handle selecting a suggestion ───────────────────
+  // Behavior differs by variant: profile-settings vs others
   const handleSelectSuggestion = (summoner: SummonerData) => {
+    // inside profile settings return the summoner up to summonersearch instead of navigation
+    if (isProfileSettings && setSummonerToBind) {
+      setSummonerToBind(summoner);
+      setFocused(false);
+      return;
+    }
+
+    // Default navigation behavior
     addRecent(summoner);
     setFocused(false);
     const summonerUrl = createSummonerUrl(
@@ -61,10 +75,10 @@ export default function SearchSuggestions({
   };
 
   const trimmedInput = summonerName.trim();
-  // Decide which list to show: recent searches or cached results
+  // Compute which list to show (recent searches vs API results)
   const suggestions: SummonerData[] = useMemo(() => {
     if (!focused) return [];
-    if (!trimmedInput) return recent; // show all recent searches
+    if (!trimmedInput && !isProfileSettings) return recent; // show all recent searches
     return results; // show cached search results
   }, [focused, trimmedInput, recent, results]);
 
@@ -82,7 +96,9 @@ export default function SearchSuggestions({
           isNavbar ? "bg-primary/50" : "bg-subtle"
         }  text-xs lg:text-sm p-2`}
       >
-        {!trimmedInput ? "Recent Searches" : "Summoner Profile"}
+        {!trimmedInput && !isProfileSettings
+          ? "Recent Searches"
+          : "Summoner Profile"}
       </h2>
       {suggestions.map((s, i) => (
         <SuggestionItem
