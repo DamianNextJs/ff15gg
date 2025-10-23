@@ -11,6 +11,7 @@ import {
   ReactNode,
   Dispatch,
   SetStateAction,
+  useCallback,
 } from "react";
 import { saveSessionUser } from "../lib/actions";
 
@@ -28,7 +29,7 @@ export function UserProvider({ children }: { children: ReactNode }) {
   const [user, setUser] = useState<User | null>(null);
   const [isPending, startTransition] = useTransition();
 
-  const refreshUser = async () => {
+  const refreshUser = useCallback(async () => {
     if (status === "authenticated") {
       startTransition(async () => {
         const savedUser = await saveSessionUser();
@@ -37,13 +38,13 @@ export function UserProvider({ children }: { children: ReactNode }) {
     } else {
       setUser(null);
     }
-  };
+  }, [status]);
 
   useEffect(() => {
     if (status !== "loading") {
       refreshUser();
     }
-  }, [status]);
+  }, [status, refreshUser]);
 
   return (
     <UserContext.Provider value={{ user, setUser, isPending, refreshUser }}>

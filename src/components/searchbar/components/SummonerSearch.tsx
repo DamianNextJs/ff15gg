@@ -36,7 +36,7 @@ export default function SummonerSearch({
     const [name, tag] = summonerName.split("#");
     if (!name || !tag) return;
 
-    isDrawer && setIsOpen(false);
+    if (isDrawer) setIsOpen(false);
     setFocused(false);
 
     const summonerUrl = createSummonerUrl(name, tag);

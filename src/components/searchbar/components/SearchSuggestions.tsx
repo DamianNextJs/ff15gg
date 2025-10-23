@@ -51,7 +51,7 @@ export default function SearchSuggestions({
       summoner.riotAccount.gameName,
       summoner.riotAccount.tagLine
     );
-    isDrawer && setIsOpen(false);
+    if (isDrawer) setIsOpen(false);
 
     router.push(
       `/summoner/${summoner.platform}/${encodeURIComponent(
