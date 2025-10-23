@@ -2,19 +2,29 @@
 
 import Button from "@/components/Button";
 import Modal from "@/components/Modal";
+import { useUser } from "@/features/auth/context/UserContext";
 import { useState } from "react";
+import { DeleteUser } from "../lib/actions";
+import { signOut } from "next-auth/react";
 
 export default function DeleteAccountModal() {
   const [open, setOpen] = useState(false);
   const [verifyInput, setVerifyInput] = useState("");
+  const { user } = useUser();
 
   const verifyText = "delete my account";
 
   const verifyMatch = verifyInput === verifyText;
 
-  const handleClick = () => {
-    console.log("deleted account");
+  const handleClick = async () => {
     setOpen(false);
+    if (!user?._id) return;
+
+    const result = await DeleteUser(user._id);
+    if (result) {
+      setVerifyInput("");
+      signOut({ callbackUrl: "/" });
+    }
   };
 
   return (
