@@ -19,7 +19,9 @@ export default function Button({
     <button
       type="button"
       disabled={disabled}
-      className={`text-sm lg:text-base ${color} text-white font-medium rounded-md px-4 py-2 cursor-pointer transition-opacity ${hoverMap[color]} disabled:opacity-50`}
+      className={`text-sm lg:text-base ${color} text-white font-medium rounded-md px-4 py-2 cursor-pointer ${
+        !disabled && hoverMap[color]
+      } disabled:opacity-50 disabled:cursor-default`}
       onClick={onClick}
     >
       {children}
