@@ -40,7 +40,9 @@ export default function NavBar() {
       </div>
 
       {/* Search bar - shown on desktop */}
-      {pathName !== "/" && <SummonerSearch variant="navbar" />}
+      {pathName !== "/" && !pathName.startsWith("/settings") && (
+        <SummonerSearch variant="navbar" />
+      )}
 
       {/* login / logout button */}
       {!session ? (
