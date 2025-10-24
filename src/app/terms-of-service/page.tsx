@@ -48,9 +48,9 @@ export default function TermsOfService() {
         5. Limitation of Liability
       </h2>
       <p className="mb-4">
-        FF15GG provides services "as is" and we cannot guarantee uninterrupted
-        access or error-free operation. We are not liable for any damages
-        arising from your use of our services.
+        FF15GG provides services &quot;as is&quot; and we cannot guarantee
+        uninterrupted access or error-free operation. We are not liable for any
+        damages arising from your use of our services.
       </p>
 
       <h2 className="text-2xl font-semibold mt-6 mb-2">6. Changes to Terms</h2>

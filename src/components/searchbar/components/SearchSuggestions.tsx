@@ -80,7 +80,7 @@ export default function SearchSuggestions({
     if (!focused) return [];
     if (!trimmedInput && !isProfileSettings) return recent; // show all recent searches
     return results; // show cached search results
-  }, [focused, trimmedInput, recent, results]);
+  }, [focused, trimmedInput, recent, results, isProfileSettings]);
 
   if (showLoader) return <SuggestionsLoadingIndicator isNavbar={isNavbar} />;
   if (!suggestions.length) return null;

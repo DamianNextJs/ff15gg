@@ -16,7 +16,7 @@ export default function BindSummoner() {
 
   useEffect(() => {
     if (error) setError("");
-  }, [summonerToBind]);
+  }, [summonerToBind, error]);
 
   const handleBindClick = async () => {
     if (!user || !summonerToBind) return;
