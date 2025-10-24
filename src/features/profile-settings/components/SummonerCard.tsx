@@ -12,6 +12,7 @@ interface SummonerCardProps {
   boundSummoner?: User["boundRiotAccount"];
   handleBindClick?: () => void;
   handleRemoveClick?: () => void;
+  error?: boolean;
 }
 
 export default function SummonerCard({
@@ -19,6 +20,7 @@ export default function SummonerCard({
   handleBindClick,
   boundSummoner,
   handleRemoveClick,
+  error,
 }: SummonerCardProps) {
   const [open, setOpen] = useState(false);
   const profileIconId =
@@ -87,7 +89,9 @@ export default function SummonerCard({
           </Modal>
         </div>
       ) : (
-        <Button onClick={handleBindClick}>Bind</Button>
+        <Button onClick={handleBindClick} disabled={error}>
+          Bind
+        </Button>
       )}
     </div>
   );

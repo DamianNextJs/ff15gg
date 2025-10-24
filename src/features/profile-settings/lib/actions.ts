@@ -2,10 +2,10 @@
 
 import User from "@/database/models/User";
 import { connectToDB } from "@/database/mongodb";
-import { findRankData } from "@/features/profilepage/utils/findRankData";
 import { SummonerData } from "@/types/summoner";
 import { User as UserType } from "@/types/user";
 
+// Remove User from db
 export async function DeleteUser(user_id: string) {
   await connectToDB();
 
@@ -13,19 +13,20 @@ export async function DeleteUser(user_id: string) {
   return result.deletedCount === 1;
 }
 
+// Bind Summoner Account to user
 export async function BindAccount(
   user: UserType,
   summonerToBind: SummonerData
 ) {
   await connectToDB();
 
-  const foundSoloRank = findRankData(
-    summonerToBind.ranked ?? [],
-    "Ranked Solo"
-  );
-  const soloRank = foundSoloRank
-    ? { tier: foundSoloRank.tier, rank: foundSoloRank.rank }
-    : "Unranked";
+  const boundAccountExists = await User.findOne({
+    "boundRiotAccount.puuid": summonerToBind.riotAccount.puuid,
+  });
+
+  if (boundAccountExists) {
+    return null;
+  }
 
   const boundRiotAccount: UserType["boundRiotAccount"] = {
     puuid: summonerToBind.riotAccount.puuid,
@@ -34,7 +35,6 @@ export async function BindAccount(
     profileIconId: summonerToBind.summoner.profileIconId,
     summonerLevel: summonerToBind.summoner.summonerLevel,
     platform: summonerToBind.platform ?? "",
-    soloRank,
   };
 
   const updatedUser = await User.findOneAndUpdate(
@@ -50,6 +50,7 @@ export async function BindAccount(
   return { ...updatedUser, _id: updatedUser?._id?.toString() } as UserType;
 }
 
+// Remove bound summoner from user account
 export async function RemoveBoundSummoner(user_id: string, puuid: string) {
   await connectToDB();
 

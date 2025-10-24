@@ -1,7 +1,7 @@
 "use client";
 import SummonerSearch from "@/components/searchbar/components/SummonerSearch";
 import { SummonerData } from "@/types/summoner";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import SummonerCard from "./SummonerCard";
 import { useUser } from "@/features/auth/context/UserContext";
 import { BindAccount, RemoveBoundSummoner } from "../lib/actions";
@@ -12,11 +12,23 @@ export default function BindSummoner() {
   const [summonerToBind, setSummonerToBind] = useState<SummonerData | null>(
     null
   );
+  const [error, setError] = useState("");
+
+  useEffect(() => {
+    if (error) setError("");
+  }, [summonerToBind]);
 
   const handleBindClick = async () => {
     if (!user || !summonerToBind) return;
     const updatedUser = await BindAccount(user, summonerToBind);
-    setUser(updatedUser);
+
+    if (updatedUser) {
+      setUser(updatedUser);
+      setError("");
+      setSummonerToBind(null);
+    } else {
+      setError("Summoner is already bound to another account");
+    }
   };
 
   const handleRemoveClick = async () => {
@@ -55,8 +67,10 @@ export default function BindSummoner() {
             <SummonerCard
               summonerToBind={summonerToBind}
               handleBindClick={handleBindClick}
+              error={error !== ""}
             />
           )}
+          {error && <p className="text-red-500 text-sm mt-3">{error}</p>}
         </div>
       )}
     </div>

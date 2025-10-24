@@ -13,10 +13,4 @@ export type BoundRiotAccount = {
   profileIconId: number;
   summonerLevel: number;
   platform: string;
-  soloRank?: SoloRank | "Unranked";
-};
-
-type SoloRank = {
-  rank?: string;
-  tier?: string;
 };
