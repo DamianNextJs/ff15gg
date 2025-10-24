@@ -18,13 +18,16 @@ const UserSchema = new Schema<User & Document>({
   image: { type: String },
   name: { type: String, required: true },
   preferences: {
-    type: {
-      appearance: {
-        type: String,
-        enum: ["Google", "Summoner"],
-        default: "Google",
+    type: new Schema(
+      {
+        appearance: {
+          type: String,
+          enum: ["Google", "Summoner"],
+          default: "Google",
+        },
       },
-    },
+      { _id: false }
+    ),
     default: {},
   },
   boundRiotAccount: BoundRiotAccountSchema,
