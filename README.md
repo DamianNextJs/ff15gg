@@ -13,6 +13,13 @@ Live demo: [ff15gg.vercel.app](https://ff15gg.vercel.app)
 - Persistent caching to reduce API requests
 - Responsive design with Tailwind CSS
 - Hover tooltip for summoner spells, runes and items
+- Show search bar in navbar on desktop while navigating away from "home"
+- Sidebar drawer with user card showing logged-in status
+- User card provides a menu with several links
+- Sidebar drawer includes a search bar for mobile
+- Login functionality with Google OAuth
+- Privacy Policy Page
+- Terms of Service Page
 
 ---
 
@@ -50,6 +57,13 @@ Live demo: [ff15gg.vercel.app](https://ff15gg.vercel.app)
 
 ---
 
+### Profile Settings Page
+
+- Logged-in users have access to the settings page, which contains three sections:
+  - **Profile Settings**: Allows users who are logged in and have bound their Summoner Account to change their appearance.
+  - **Bind Summoner Account**: Allows logged-in users to bind a summoner account to their user profile.
+  - **Account Settings**: Allows users to delete their account, permanently removing all their data from the database.
+
 ## Notes / Usage Tips
 
 - ℹ️ **Hosting Info**: FF15GG is hosted on Vercel’s free tier, so the first request after a period of inactivity may take a few extra seconds while the server “warms up.” Subsequent requests are faster.
@@ -62,5 +76,6 @@ Live demo: [ff15gg.vercel.app](https://ff15gg.vercel.app)
 
 **Frontend**: Next.js (App Router), TypeScript, Tailwind CSS  
 **Backend**: Next.js API routes & server actions
+**Auth**: Next-Auth.js (Google OAuth)
 **Database**: MongoDB (persistent caching)  
 **API**: Riot Games API
