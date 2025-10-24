@@ -2,6 +2,7 @@ import { useUser } from "@/features/auth/context/UserContext";
 import { useDropDown } from "@/features/shared/dropdowns/hooks/useDropdown";
 import Link from "next/link";
 import { useSidebarDrawer } from "./context/SidebarDrawerContext";
+import { createSummonerUrl } from "@/utils/summoner";
 
 export default function UserCardMenu() {
   const { user } = useUser();
@@ -15,6 +16,16 @@ export default function UserCardMenu() {
       setDrawerOpen(false);
     }
   };
+
+  const summonerUrl =
+    user?.boundRiotAccount &&
+    `/summoner/${user.boundRiotAccount.platform}/${encodeURIComponent(
+      createSummonerUrl(
+        user.boundRiotAccount.gameName,
+        user.boundRiotAccount.tagLine
+      )
+    )}/overview`;
+
   return (
     <div
       ref={ref}
@@ -64,6 +75,15 @@ export default function UserCardMenu() {
                   d="M12 9v3.75m9-.75a9 9 0 1 1-18 0 9 9 0 0 1 18 0Zm-9 3.75h.008v.008H12v-.008Z"
                 />
               </svg>
+            </Link>
+          )}
+          {user && summonerUrl && (
+            <Link
+              className={`${linkClass} flex items-center gap-2`}
+              href={summonerUrl}
+              onClick={handleLinkClick}
+            >
+              My Summoner
             </Link>
           )}
           {user && (
