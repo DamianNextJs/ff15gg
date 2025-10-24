@@ -42,6 +42,7 @@ export async function BindAccount(
     {
       $set: {
         boundRiotAccount,
+        "preferences.appearance": "Summoner",
       },
     },
     { new: true }
@@ -56,7 +57,32 @@ export async function RemoveBoundSummoner(user_id: string, puuid: string) {
 
   const updatedUser = await User.findOneAndUpdate(
     { _id: user_id, "boundRiotAccount.puuid": puuid },
-    { $unset: { boundRiotAccount: 1 } },
+    {
+      $unset: { boundRiotAccount: 1 },
+      $set: { "preferences.appearance": "Google" },
+    },
+    { new: true }
+  ).lean<UserType>();
+
+  return { ...updatedUser, _id: updatedUser?._id?.toString() } as UserType;
+}
+
+//update Appearance
+export async function UpdateAppearance(
+  user_id: string,
+  appearance: "Google" | "Summoner"
+) {
+  await connectToDB();
+
+  const updatedUser = await User.findOneAndUpdate(
+    {
+      _id: user_id,
+    },
+    {
+      $set: {
+        "preferences.appearance": appearance,
+      },
+    },
     { new: true }
   ).lean<UserType>();
 

@@ -17,6 +17,16 @@ const UserSchema = new Schema<User & Document>({
   email: { type: String, required: true, unique: true },
   image: { type: String },
   name: { type: String, required: true },
+  preferences: {
+    type: {
+      appearance: {
+        type: String,
+        enum: ["Google", "Summoner"],
+        default: "Google",
+      },
+    },
+    default: {},
+  },
   boundRiotAccount: BoundRiotAccountSchema,
 });
 

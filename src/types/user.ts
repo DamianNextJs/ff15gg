@@ -3,6 +3,9 @@ export type User = {
   email: string;
   image?: string;
   name: string;
+  preferences: {
+    appearance: "Google" | "Summoner";
+  };
   boundRiotAccount?: BoundRiotAccount;
 };
 

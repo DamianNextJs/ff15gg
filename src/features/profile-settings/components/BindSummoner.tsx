@@ -42,7 +42,7 @@ export default function BindSummoner() {
   };
 
   return (
-    <div className="">
+    <div>
       {user?.boundRiotAccount ? (
         <SummonerCard
           boundSummoner={user.boundRiotAccount}
