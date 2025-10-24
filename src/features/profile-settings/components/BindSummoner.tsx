@@ -16,7 +16,8 @@ export default function BindSummoner() {
 
   useEffect(() => {
     if (error) setError("");
-  }, [summonerToBind, error]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [summonerToBind]);
 
   const handleBindClick = async () => {
     if (!user || !summonerToBind) return;
