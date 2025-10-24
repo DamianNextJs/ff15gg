@@ -99,8 +99,19 @@ export default function UserCardMenu() {
             FAQ
           </Link>
 
-          <Link className={linkClass} href={"/"} onClick={handleLinkClick}>
+          <Link
+            className={linkClass}
+            href={"/privacy-policy"}
+            onClick={handleLinkClick}
+          >
             Privacy Policy
+          </Link>
+          <Link
+            className={linkClass}
+            href={"/terms-of-service"}
+            onClick={handleLinkClick}
+          >
+            Terms of Service
           </Link>
         </div>
       )}
