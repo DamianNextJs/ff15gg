@@ -7,6 +7,7 @@ import {
   ReactNode,
   Dispatch,
   SetStateAction,
+  useEffect,
 } from "react";
 
 type SidebarDrawerContextType = {
@@ -20,6 +21,12 @@ const SidebarDrawerContext = createContext<
 
 export function SidebarDrawerProvider({ children }: { children: ReactNode }) {
   const [isOpen, setIsOpen] = useState(false);
+
+  useEffect(() => {
+    if (window.innerWidth > 1024) {
+      setIsOpen(true);
+    }
+  }, []);
 
   return (
     <SidebarDrawerContext.Provider value={{ isOpen, setIsOpen }}>

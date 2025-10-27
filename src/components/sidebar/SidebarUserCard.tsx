@@ -27,7 +27,7 @@ export default function SidebarUserCard() {
             alt="user icon"
           />
           <div className="flex flex-col">
-            <p className="truncate max-w-35">
+            <p className="truncate max-w-50 lg:max-w-35">
               {isGuest ? "Guest" : displayName}
             </p>
             <p

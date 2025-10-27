@@ -46,7 +46,7 @@ export default function ProfilePreferences() {
         </p>
       ) : (
         <div className="flex flex-col items-start gap-3">
-          <h3 className="underline text-lg">Change Appearance:</h3>
+          <h3 className="text-lg">Change Appearance:</h3>
 
           <div>
             <div className="flex items-center gap-1">
