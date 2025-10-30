@@ -25,7 +25,7 @@ export default function RankCard({
   return (
     <section className="mt-3 bg-secondary rounded-md p-4">
       <div className={`relative ${hasRankInfo && "space-y-4"}`}>
-        <SectionHeading text={rankType} />
+        <SectionHeading>{rankType}</SectionHeading>
 
         {hasRankInfo ? (
           <div className="flex items-center justify-between ">

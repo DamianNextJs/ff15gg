@@ -87,7 +87,7 @@ export default function MatchHistory({
   return (
     <section className="mt-3 bg-secondary rounded-md p-4 pt-4">
       <div className="flex items-center justify-between">
-        <SectionHeading text="Match History" />
+        <SectionHeading>Match History</SectionHeading>
         <div className="flex items-center lg:gap-4">
           <QueueSelector
             currentQueue={currentQueue}

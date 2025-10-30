@@ -1,4 +1,5 @@
 "use client";
+import SectionHeading from "@/components/SectionHeading";
 import { queueMap } from "@/lib/maps/queueMap";
 import { formatGameDuration } from "@/utils/utils";
 import { useEffect, useState } from "react";
@@ -27,9 +28,11 @@ export default function LiveGameInfo({
   }, []);
 
   return (
-    <div className="text-sm lg:text-base font-semibold border-l-2 border-primary ps-3 flex items-center gap-2">
-      {queue} <p className="text-subtle/50">/</p>{" "}
-      {formatGameDuration(elapsedTime)}
-    </div>
+    <SectionHeading>
+      <div className="flex items-center gap-2">
+        {queue} <p className="text-subtle/50">/</p>{" "}
+        {formatGameDuration(elapsedTime)}
+      </div>
+    </SectionHeading>
   );
 }

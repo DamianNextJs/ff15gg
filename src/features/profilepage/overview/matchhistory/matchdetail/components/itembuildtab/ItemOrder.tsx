@@ -55,7 +55,7 @@ export default function ItemOrder({ itemEvents }: { itemEvents: EventData[] }) {
   const eventsByMinute = groupItemEventsByMinute(itemEvents);
   return (
     <div>
-      <SectionHeading text="Items" />
+      <SectionHeading>Items</SectionHeading>
       <div className="mt-3 flex w-full justify-center">
         <div className="flex flex-wrap w-141.5">
           {Array.from(eventsByMinute.entries()).map(

@@ -37,7 +37,7 @@ export default function RecentlyPlayedWith({
   return (
     <section className="mt-3 bg-secondary rounded-md p-4 pb-0 overflow-hidden">
       <div className="flex items-center justify-between">
-        <SectionHeading text="Recently Played With" />
+        <SectionHeading>Recently Played With</SectionHeading>
         <p className="text-xs lg:text-sm text-subtle">
           Last {filteredMatches.length} Games
         </p>

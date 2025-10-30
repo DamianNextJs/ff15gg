@@ -12,7 +12,7 @@ export default function SkillOrder({
 }) {
   return (
     <div>
-      <SectionHeading text="Skill Order" />
+      <SectionHeading>Skill Order</SectionHeading>
       <div className="mt-3 overflow-x-auto lg:overflow-visible">
         <div className="min-w-fit flex gap-2 justify-start lg:justify-center pb-3 lg:p-0">
           <ChampionSpellSlots participantChampionId={participantChampionId} />
