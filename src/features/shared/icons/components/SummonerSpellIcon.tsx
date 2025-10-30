@@ -1,27 +1,38 @@
 import Tooltip from "@/components/Tooltip";
+import { SummonerSpell } from "@/types/data";
+import { getSummonerSpellById } from "@/utils/data";
+import { DDragon } from "@/utils/ddragon";
 
 import Image from "next/image";
-import { SummonerSpellInfo } from "../types/summonerSpell";
 
 interface SummonerSpellIconProps {
   sm?: boolean;
-  spellData?: SummonerSpellInfo;
-  iconUrl?: string;
+  summonerSpellId: number;
 }
 
 export function SummonerSpellIcon({
   sm = false,
-  spellData,
-  iconUrl,
+  summonerSpellId,
 }: SummonerSpellIconProps) {
-  if (!spellData || !iconUrl)
+  if (!summonerSpellId)
     return (
       <div className={`${sm ? "size-4" : "size-6"} bg-white/10 rounded-xs`} />
     );
+
+  const summonerSpellData = getSummonerSpellById(summonerSpellId);
+  const summonerSpellIcon = DDragon.summonerSpell(summonerSpellData.image);
+
   return (
-    <Tooltip content={<SummonerSpellTooltip summonerSpell={spellData} />}>
+    <Tooltip
+      content={<SummonerSpellTooltip summonerSpell={summonerSpellData} />}
+    >
       <div className={`${sm ? "size-4" : "size-6"} relative`}>
-        <Image src={iconUrl} fill alt={spellData.name} className="rounded-xs" />
+        <Image
+          src={summonerSpellIcon}
+          fill
+          alt={summonerSpellData.name}
+          className="rounded-xs"
+        />
       </div>
     </Tooltip>
   );
@@ -30,7 +41,7 @@ export function SummonerSpellIcon({
 export function SummonerSpellTooltip({
   summonerSpell,
 }: {
-  summonerSpell: SummonerSpellInfo;
+  summonerSpell: SummonerSpell;
 }) {
   return (
     <div className="text-xs">

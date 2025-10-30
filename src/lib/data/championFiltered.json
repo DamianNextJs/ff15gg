@@ -2021,11 +2021,11 @@
         "name": "Flash Frost",
         "description": "Anivia brings her wings together and summons a sphere of ice that flies towards her opponents, chilling and damaging anyone in its path. When the sphere explodes it does moderate damage in a radius, stunning anyone in the area.",
         "cooldown": [
-          12,
           11,
           10,
           9,
-          8
+          8,
+          7
         ],
         "image": "FlashFrost.png"
       },
@@ -3500,11 +3500,11 @@
         "name": "Warrior Trickster",
         "description": "Wukong becomes <font color='#91d7ee'>Invisible</font> and dashes in a direction, leaving behind a clone that will attack nearby enemies.",
         "cooldown": [
+          22,
+          21,
           20,
           19,
-          18,
-          17,
-          16
+          18
         ],
         "image": "MonkeyKingDecoy.png"
       },
@@ -3546,7 +3546,7 @@
       {
         "id": "BrandQ",
         "name": "Sear",
-        "description": "Brand launches a ball of fire forward that deals magic damage. If the target is ablaze, Sear will stun the target for @StunDuration@ seconds.",
+        "description": "Brand launches a ball of fire forward that deals magic damage. If the target is ablaze, Sear will stun the target.",
         "cooldown": [
           8,
           7.5,
@@ -5348,7 +5348,7 @@
       {
         "id": "GravesMove",
         "name": "Quickdraw",
-        "description": "Graves dashes forward gaining an Armor boost for several seconds. If Graves dashes towards an enemy champion, gain two stacks of True Grit instead. Hitting enemies with basic attacks lowers the cooldown of this skill and refreshes the resistance boost.",
+        "description": "Graves dashes forward gaining an Armor and Magic Resist boost for several seconds. If Graves dashes towards an enemy champion, gain two stacks of True Grit instead. Hitting enemies with basic attacks lowers the cooldown of this skill and refreshes the resistance boost.",
         "cooldown": [
           16,
           15,
@@ -6510,11 +6510,11 @@
         "name": "Scatter the Weak",
         "description": "Syndra knocks enemies and Dark Spheres back dealing magic damage. Enemies hit by Dark Spheres become stunned.",
         "cooldown": [
-          17,
-          17,
-          17,
-          17,
-          17
+          15,
+          15,
+          15,
+          15,
+          15
         ],
         "image": "SyndraE.png"
       },
@@ -7120,11 +7120,11 @@
         "name": "Tectonic Disruption",
         "description": "Vel'Koz causes an area to explode, knocking up enemies, and knocking close enemies slightly away.",
         "cooldown": [
-          14,
-          13.5,
-          13,
-          12.5,
-          12
+          12,
+          11.5,
+          11,
+          10.5,
+          10
         ],
         "image": "VelkozE.png"
       },
@@ -7229,10 +7229,10 @@
         "name": "Tactical Sweep",
         "description": "Camille blasts in a cone after a delay, dealing damage. Enemies in the outer half are slowed and take extra damage, while also healing Camille.",
         "cooldown": [
-          17,
-          15.5,
+          15,
           14,
-          12.5,
+          13,
+          12,
           11
         ],
         "image": "CamilleW.png"
@@ -9745,13 +9745,13 @@
       {
         "id": "YunaraE",
         "name": "Kanmei's Steps | Untouchable Shadow",
-        "description": "Yunara gains decaying movement speed and becomes Ghosted. While in her Transcendent State she instead dashes in a direction.",
+        "description": "Yunara gains decaying Move Speed and becomes Ghosted. While in her Transcendent State she instead dashes in a direction.",
         "cooldown": [
-          7.5,
-          7.5,
-          7.5,
-          7.5,
-          7.5
+          9,
+          9,
+          9,
+          9,
+          9
         ],
         "image": "YunaraE.png"
       },
@@ -9882,9 +9882,9 @@
         "name": "Lilting Lullaby",
         "description": "Lillia causes all enemies with Dream Dust on them to become Drowsy before falling asleep. Those enemies will take extra damage on being forcibly woken up.",
         "cooldown": [
-          150,
-          130,
-          110
+          140,
+          120,
+          100
         ],
         "image": "LilliaR.png"
       }
@@ -9917,10 +9917,10 @@
         "name": "Hallowed Mist",
         "description": "Gwen summons mist that protects her from enemies outside of it. She can only be targeted by enemies who enter the mist.",
         "cooldown": [
-          24,
-          22.5,
+          22,
           21,
-          19.5,
+          20,
+          19,
           18
         ],
         "image": "GwenW.png"
@@ -9930,11 +9930,11 @@
         "name": "Skip 'n Slash",
         "description": "Gwen dashes a short distance then gains Attack Speed, attack range, and magic damage <OnHit>On-Hit</OnHit> for a few seconds. If she hits an enemy during that time, this Ability's cooldown is partially refunded. ",
         "cooldown": [
+          13,
+          12.5,
           12,
-          11,
-          10,
-          9,
-          8
+          11.5,
+          11
         ],
         "image": "GwenE.png"
       },

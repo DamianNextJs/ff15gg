@@ -1,14 +1,14 @@
 import Tooltip from "@/components/Tooltip";
+import { Champion } from "@/types/data";
 
 import { DDragon } from "@/utils/ddragon";
 import Image from "next/image";
-import { ChampionSpell } from "../types/champion";
 
 export function ChampionSpellIcon({
   championSpell,
   slot,
 }: {
-  championSpell: ChampionSpell;
+  championSpell: Champion["spells"][0];
   slot: number;
 }) {
   const champSpellIconUrl = DDragon.championSpell(championSpell.image);
@@ -30,7 +30,11 @@ export function ChampionSpellIcon({
   );
 }
 
-export function ChampionSpellTooltip({ spell }: { spell: ChampionSpell }) {
+export function ChampionSpellTooltip({
+  spell,
+}: {
+  spell: Champion["spells"][0];
+}) {
   const cooldownDisplay = [...new Set(spell.cooldown)].join("/");
   return (
     <div className="text-xs">

@@ -12,6 +12,10 @@
 //         description: item.description,
 //         gold: item.gold.total,
 //         plaintext: item.plaintext,
+//         maps: {
+//           11: item.maps[11],
+//           12: item.maps[12],
+//         },
 //       },
 //     ])
 // );

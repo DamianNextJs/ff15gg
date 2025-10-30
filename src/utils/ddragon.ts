@@ -9,8 +9,8 @@ export const DDragon = {
     return `https://ddragon.leagueoflegends.com/cdn/${LATEST_VERSION}/img/item/${id}.png`;
   },
 
-  championIcon(championName: string) {
-    return `https://ddragon.leagueoflegends.com/cdn/${LATEST_VERSION}/img/champion/${championName}.png`;
+  championIcon(championId: string) {
+    return `https://ddragon.leagueoflegends.com/cdn/${LATEST_VERSION}/img/champion/${championId}.png`;
   },
 
   splash(championName: string, skinNum = 0) {
@@ -22,8 +22,8 @@ export const DDragon = {
     return `https://ddragon.leagueoflegends.com/cdn/img/${filename}`;
   },
 
-  summonerSpell(spellName: string) {
-    return `https://ddragon.leagueoflegends.com/cdn/${LATEST_VERSION}/img/spell/${spellName}.png`;
+  summonerSpell(summonerSpellImage: string) {
+    return `https://ddragon.leagueoflegends.com/cdn/${LATEST_VERSION}/img/spell/${summonerSpellImage}`;
   },
 
   championSpell(championSpellImage: string) {

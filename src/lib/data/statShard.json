@@ -1,0 +1,71 @@
+{
+  "offense": [
+    {
+      "id": 5008,
+      "key": "Adaptive Force",
+      "icon": "perk-images/StatMods/StatModsAdaptiveForceIcon.png",
+      "name": "Adaptive Force",
+      "shortDesc": "+9 Adaptive Force"
+    },
+    {
+      "id": 5005,
+      "key": "Attack Speed",
+      "icon": "perk-images/StatMods/StatModsAttackSpeedIcon.png",
+      "name": "Attack Speed",
+      "shortDesc": "+10% Attack Speed"
+    },
+    {
+      "id": 5007,
+      "key": "Ability Haste",
+      "icon": "perk-images/StatMods/StatModsCDRScalingIcon.png",
+      "name": "Ability Haste",
+      "shortDesc": "+8 Ability Haste"
+    }
+  ],
+  "flex": [
+    {
+      "id": 5008,
+      "key": "Adaptive Force",
+      "icon": "perk-images/StatMods/StatModsAdaptiveForceIcon.png",
+      "name": "Adaptive Force",
+      "shortDesc": "+9 Adaptive Force"
+    },
+    {
+      "id": 5010,
+      "key": "Move Speed",
+      "icon": "perk-images/StatMods/StatModsMovementSpeedIcon.png",
+      "name": "Move Speed",
+      "shortDesc": "+2% Move Speed"
+    },
+    {
+      "id": 5001,
+      "key": "Health Scaling",
+      "icon": "perk-images/StatMods/StatModsHealthPlusIcon.png",
+      "name": "Health Scaling",
+      "shortDesc": "+10-180 Health (based on level)"
+    }
+  ],
+  "defense": [
+    {
+      "id": 5011,
+      "key": "Health",
+      "icon": "perk-images/StatMods/StatModsHealthScalingIcon.png",
+      "name": "Health",
+      "shortDesc": "+65 Health"
+    },
+    {
+      "id": 5013,
+      "key": "Tenacity And Slow Resist",
+      "icon": "perk-images/StatMods/StatModsTenacityIcon.png",
+      "name": "Tenacity And Slow Resist",
+      "shortDesc": "+10% Tenacity and Slow Resist"
+    },
+    {
+      "id": 5001,
+      "key": "Health Scaling",
+      "icon": "perk-images/StatMods/StatModsHealthPlusIcon.png",
+      "name": "Health Scaling",
+      "shortDesc": "+10-180 Health (based on level)"
+    }
+  ]
+}

@@ -6,7 +6,12 @@
     "dev": "next dev --turbopack",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint",
+    "filter:champion": "tsx scripts/filterChampion.ts",
+    "filter:item": "tsx scripts/filterItem.ts",
+    "filter:summonerspell": "tsx scripts/filterSummonerSpell.ts",
+    "filter:rune": "tsx scripts/filterRune.ts",
+    "filter:all": "npm run filter:champion && npm run filter:item && npm run filter:summonerspell && npm run filter:rune"
   },
   "dependencies": {
     "mongoose": "^8.17.2",

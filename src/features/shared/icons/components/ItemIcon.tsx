@@ -1,11 +1,8 @@
 import Tooltip from "@/components/Tooltip";
 import { DDragon } from "@/utils/ddragon";
-import rawItemsData from "@/lib/data/itemFiltered.json";
-
 import Image from "next/image";
-import { ItemInfo, ItemsData } from "../types/item";
-
-const itemsData: ItemsData = rawItemsData;
+import { Item as ItemType } from "@/types/data";
+import { getItemById } from "@/utils/data";
 
 export function ItemIcon({
   itemId,
@@ -30,8 +27,7 @@ export function ItemIcon({
 
   if (!itemId) return EmptySlot;
 
-  const itemData = itemsData[String(itemId)];
-
+  const itemData = getItemById(itemId);
   const itemIconUrl = DDragon.itemIcon(itemId);
 
   return (
@@ -71,7 +67,7 @@ export function ItemIcon({
   );
 }
 
-export function ItemTooltip({ item }: { item: ItemInfo }) {
+export function ItemTooltip({ item }: { item: ItemType }) {
   return (
     <div className="text-xs ">
       <strong className="text-blue-500 text-sm">{item?.name}</strong>
