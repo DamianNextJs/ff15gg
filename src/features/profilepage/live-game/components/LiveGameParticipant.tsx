@@ -1,17 +1,9 @@
 import { LiveParticipant } from "@/types/live-game";
-import { DDragon } from "@/utils/ddragon";
-
-import Image from "next/image";
-
 import Link from "next/link";
-import { getChampionById } from "../../utils/getChampionById";
-import {
-  getRuneData,
-  getSummonerSpellData,
-} from "@/features/shared/icons/utils/icons";
 import { createSummonerUrl } from "@/utils/summoner";
 import { SummonerSpellIcon } from "@/features/shared/icons/components/SummonerSpellIcon";
 import { RuneIcon } from "@/features/shared/icons/components/RuneIcon";
+import ChampionIcon from "@/features/shared/icons/components/ChampionIcon";
 
 export default function LiveGameParticipant({
   participant,
@@ -24,24 +16,6 @@ export default function LiveGameParticipant({
   position: number;
   platform: string;
 }) {
-  const champ = getChampionById(participant.championId);
-  if (!champ) return null;
-  const championIcon = DDragon.championIcon(champ.id);
-
-  const { data: summoner1Data, icon: summoner1Icon } = getSummonerSpellData(
-    participant.spell1Id
-  );
-  const { data: summoner2Data, icon: summoner2Icon } = getSummonerSpellData(
-    participant.spell2Id
-  );
-
-  const { data: keyStoneData, icon: keyStoneIcon } = getRuneData(
-    participant.perks.perkIds[0]
-  );
-  const { data: subStyleData, icon: subStyleIcon } = getRuneData(
-    participant.perks.perkSubStyle
-  );
-
   const [name, tag] = participant.riotId.split("#");
   const summonerUrl = createSummonerUrl(name, tag);
 
@@ -52,24 +26,20 @@ export default function LiveGameParticipant({
       }`}
     >
       <div className="flex items-center gap-1">
-        <div className="relative size-9 mr-0.5">
-          <Image src={championIcon} alt="Champ Icon" fill />
+        <div className=" mr-0.5">
+          <ChampionIcon championId={participant.championId} size={"md"} />
         </div>
         <div className="flex flex-col justify-center gap-1">
-          <SummonerSpellIcon
-            spellData={summoner1Data}
-            iconUrl={summoner1Icon}
-            sm={true}
-          />
-          <SummonerSpellIcon
-            spellData={summoner2Data}
-            iconUrl={summoner2Icon}
-            sm={true}
-          />
+          <SummonerSpellIcon summonerSpellId={participant.spell1Id} sm={true} />
+          <SummonerSpellIcon summonerSpellId={participant.spell2Id} sm={true} />
         </div>
         <div className="flex flex-col justify-center gap-1">
-          <RuneIcon runeData={keyStoneData} iconUrl={keyStoneIcon} sm={true} />
-          <RuneIcon runeData={subStyleData} iconUrl={subStyleIcon} sm={true} />
+          <RuneIcon runeId={participant.perks.perkIds[0]} sm={true} />
+          <RuneIcon
+            runeId={participant.perks.perkSubStyle}
+            sm={true}
+            isTree={true}
+          />
         </div>
       </div>
       <Link

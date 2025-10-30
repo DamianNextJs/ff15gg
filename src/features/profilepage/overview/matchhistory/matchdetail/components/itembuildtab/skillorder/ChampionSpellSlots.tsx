@@ -1,5 +1,5 @@
-import { getChampionById } from "@/features/profilepage/utils/getChampionById";
 import { ChampionSpellIcon } from "@/features/shared/icons/components/ChampionSpellIcon";
+import { getChampionById } from "@/utils/data";
 
 export default function ChampionSpellSlots({
   participantChampionId,

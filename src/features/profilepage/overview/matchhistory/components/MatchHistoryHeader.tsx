@@ -1,11 +1,10 @@
 import { RecentStats } from "@/types/summoner";
 
-import { DDragon } from "@/utils/ddragon";
 import Image from "next/image";
 import Tooltip from "@/components/Tooltip";
 import WinRateDonut from "./WinRateDonut";
 import { calculateAverageStats } from "@/features/profilepage/utils/stats";
-import { getChampionById } from "@/features/profilepage/utils/getChampionById";
+import ChampionIcon from "@/features/shared/icons/components/ChampionIcon";
 
 export default function MatchHistoryHeader({
   recentStats,
@@ -31,11 +30,6 @@ export default function MatchHistoryHeader({
     assists,
     safeGames
   );
-
-  const champ =
-    mostPlayedChampion && getChampionById(mostPlayedChampion.champId);
-
-  const champIcon = DDragon.championIcon(champ?.id ?? "");
 
   return (
     <div className="-mx-4 px-4 py-3 bg-accent/75 mt-4 grid grid-cols-2 lg:grid-cols-4 items-center justify-items-center">
@@ -66,7 +60,7 @@ export default function MatchHistoryHeader({
       {/* --- Most Played Champion --- */}
       {mostPlayedChampion && (
         <div className="hidden lg:flex gap-2 w-35">
-          <Image src={champIcon} width={40} height={40} alt="champ icon" />
+          <ChampionIcon championId={mostPlayedChampion.champId} size={"lg"} />
           <div className="text-xs flex flex-col justify-between font-medium">
             <div className="flex gap-1">
               {mostPlayedChampion.winRate}%

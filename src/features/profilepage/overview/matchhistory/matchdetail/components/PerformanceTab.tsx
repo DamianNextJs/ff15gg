@@ -1,14 +1,10 @@
 import { useState } from "react";
-
-import { DDragon } from "@/utils/ddragon";
-import Image from "next/image";
-
 import { ParticipantData } from "@/types/match";
 import { useMatchContext } from "../../../context/MatchContext";
 import { calculateKDA } from "@/features/profilepage/utils/stats";
-import { getChampionById } from "@/features/profilepage/utils/getChampionById";
 import { getMatchResultUI } from "../../utils/matchResult";
 import PerformanceTabHeader, { StatType } from "./PerformanceTabHeader";
+import ChampionIcon from "@/features/shared/icons/components/ChampionIcon";
 
 export default function PerformanceTab() {
   const { match, myParticipant } = useMatchContext();
@@ -65,10 +61,6 @@ export default function PerformanceTab() {
         {/* Performance List  */}
 
         {sortedParticipants.map((p) => {
-          const champ = getChampionById(p.championId);
-          if (!champ) return null;
-          const champIconUrl = DDragon.championIcon(champ.id);
-
           const KDA = calculateKDA(p.kills, p.deaths, p.assists);
 
           const CS = p.totalMinionsKilled + p.neutralMinionsKilled;
@@ -89,12 +81,7 @@ export default function PerformanceTab() {
             >
               {/* Player */}
               <div className="flex items-center gap-0.5  lg:gap-1 ml-1 col-span-2 lg:col-span-3">
-                <Image
-                  src={champIconUrl}
-                  alt="champ icon"
-                  width={32}
-                  height={32}
-                />
+                <ChampionIcon championId={p.championId} size={"sm"} />
                 <div className="flex flex-col items-start">
                   <p className="truncate text-white font-medium block max-w-17 lg:max-w-40">
                     {p.riotIdGameName} #{p.riotIdTagline}

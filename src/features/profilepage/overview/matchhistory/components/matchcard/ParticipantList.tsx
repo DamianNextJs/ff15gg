@@ -1,10 +1,8 @@
-import Image from "next/image";
 import Link from "next/link";
 import { RegionKey, regionMap } from "@/lib/maps/regionMap";
-import { DDragon } from "@/utils/ddragon";
-import { getChampionById } from "@/features/profilepage/utils/getChampionById";
 import { createSummonerUrl } from "@/utils/summoner";
 import { useMatchContext } from "../../../context/MatchContext";
+import ChampionIcon from "@/features/shared/icons/components/ChampionIcon";
 
 export default function ParticipantList() {
   const { match, myParticipant } = useMatchContext();
@@ -18,10 +16,6 @@ export default function ParticipantList() {
           {match.info.participants
             .filter((p) => p.teamId === team.teamId)
             .map((p) => {
-              const champ = getChampionById(p.championId);
-              if (!champ) return null;
-              const champIconUrl = DDragon.championIcon(champ.id);
-
               const isMyParticipant = p.puuid === myParticipant.puuid;
               const summonerUrl = createSummonerUrl(
                 p.riotIdGameName,
@@ -33,13 +27,11 @@ export default function ParticipantList() {
                   key={p.puuid}
                   className="text-xs w-20 text-left flex my-0.5 gap-0.5"
                 >
-                  <div
-                    className={`${
-                      isMyParticipant ? "border-orange-500 border" : ""
-                    } size-4`}
-                  >
-                    <Image src={champIconUrl} alt="" width={15} height={15} />
-                  </div>
+                  <ChampionIcon
+                    championId={p.championId}
+                    size={"xs"}
+                    border={isMyParticipant}
+                  />
                   <Link
                     prefetch={false}
                     href={`/summoner/${regionKey}/${encodeURIComponent(

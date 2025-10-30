@@ -1,9 +1,7 @@
 import { ChampStatsWithAvg } from "@/types/summoner";
-import { DDragon } from "@/utils/ddragon";
-import Image from "next/image";
 import ChampionStatsRowCell from "./ChampionStatsRowCell";
 import { SortableChampionStats } from "./ChampionStatsTable";
-import { getChampionById } from "../../utils/getChampionById";
+import ChampionIcon from "@/features/shared/icons/components/ChampionIcon";
 
 export default function ChampionStatsRow({
   stat,
@@ -16,10 +14,6 @@ export default function ChampionStatsRow({
   isLast: boolean;
   sortBy: SortableChampionStats | undefined;
 }) {
-  const champ = getChampionById(stat.champId);
-  if (!champ) return null;
-  const champIcon = DDragon.championIcon(champ.id);
-
   const cells: {
     content: React.ReactNode;
     sortKey: SortableChampionStats;
@@ -32,8 +26,8 @@ export default function ChampionStatsRow({
     {
       content: (
         <div className="flex items-center text-start gap-1 lg:ml-2">
-          <Image src={champIcon} alt="champ icon" width={30} height={30} />
-          <p className="hidden lg:block">{champ.name}</p>
+          <ChampionIcon championId={stat.champId} size={"sm"} />
+          <p className="hidden lg:block truncate max-w-18">{stat.champName}</p>
         </div>
       ),
       className: "lg:col-span-2",

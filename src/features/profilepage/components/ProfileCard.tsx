@@ -5,10 +5,10 @@ import Image from "next/image";
 import { DDragon } from "@/utils/ddragon";
 import { toNormalCase } from "@/utils/utils";
 import UpdateButton from "./UpdateButton";
-import { getChampionById } from "../utils/getChampionById";
 import ProfileLinks from "./ProfileLinks";
 import { parseSummonerParams } from "../utils/parseSummonerParams";
 import { getSummonerData } from "../utils/getSummonerData";
+import { getChampionById } from "@/utils/data";
 
 interface ProfileCardProps {
   params: {
@@ -42,7 +42,7 @@ export default async function ProfileCard({ params }: ProfileCardProps) {
 
   // --- Champion for background ---
   const topChampId = profileData?.championMastery?.[0]?.championId ?? 92;
-  const bgImgChamp = getChampionById(topChampId);
+  const bgImgChamp = getChampionById(topChampId).id;
 
   return (
     <section className="relative flex items-center h-50 lg:h-65">
@@ -50,7 +50,7 @@ export default async function ProfileCard({ params }: ProfileCardProps) {
       <div
         className="absolute inset-0 bg-cover -mt-4 -mx-4 lg:m-0 -z-1"
         style={{
-          backgroundImage: `url(https://ddragon.leagueoflegends.com/cdn/img/champion/splash/${bgImgChamp?.id}_1.jpg)`,
+          backgroundImage: `url(https://ddragon.leagueoflegends.com/cdn/img/champion/splash/${bgImgChamp}_1.jpg)`,
         }}
       >
         {/* Gradient overlay */}

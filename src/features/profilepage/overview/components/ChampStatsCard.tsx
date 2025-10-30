@@ -1,15 +1,13 @@
 "use client";
 
-import Image from "next/image";
 import { ChampStats } from "@/types/summoner";
-import { DDragon } from "@/utils/ddragon";
 import SectionHeading from "@/components/SectionHeading";
 import { useState } from "react";
 import { queueMap } from "@/lib/maps/queueMap";
 import QueueSelector from "@/features/shared/dropdowns//components/QueueSelector";
-import { getChampionById } from "../../utils/getChampionById";
 import { calculateAverageStats } from "../../utils/stats";
 import { mergeChampionStats } from "../../utils/mergeChampionStats";
+import ChampionIcon from "@/features/shared/icons/components/ChampionIcon";
 
 export default function ChampStatsCard({
   championStats,
@@ -30,7 +28,7 @@ export default function ChampStatsCard({
   return (
     <section className="mt-3 bg-secondary rounded-md p-4 pb-0">
       <div className="flex items-center justify-between">
-        <SectionHeading text="Champion Stats" />
+        <SectionHeading>Champion Stats</SectionHeading>
         <QueueSelector
           currentQueue={currentQueue}
           setCurrentQueue={setCurrentQueue}
@@ -39,11 +37,8 @@ export default function ChampStatsCard({
       <div className="mt-3">
         {displayedStats.length > 0 ? (
           displayedStats.slice(0, 5).map((champStats: ChampStats) => {
-            const champ = getChampionById(champStats.champId);
-            if (!champ) return null;
             // skip if champion not found
 
-            const champIcon = DDragon.championIcon(champ.id);
             const { averageKills, averageDeaths, averageAssists } =
               calculateAverageStats(
                 champStats.kills,
@@ -59,14 +54,9 @@ export default function ChampStatsCard({
               >
                 {/* Champ Icon + name */}
                 <div className="flex gap-2 items-center">
-                  <Image
-                    src={`${champIcon}`}
-                    alt="champion icon"
-                    width={35}
-                    height={35}
-                  />
+                  <ChampionIcon championId={champStats.champId} size={"md"} />
                   <p className="font-semibold lg:text-sm text-left">
-                    {champ.name}
+                    {champStats.champName}
                   </p>
                 </div>
 

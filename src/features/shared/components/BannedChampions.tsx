@@ -2,7 +2,7 @@ import { BannedChampion } from "@/types/live-game";
 import Image from "next/image";
 
 import { DDragon } from "@/utils/ddragon";
-import { getChampionById } from "@/features/profilepage/utils/getChampionById";
+import { getChampionById } from "@/utils/data";
 
 export default function BannedChampions({
   bannedChampions,
@@ -23,15 +23,12 @@ export default function BannedChampions({
               const noBan = bannedChampion.championId === -1;
 
               // Champion Icon or fallback
-              let champIcon;
-              if (noBan) {
-                champIcon = "/no-icon.jpg";
-              } else {
-                const champ = getChampionById(bannedChampion.championId);
-                champIcon = champ ? DDragon.championIcon(champ.id) : null;
-              }
+              const champIcon = noBan
+                ? "/no-icon.jpg"
+                : DDragon.championIcon(
+                    getChampionById(bannedChampion.championId).id
+                  );
 
-              if (!champIcon) return null;
               return (
                 <div
                   className={`relative ${
