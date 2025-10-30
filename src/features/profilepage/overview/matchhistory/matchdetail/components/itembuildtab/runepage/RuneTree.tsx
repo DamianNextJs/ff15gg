@@ -1,8 +1,8 @@
-import { getRunesForStyle } from "@/lib/maps/runeMap";
 import RuneSlots from "./RuneSlots";
 import KeyStones from "./KeyStones";
 import RuneTreeHeader from "./RuneTreeHeader";
-import StatShards, { StatShardIds } from "./StatShards";
+import { getRuneTreeById } from "@/utils/data";
+import StatShards from "./StatShards";
 
 export default function RuneTree({
   runeStyle,
@@ -13,10 +13,9 @@ export default function RuneTree({
   runeStyle: number;
   selectedRuneIds: number[];
   isPrimary?: boolean;
-  selectedStatIds?: StatShardIds;
+  selectedStatIds?: { offense: number; flex: number; defense: number };
 }) {
-  const styleData = getRunesForStyle(runeStyle);
-  if (!styleData) return null;
+  const styleData = getRuneTreeById(runeStyle);
 
   return (
     <div className="flex flex-col gap-4 items-center lg:w-60">
@@ -25,16 +24,19 @@ export default function RuneTree({
       {/* Keystones Selection */}
       {isPrimary && (
         <KeyStones
-          keystones={styleData.slots[0].runes}
+          keystones={styleData.slots[0]}
           selectedRuneIds={selectedRuneIds}
         />
       )}
       {/* Slots */}
-      <RuneSlots styleData={styleData} selectedRuneIds={selectedRuneIds} />
+      <RuneSlots
+        slots={styleData.slots.slice(1)}
+        selectedRuneIds={selectedRuneIds}
+      />
       {/* Stat Shards */}
 
       {!isPrimary && selectedStatIds && (
-        <StatShards selectedShardIds={selectedStatIds} />
+        <StatShards selectedStatIds={selectedStatIds} />
       )}
     </div>
   );

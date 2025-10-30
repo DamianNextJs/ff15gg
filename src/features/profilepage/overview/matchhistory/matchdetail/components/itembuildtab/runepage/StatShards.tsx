@@ -1,43 +1,39 @@
-import { getStatShards } from "@/lib/maps/runeMap";
+import { allStatShardSlots } from "@/utils/data";
 import Rune from "./Rune";
-import { getRuneData } from "@/features/shared/icons/utils/icons";
-
-export type StatShardIds = {
-  offense: number;
-  flex: number;
-  defense: number;
-};
+import { DDragon } from "@/utils/ddragon";
 
 export default function StatShards({
-  selectedShardIds,
+  selectedStatIds,
 }: {
-  selectedShardIds: StatShardIds;
+  selectedStatIds: { offense: number; flex: number; defense: number };
 }) {
-  const statShards = getStatShards();
-
-  const slotKeys: (keyof StatShardIds)[] = ["offense", "flex", "defense"];
+  const statShards = allStatShardSlots();
+  const rowNames = ["offense", "flex", "defense"];
 
   return (
-    <div className="flex flex-col gap-2 lg:gap-4 w-full border-t border-white/10 pt-3">
-      {statShards.map((statSlot, i) => (
-        <div key={i} className="flex justify-around">
-          {statSlot.map((stat) => {
-            const { data, icon } = getRuneData(stat.id);
-            const slotKey = slotKeys[i];
-            const isSelected = selectedShardIds[slotKey] === stat.id;
-
-            return (
-              <Rune
-                key={stat.id}
-                runeData={data}
-                iconUrl={icon}
-                isSelected={isSelected}
-                isStatShard={true}
-              />
-            );
-          })}
-        </div>
-      ))}
+    <div className="flex flex-col justify-between gap-2 lg:gap-4 w-full border-t border-white/10 pt-3">
+      {statShards.map((row, i) => {
+        const rowName = rowNames[i];
+        return (
+          <div key={i} className="grid grid-cols-3 justify-items-center">
+            {row.map((statShard) => {
+              const isSelected =
+                selectedStatIds[rowName as keyof typeof selectedStatIds] ===
+                statShard.id;
+              const icon = DDragon.runeIcon(statShard.icon);
+              return (
+                <Rune
+                  key={statShard.id}
+                  runeData={statShard}
+                  iconUrl={icon}
+                  isSelected={isSelected}
+                  isStatShard={true}
+                />
+              );
+            })}
+          </div>
+        );
+      })}
     </div>
   );
 }

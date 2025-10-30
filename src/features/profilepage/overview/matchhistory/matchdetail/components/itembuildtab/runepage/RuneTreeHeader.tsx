@@ -1,8 +1,10 @@
-import { getRuneData } from "@/features/shared/icons/utils/icons";
+import { getRuneTreeById } from "@/utils/data";
+import { DDragon } from "@/utils/ddragon";
 import Image from "next/image";
 
 export default function RuneTreeHeader({ runeStyle }: { runeStyle: number }) {
-  const { data: runeTreeData, icon: runeTreeIcon } = getRuneData(runeStyle);
+  const runeTreeData = getRuneTreeById(runeStyle);
+  const runeTreeIcon = DDragon.runeIcon(runeTreeData.icon);
 
   return (
     <div className="flex bg-accent p-1.5 rounded-md items-center gap-1 w-full">

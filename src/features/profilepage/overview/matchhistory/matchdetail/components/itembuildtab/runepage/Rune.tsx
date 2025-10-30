@@ -1,6 +1,6 @@
 import Tooltip from "@/components/Tooltip";
 import { RuneTooltip } from "@/features/shared/icons/components/RuneIcon";
-import { RuneInfo } from "@/features/shared/icons/types/rune";
+import { Rune as RuneType } from "@/types/data";
 
 import Image from "next/image";
 
@@ -11,7 +11,7 @@ export default function Rune({
   isKeyStone = false,
   isStatShard = false,
 }: {
-  runeData: RuneInfo;
+  runeData: RuneType;
   iconUrl: string;
   isSelected?: boolean;
   isKeyStone?: boolean;

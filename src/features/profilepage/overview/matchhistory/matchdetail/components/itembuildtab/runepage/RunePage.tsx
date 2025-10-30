@@ -10,7 +10,7 @@ export default function RunePage({
 }) {
   return (
     <div>
-      <SectionHeading text="Runes" />
+      <SectionHeading>Runes</SectionHeading>
       <div className="grid grid-cols-2 gap-3 lg:justify-items-center mt-3">
         <RuneTree
           runeStyle={runes.styles[0].style}

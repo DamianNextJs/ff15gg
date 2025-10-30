@@ -1,25 +1,25 @@
-import { RuneStyle } from "@/features/shared/icons/types/rune";
+import { Rune as RuneType } from "@/types/data";
 import Rune from "./Rune";
-import { getRuneData } from "@/features/shared/icons/utils/icons";
+import { DDragon } from "@/utils/ddragon";
 
 export default function RuneSlots({
-  styleData,
+  slots,
   selectedRuneIds,
 }: {
-  styleData: RuneStyle;
+  slots: RuneType[][];
   selectedRuneIds: number[];
 }) {
   return (
-    <div className="flex flex-col gap-2 lg:gap-4 w-full h-full justify-between">
-      {styleData.slots.slice(1).map((slot, i) => (
-        <div key={i} className="flex justify-around">
-          {slot.runes.map((r) => {
-            const { icon, data } = getRuneData(r.id);
-            const isSelected = selectedRuneIds.includes(r.id);
+    <div className="flex flex-col justify-between gap-2 lg:gap-4 w-full h-full">
+      {slots.map((slot, i) => (
+        <div key={i} className="grid grid-cols-3 justify-items-center">
+          {slot.map((rune) => {
+            const isSelected = selectedRuneIds.includes(rune.id);
+            const icon = DDragon.runeIcon(rune.icon);
             return (
               <Rune
-                key={r.id}
-                runeData={data}
+                key={rune.id}
+                runeData={rune}
                 iconUrl={icon}
                 isSelected={isSelected}
               />
